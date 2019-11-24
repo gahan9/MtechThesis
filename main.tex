@@ -12,13 +12,9 @@
 %\usepackage[a4paper]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-%\usepackage{lipsum}
-%\usepackage{listings}
 
 \usepackage{graphicx}
 \graphicspath{ {./assets/} {./pics/} {./eps/} {./figures/}}
-%\usepackage{epsfig}
-%\usepackage{epstopdf}
 
 
 
@@ -43,21 +39,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    SECTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage{titlesec}
-%\usepackage{sectsty}
+\usepackage{titlesec}
+\usepackage{sectsty}
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%set section/subsections HEADINGS font and color
 %\sectionfont{\color{MyColor1}}  % sets colour of sections
 %\subsectionfont{\color{MyColor1}}  % sets colour of sections
 %
 %%set section enumerator to arabic number (see footnotes markings alternatives)
-%\renewcommand\thesection{\arabic{section}.} %define sections numbering
-%\renewcommand\thesubsection{\thesection\arabic{subsection}} %subsec.num.
-%
-%%define new section style
-%\newcommand{\mysection}{
-%    \titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}} 
-%    {\thesection} {3pt} {} } 
+\renewcommand\thesection{\arabic{section}.} %define sections numbering
+\renewcommand\thesubsection{\thesection\arabic{subsection}} %subsec.num.
+
+%define new section style
+\newcommand{\mysection}{
+    \titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}} 
+    {\thesection} {3pt} {} } 
 
 % Glossaries build
 \usepackage[acronym]{glossaries}
@@ -66,8 +62,7 @@
 
 
 \usepackage{longtable}
-\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
-\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+
 %----------------------------------------------------------------------------------------
 %       DATE FORMAT
 %----------------------------------------------------------------------------------------
