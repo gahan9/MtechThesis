@@ -1,0 +1,12 @@
+*.acn
+*.aux
+*.gl[os]
+*.log
+*.out
+*.idx
+*.ilg
+*.ist
+*.toc
+*.gz
+*.mintedcmd
+
