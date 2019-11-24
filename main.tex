@@ -1,0 +1,310 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% 
+% Gahan M. Saraiya
+% 18MCEC10
+%
+% References
+% ==========
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,11pt,oneside]{Thesis}
+%\usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+%\usepackage{lipsum}
+%\usepackage{listings}
+
+\usepackage{graphicx}
+\graphicspath{ {./assets/} {./pics/} {./eps/} {./figures/}}
+%\usepackage{epsfig}
+%\usepackage{epstopdf}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COLOR DEFINITIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[svgnames]{xcolor} % Enabling mixing colors and color's call by 'svgnames'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{MyColor1}{rgb}{0.2,0.4,0.6} %mix personal color
+\newcommand{\textb}{\color{Black} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\blue}{\color{MyColor1} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\blueb}{\color{MyColor1} \usefont{OT1}{lmss}{b}{n}}
+\newcommand{\red}{\color{LightCoral} \usefont{OT1}{lmss}{m}{n}}
+\newcommand{\green}{\color{Turquoise} \usefont{OT1}{lmss}{m}{n}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FONTS AND COLORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    SECTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{titlesec}
+%\usepackage{sectsty}
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%set section/subsections HEADINGS font and color
+%\sectionfont{\color{MyColor1}}  % sets colour of sections
+%\subsectionfont{\color{MyColor1}}  % sets colour of sections
+%
+%%set section enumerator to arabic number (see footnotes markings alternatives)
+%\renewcommand\thesection{\arabic{section}.} %define sections numbering
+%\renewcommand\thesubsection{\thesection\arabic{subsection}} %subsec.num.
+%
+%%define new section style
+%\newcommand{\mysection}{
+%    \titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}} 
+%    {\thesection} {3pt} {} } 
+
+% Glossaries build
+\usepackage[acronym]{glossaries}
+\makeglossaries
+\loadglsentries{sections/glossaries}
+
+
+\usepackage{longtable}
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+%----------------------------------------------------------------------------------------
+%       DATE FORMAT
+%----------------------------------------------------------------------------------------
+\usepackage{datetime}
+\newdateformat{monthyeardate}{\monthname[\THEMONTH], \THEYEAR}
+%----------------------------------------------------------------------------------------
+
+%\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+%\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+%\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+%\usepackage{fancyhdr} % Headers and footers
+%\pagestyle{fancy} % All pages have headers and footers
+%\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%		CAPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{caption}
+%%\usepackage{subcaption}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%\captionsetup[figure]{labelfont={color=Turquoise}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%		!!!EQUATION (ARRAY) --> USING ALIGN INSTEAD
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%using amsmath package to redefine eq. numeration (1.1, 1.2, ...) 
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\renewcommand{\theequation}{\thesection\arabic{equation}}
+%
+%%set box background to grey in align environment 
+%\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+%\makeatletter
+%\patchcmd{\@Aboxed}{\boxed{#1#2}}{\colorbox{black!15}{$#1#2$}}{}{}%
+%\patchcmd{\@boxed}{\boxed{#1#2}}{\colorbox{black!15}{$#1#2$}}{}{}%
+%\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% -------------------------------------------------------------------------------
+% *** FLOWCHART AND GRAPHS PACKAGES ***
+% -------------------------------------------------------------------------------
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{neuralnetwork}
+\pgfplotsset{compat=1.5.1}
+\usetikzlibrary{snakes, arrows, shapes, shapes.geometric, calc, automata, positioning}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum height=1cm, minimum width=2cm, 
+text centered, trapezium stretches=true, draw=black, 
+%fill=red!30
+]
+
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, trapezium stretches=true, minimum height=1cm, text centered, draw=black, 
+%fill=blue!30
+]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, trapezium stretches=true, 
+%fill=orange!30
+]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, trapezium stretches=true, 
+%fill=green!30
+]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\pgfplotsset{every axis/.append style={tick label style={/pgf/number format/fixed},font=\scriptsize,ylabel near ticks,xlabel near ticks,grid=major}}
+\tikzset{%
+	every neuron/.style={
+		circle,
+		draw,
+		minimum size=1cm
+	},
+	neuron missing/.style={
+		draw=none, 
+		scale=4,
+		text height=0.333cm,
+		execute at begin node=\color{black}$\vdots$
+	},
+}
+% -------------------------------------------------------------------------------
+
+% -------------------------------------------------------------------------------
+% *** INDIAN RUPEE SYMBOL ***
+% -------------------------------------------------------------------------------
+\usepackage{tfrupee} 
+% ------------ INDIAN RUPEE SYMBOL END ---------------------------
+
+
+% -------------------------------------------------------------------------------
+% SET UP MATH Commands and configs
+% -------------------------------------------------------------------------------
+
+
+\usepackage{amsmath, amssymb, amsfonts, amsthm, fouriernc, mathtools}
+% mathtools for: Aboxed (put box on last equation in align envirenment)
+%\usepackage{microtype} %improves the spacing between words and letters
+
+\usepackage{theorem}
+% Special Matrix
+\newenvironment{spmatrix}[1]
+{\def\mysubscript{#1}\mathop\bgroup\begin{bmatrix}}
+	{\end{bmatrix}\egroup_{\textstyle\mathstrut\mysubscript}}
+% Adding explaination below equation terms
+\newcommand{\explain}[2]{\underbrace{#1}_{\parbox{\widthof{$#1$}}{\tiny#2}}}
+%\newcommand{\explain}[2]{\underbrace{#1}_{\parbox{\widthof{#1}}{\footnotesize\raggedright #2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DESIGN CIRCUITS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[siunitx, american, smartlabels, cute inductors, europeanvoltages]{circuitikz}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%\makeatletter
+%\let\reftagform@=\tagform@
+%\def\tagform@#1{\maketag@@@{(\ignorespaces\textcolor{red}{#1}\unskip\@@italiccorr)}}
+%\renewcommand{\eqref}[1]{\textup{\reftagform@{\ref{#1}}}}
+%\makeatother
+%\usepackage{hyperref}
+%\hypersetup{colorlinks=true}
+
+% to allow adding line break in table cell
+
+\usepackage{makecell}
+%\hypersetup{%
+%  colorlinks=true,
+%  linkcolor=blue,
+%  linkbordercolor={0 0 1}
+%}
+% 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+%\setlength{\parindent}{0.0in}
+%\setlength{\parskip}{0.05in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PREPARE TITLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{
+%	\blue Project Report \\
+    \blueb Generic IP independent BIOS Signing and Parsing}
+\author{Gahan Saraiya (18MCEC10)}
+\date{\monthyeardate\today}
+%\date{March, 2019}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------------------------------------------------------
+%       SET HEADER AND FOOTER
+%----------------------------------------------------------------------------------------
+\newcommand\theauthor{Gahan Saraiya}
+\newcommand\thesubject{Generic IP independent BIOS Signing and Parsing}
+\renewcommand{\footrulewidth}{0.4pt}% default is 0pt
+\fancyhead[C]{Institute of Technology, Nirma University $\bullet$ \monthyeardate\today} % Custom header text
+\fancyfoot[LE,LO]{\thesubject}
+\fancyfoot[RO,LE]{Page \thepage} % Custom footer text
+%----------------------------------------------------------------------------------------
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+\newcommand*\tick{\item[\Checkmark]}
+\newcommand*\arrow{\item[$\Rightarrow$]}
+\newcommand*\fail{\item[\XSolidBrush]}
+\usepackage{minted} % for highlighting code sytax
+\definecolor{LightGray}{gray}{0.9}
+%\renewcommand*{\arraystretch}{2}
+%\definecolor{LightGray}{gray}{0.9}
+
+\setminted[text]{
+	frame=lines, 
+	breaklines,
+	baselinestretch=1.2,
+	bgcolor=LightGray,
+%	fontsize=\small
+}
+\setminted[bash]{
+%	frame=lines, 
+	breaklines,
+	baselinestretch=1.2,
+	bgcolor=LightGray,
+%	fontsize=\small
+}
+\setminted[python]{
+	frame=lines, 
+	breaklines, 
+	linenos,
+	baselinestretch=1.2,
+%	bgcolor=LightGray,
+%	fontsize=\small
+}
+
+
+\usepackage[square, numbers, comma, sort&compress]{natbib}  
+\usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
+% Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
+\hypersetup{urlcolor=blue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
+
+\begin{document}
+	\maketitle
+	
+	
+	\setstretch{1.0}
+	\fancyhead{}
+	\rhead{\thepage}
+	\lhead{}
+	
+	\pagestyle{fancy}
+	
+	\include{sections/declaration}
+	
+	\include{sections/certificate}
+	
+	\include{sections/abstract}
+	
+	\include{sections/acknowledgements}
+
+	\pagestyle{fancy}  
+	
+	\lhead{\emph{Contents}}  
+	\tableofcontents  % Write out the Table of Contents
+
+	\include{sections/introduction/introduction}
+
+	\include{sections/introduction/design}
+
+	\printglossary[type=main]
+\end{document}

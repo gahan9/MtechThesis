@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DESIGN CIRCUITS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[siunitx, american, smartlabels, cute inductors, europeanvoltages]{circuitikz}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\makeatletter
+%\let\reftagform@=\tagform@
+%\def\tagform@#1{\maketag@@@{(\ignorespaces\textcolor{red}{#1}\unskip\@@italiccorr)}}
+%\renewcommand{\eqref}[1]{\textup{\reftagform@{\ref{#1}}}}
+%\makeatother
+%\usepackage{hyperref}
+%\hypersetup{colorlinks=true}
+
+
+%\hypersetup{%
+%  colorlinks=true,
+%  linkcolor=blue,
+%  linkbordercolor={0 0 1}
+%}
+% 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+	language        = Python,
+	frame           = lines, 
+	basicstyle      = \footnotesize,
+	keywordstyle    = \color{blue},
+	stringstyle     = \color{green},
+	commentstyle    = \color{red}\ttfamily
+}
+
+%\setlength{\parindent}{0.0in}
+%\setlength{\parskip}{0.05in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PREPARE TITLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{
+%	\blue Project Report \\
+    \blueb Generic IP independent BIOS Signing and Parsing}
+\author{Gahan Saraiya (18MCEC10)}
+\date{\monthyeardate\today}
+%\date{March, 2019}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------------------------------------------------------
+%       SET HEADER AND FOOTER
+%----------------------------------------------------------------------------------------
+\newcommand\theauthor{Gahan Saraiya}
+\newcommand\thesubject{Generic IP independent BIOS Signing and Parsing}
+\renewcommand{\footrulewidth}{0.4pt}% default is 0pt
+\fancyhead[C]{Institute of Technology, Nirma University $\bullet$ \monthyeardate\today} % Custom header text
+\fancyfoot[LE,LO]{\thesubject}
+\fancyfoot[RO,LE]{Page \thepage} % Custom footer text
+%----------------------------------------------------------------------------------------
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+\newcommand*\tick{\item[\Checkmark]}
+\newcommand*\arrow{\item[$\Rightarrow$]}
+\newcommand*\fail{\item[\XSolidBrush]}
+\usepackage{minted} % for highlighting code sytax
+\definecolor{LightGray}{gray}{0.9}
+%\renewcommand*{\arraystretch}{2}
+%\definecolor{LightGray}{gray}{0.9}
+
+\setminted[text]{
+	frame=lines, 
+	breaklines,
+	baselinestretch=1.2,
+	bgcolor=LightGray,
+%	fontsize=\small
+}
+\setminted[bash]{
+%	frame=lines, 
+	breaklines,
+	baselinestretch=1.2,
+	bgcolor=LightGray,
+%	fontsize=\small
+}
+\setminted[python]{
+	frame=lines, 
+	breaklines, 
+	linenos,
+	baselinestretch=1.2,
+%	bgcolor=LightGray,
+%	fontsize=\small
+}

@@ -1,0 +1,37 @@
+\section{Introduction}
+
+\subsection{Legacy \gls{bios} and \gls{uefi}}
+
+\paragraph{\gls{bios}} is the dominant standard which defines a firmware interface.
+
+"Legacy" (as in Legacy \gls{bios}), in the context of firmware specifications, refer to an older, widely used specification. Major responsibility of \gls{bios} is to set up the hardware, load and start an \gls{os}. When the system boots, the BIOS initializes and identifies system devices including video display card, mouse, hard disk drive, keyboard, solid state drive and other hardware followed by locating software held on a boot device i.e. a hard disk or removable storage such as CD/DVD or USB and loads and executes that software, giving it control of the computer. This process is also referred to as "booting" or "boot strapping".
+
+\subsubsection{Background of Legacy \gls{bios}}
+In 1980s, IBM developed the personal computer with a 16-bit BIOS with the aim of ending the BIOS after the first 250,000 products. Legacy BIOS is based upon Intel's original 16-bit architecture, ordinarily referred to as  "8086" architecture. And as technology advanced, Intel extended that 8086 architecture from 16 to 32-bit.
+Legacy BIOS is able to run different \gls{os}, such as MS-DOS, equally well on systems other than IBM. Additionally, Legacy BIOS has a defined OS-independent interface for hardware that enables interrupts to communicate with video, disk and keyboard services along with the BIOS ROM loader and bootstrap loader, to name a few.
+
+Use of legacy BIOS is diminishing and is expected to be phased out in new systems by the year 2020.
+
+\subsection{Unified Extensible Firmware Interface (\gls{uefi})}
+\gls{uefi} was developed as a replacement for legacy BIOS to streamline the booting process, and act as the interface between a operating system and its platform firmware. It not only replaces most BIOS functions, but also offers a rich extensible pre-OS environment with advanced boot and runtime services.
+Unified Extensible Firmware Interface (\gls{uefi}) is grounded in Intel's initial Extensible Firmware Interface (EFI) specification 1.10, which defines a software interface between an operating system and platform firmware. The UEFI architecture allows users to execute applications on a command line interface. It has intrinsic networking capabilities and is designed to work with multi-processors (MP) systems.
+
+\begin{figure}[h]
+	\includegraphics[width=\linewidth]{uefi_board_of_directors}
+	\caption{Board of Directors of UEFI Forum}\label{fig:introduction-uefi-board-of-directors}
+\end{figure}
+
+The UEFI Forum board of directors consists of representatives from 11 industry leaders as described in Figure \ref{fig:introduction-uefi-board-of-directors}. These involved organizations work to ensure that the UEFI specifications meet industry needs.
+
+UEFI uses a different interface for boot services and runtime services but UEFI does not specify how "Power On Self Test" (POST) and Setup are implemented - those are BIOS' primary functions.
+
+\subsubsection{\gls{uefi}'s Role in boot process}
+
+During the boot process, UEFI speaks to the operating system loader and acts as the interface between the operating system and the BIOS.
+
+
+\subsection{Comparing of Legacy \gls{bios} and \gls{uefi}}
+
+
+
+\input{sections/introduction/acpi}
