@@ -1,0 +1,16 @@
+
+https://github.com/tianocore/tianocore.github.io/wiki/UEFI-EDKII-Learning-Dev
+
+
+
+https://uefi.org/learning_center/presentationsandvideos
+
+
+https://uefi.org/sites/default/files/resources/UEFI%20SDL%20Webinar_Final%20Slides%20-%20PDF.pdf
+
+
+
+https://edk2-docs.gitbooks.io/edk-ii-build-specification/content/2_design_discussion/25_generic_build_process.html
+
+
+https://uefi.org/sites/default/files/resources/PI_Spec_1_7_final_Jan_2019.pdf
