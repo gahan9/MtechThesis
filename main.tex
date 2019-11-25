@@ -49,11 +49,11 @@
 %%set section enumerator to arabic number (see footnotes markings alternatives)
 \renewcommand\thesection{\arabic{section}.} %define sections numbering
 \renewcommand\thesubsection{\thesection\arabic{subsection}} %subsec.num.
-
-%define new section style
-\newcommand{\mysection}{
-    \titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}} 
-    {\thesection} {3pt} {} } 
+%
+%%define new section style
+%\newcommand{\mysection}{
+%    \titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}} 
+%    {\thesection} {3pt} {} } 
 
 % Glossaries build
 \usepackage[acronym]{glossaries}
@@ -225,11 +225,16 @@ text centered, trapezium stretches=true, draw=black,
 %       SET HEADER AND FOOTER
 %----------------------------------------------------------------------------------------
 \newcommand\theauthor{Gahan Saraiya}
+\newcommand\therollno{18MCEC10}
 \newcommand\thesubject{Generic IP independent BIOS Signing and Parsing}
+\newcommand\theinstitute{Institute of Technology}
+\newcommand\theuniversity{Nirma University}
+\newcommand\thedegree{Master of Technology}
+\newcommand\thebranch{Computer Science \& Engineering}
 \renewcommand{\footrulewidth}{0.4pt}% default is 0pt
-\fancyhead[C]{Institute of Technology, Nirma University $\bullet$ \monthyeardate\today} % Custom header text
-\fancyfoot[LE,LO]{\thesubject}
-\fancyfoot[RO,LE]{Page \thepage} % Custom footer text
+%\fancyhead[C]{\theinstitute, \theuniversity $\bullet$ \monthyeardate\today} % Custom header text
+%\fancyfoot[LE,LO]{\thesubject}
+%\fancyfoot[RO,LE]{Page \thepage} % Custom footer text
 %----------------------------------------------------------------------------------------
 
 \renewcommand\theadalign{bc}
@@ -294,7 +299,7 @@ text centered, trapezium stretches=true, draw=black,
 
 	\pagestyle{fancy}  
 	
-	\lhead{\emph{Contents}}  
+%	\lhead{\emph{Contents}}  
 	\tableofcontents  % Write out the Table of Contents
 
 	\include{sections/introduction/introduction}
