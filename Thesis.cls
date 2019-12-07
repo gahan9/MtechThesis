@@ -27,7 +27,7 @@
 \addtotoc{Declaration}
 \thispagestyle{plain}
 \null\vfil
-\begin{center}\includegraphics[width=0.3\textwidth] {logo.png}\end{center}
+\begin{center}\includegraphics[width=0.3\textwidth] {NU_IT_Color_Max.png}\end{center}
 %\vskip 60\p@
 \begin{center}{\huge\bf Declaration\par}\end{center}
 %\vskip 60\p@
@@ -40,7 +40,7 @@
 \btypeout{Certificate}
 \addtotoc{Certificate}
 \thispagestyle{plain}
-\begin{center}\includegraphics[width=0.3\textwidth] {logo.png}\end{center}
+\begin{center}\includegraphics[width=0.3\textwidth] {NU_IT_Color_Max.png}\end{center}
 \begin{center}\Large{\bf{Computer Science \& Engineering}} \end{center}
 \begin{center}{\LARGE\bf Certificate\par}\end{center}
 {\normalsize #1}
@@ -203,7 +203,7 @@
       {\large 18MCEC10 \par}
       \bigskip
       \bigskip
-       \includegraphics[width=4cm]{logo.png}\par 
+       \includegraphics[width=4cm]{NU_IT_Color_Max.png}\par 
       \bigskip
       \bigskip
        {\large Department of Computer Science \& Engineering, \par}

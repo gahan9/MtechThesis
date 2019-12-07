@@ -8,14 +8,14 @@
 % ==========
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[a4paper,11pt,oneside]{Thesis}
+\documentclass[a4paper,12pt,oneside]{Thesis}
 %\usepackage[a4paper]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
 \usepackage{graphicx}
 \graphicspath{ {./assets/} {./pics/} {./eps/} {./figures/}}
-
+%\usepackage{mtechthesisstyle}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -188,12 +188,13 @@ text centered, trapezium stretches=true, draw=black,
 % to allow adding line break in table cell
 
 \usepackage{makecell}
-%\hypersetup{%
-%  colorlinks=true,
-%  linkcolor=blue,
-%  linkbordercolor={0 0 1}
-%}
-% 
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=black,
+  filecolor=black,
+  linkbordercolor={0 0 1}
+}
+ 
 \renewcommand\lstlistingname{Algorithm}
 \renewcommand\lstlistlistingname{Algorithms}
 \def\lstlistingautorefname{Alg.}
@@ -231,6 +232,7 @@ text centered, trapezium stretches=true, draw=black,
 \newcommand\theuniversity{Nirma University}
 \newcommand\thedegree{Master of Technology}
 \newcommand\thebranch{Computer Science \& Engineering}
+\newcommand{\HRule}{\rule{\linewidth}{0.8mm}}
 \renewcommand{\footrulewidth}{0.4pt}% default is 0pt
 %\fancyhead[C]{\theinstitute, \theuniversity $\bullet$ \monthyeardate\today} % Custom header text
 %\fancyfoot[LE,LO]{\thesubject}
@@ -276,35 +278,42 @@ text centered, trapezium stretches=true, draw=black,
 \usepackage[square, numbers, comma, sort&compress]{natbib}  
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
 % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
-\hypersetup{urlcolor=blue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
+%\hypersetup{urlcolor=blue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
 
+
+
+% -------------------------------------------------------------------
+% BEGIN THE DOCUMENT ------------------------------------------------
+% -------------------------------------------------------------------
 \begin{document}
-	\maketitle
-	
-	
-	\setstretch{1.0}
-	\fancyhead{}
-	\rhead{\thepage}
-	\lhead{}
-	
-	\pagestyle{fancy}
-	
-	\include{sections/declaration}
-	
-	\include{sections/certificate}
-	
-	\include{sections/abstract}
-	
-	\include{sections/acknowledgements}
+\maketitle
 
-	\pagestyle{fancy}  
-	
-%	\lhead{\emph{Contents}}  
-	\tableofcontents  % Write out the Table of Contents
 
-	\include{sections/introduction/introduction}
+\setstretch{1.0}
+\fancyhead{}
+\rhead{\thepage}
+\lhead{}
 
-	\include{sections/introduction/design}
+\pagestyle{fancy}
+\renewcommand{\thepage}{\roman{page}}
+\include{sections/declaration}
 
-	\printglossary[type=main]
+\include{sections/certificate}
+
+\include{sections/abstract}
+
+\include{sections/acknowledgements}
+
+\pagestyle{fancy}  
+
+%\lhead{\emph{Contents}}  
+\tableofcontents  % Write out the Table of Contents
+\listoffigures \addcontentsline{toc}{chapter}{List of Figures}
+
+\pagenumbering{arabic}
+
+\include{sections/introduction/introduction}
+\include{sections/introduction/design}
+
+\printglossary[type=main]
 \end{document}
