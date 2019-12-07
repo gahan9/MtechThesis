@@ -45,7 +45,7 @@ Figure \ref{fig:design-pei-operation-diagram} shows a diagram describes the acti
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\linewidth]{design/pei-operation-diagram}
+	\includegraphics[width=0.8\linewidth]{design/pei-operation-diagram}
 	\caption{Diagram of PI Operations}\label{fig:design-pei-operation-diagram}
 \end{figure}
 
@@ -56,7 +56,9 @@ The PEI Foundation provides the classes of services listed in Table \ref{table:d
 
 \begin{table}[h]
 	\centering
-	\begin{tabular}{ l | p{8cm} }
+	\renewcommand*{\arraystretch}{2}
+	\caption{Services provided by PEI Foundation Classes}\label{table:design-pei-foundation-class-service}
+	\begin{tabular}{ l | p{9cm} }
 		Service & Details
 		\\ \hline \hline
 		PPI Services & Manages PPIs to ease inter-module method calls between PEIMs. A database maintained in temporary RAM to track installed interfaces.
@@ -74,7 +76,7 @@ The PEI Foundation provides the classes of services listed in Table \ref{table:d
 		Reset Services & Provides a common means to aid initializing warm or cold restart of the system
 		\\ \hline
 	\end{tabular}
-	\caption{Services provided by PEI Foundation Classes}\label{table:design-pei-foundation-class-service}
+
 \end{table}
 
 
@@ -88,14 +90,14 @@ The PEI Foundation is the entity that carried outs following activity:
 \end{itemize}
 The PEI Foundation written to be portable across all the various platforms architecture of a given instruction-set. i.e. A binary for IA-32 (32-bit Intel architecture) works across all Pentium processors and similarly Itanium processor family work across all Itanium processors.
 
-Irrespective of the processor micro architecture, the set of services uncovered by the PEI Foundation should be the same. This consistent surface area around the PEI Foundation allows PEIMs to be written in the $C\ programming\ language$ and compiled across any micro architecture.
+Irrespective of the processor micro architecture, the set of services uncovered by the PEI Foundation should be the same. This consistent surface area around the PEI Foundation allows PEIMs to be written in the \verb|C programming language| and compiled across any micro architecture.
 
 \subsection{PEI Dispatcher}
 The PEI Dispatcher is basically a state machine which is implemented in the PEI Foundation. The PEI Dispatcher evaluates the dependency expressions in Pre-EFI initialization modules (PEIMs) that are lying in the \gls{fv}s being examined.
 
-Dependency expressions are coherent combinations of PEIM-to-PEIM Interfaces (PPIs). These expressions distinguish the PPIs that must be available for use before a given PEIM can be invoked. The PEI Dispatcher references the PPI database in the PEI Foundation to conclude which PPIs have to be installed and evaluate the dependency expression for the PEIM. If PPI has already been installed then dependency expression will evaluate to $TRUE$, which notifies  PEI Dispatcher it can run PEIM. At this stage, the PEI Foundation handovers control to the PEIM with $TRUE$ dependency expression. 
+Dependency expressions are coherent combinations of PEIM-to-PEIM Interfaces (PPIs). These expressions distinguish the PPIs that must be available for use before a given PEIM can be invoked. The PEI Dispatcher references the PPI database in the PEI Foundation to conclude which PPIs have to be installed and evaluate the dependency expression for the PEIM. If PPI has already been installed then dependency expression will evaluate to \verb|TRUE|, which notifies  PEI Dispatcher it can run PEIM. At this stage, the PEI Foundation handovers control to the PEIM with \verb|TRUE| dependency expression. 
 
-The PEI Dispatcher will exit Once the PEI Dispatcher has examined and evaluated all of the PEIMs in all of the uncovered firmware volumes and no more PEIMs can be dispatched (i.e. the dependency expressions do not evaluate from $FALSE$ to $TRUE$). At this stage, the PEI Dispatcher cannot invoke any additional PEIMs. The PEI Foundation then takes back control from the PEI Dispatcher and invokes the $DXE IPL PPI$ to pass control to the DXE phase of execution.
+The PEI Dispatcher will exit Once the PEI Dispatcher has examined and evaluated all of the PEIMs in all of the uncovered firmware volumes and no more PEIMs can be dispatched (i.e. the dependency expressions do not evaluate from \verb|FALSE| to \verb|TRUE|). At this stage, the PEI Dispatcher cannot invoke any additional PEIMs. The PEI Foundation then takes back control from the PEI Dispatcher and invokes the \verb|DXE IPL PPI| to pass control to the DXE phase of execution.
 
 \subsection{Drive Execution Environment (\gls{dxe})}
 Prior to the DXE phase, the Pre-EFI Initialization (PEI) phase is responsible for initializing permanent memory in the platform so that the DXE phase can be loaded and executed. The state of the system at the end of the PEI phase is passed to the DXE phase through a list of position independent data structures called Hand-Off Blocks (HOBs). HOBs are described in detail in the Platform Initialization Specification.
