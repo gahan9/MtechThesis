@@ -15,7 +15,6 @@
 
 \usepackage{graphicx}
 \graphicspath{ {./assets/} {./pics/} {./eps/} {./figures/}}
-%\usepackage{mtechthesisstyle}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,8 +82,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		CAPTIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage{caption}
-%%\usepackage{subcaption}
+\usepackage{caption}
+%\usepackage{subcaption}
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %\captionsetup[figure]{labelfont={color=Turquoise}}
 
@@ -211,14 +210,6 @@ text centered, trapezium stretches=true, draw=black,
 %\setlength{\parindent}{0.0in}
 %\setlength{\parskip}{0.05in}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% PREPARE TITLE
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{
-%	\blue Project Report \\
-    \blueb Generic IP independent BIOS Signing and Parsing}
-\author{Gahan Saraiya (18MCEC10)}
-\date{\monthyeardate\today}
 %\date{March, 2019}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -232,7 +223,7 @@ text centered, trapezium stretches=true, draw=black,
 \newcommand\theuniversity{Nirma University}
 \newcommand\thedegree{Master of Technology}
 \newcommand\thebranch{Computer Science \& Engineering}
-\newcommand{\HRule}{\rule{\linewidth}{0.8mm}}
+%\newcommand{\HRule}{\rule{\linewidth}{0.8mm}}
 \renewcommand{\footrulewidth}{0.4pt}% default is 0pt
 %\fancyhead[C]{\theinstitute, \theuniversity $\bullet$ \monthyeardate\today} % Custom header text
 %\fancyfoot[LE,LO]{\thesubject}
@@ -247,6 +238,8 @@ text centered, trapezium stretches=true, draw=black,
 \newcommand*\arrow{\item[$\Rightarrow$]}
 \newcommand*\fail{\item[\XSolidBrush]}
 \usepackage{minted} % for highlighting code sytax
+\captionsetup[listing]{position=top}
+
 \definecolor{LightGray}{gray}{0.9}
 %\renewcommand*{\arraystretch}{2}
 %\definecolor{LightGray}{gray}{0.9}
@@ -274,6 +267,15 @@ text centered, trapezium stretches=true, draw=black,
 %	fontsize=\small
 }
 
+\setminted[c]{
+	frame=lines, 
+	breaklines, 
+	linenos,
+	baselinestretch=1.2,
+%	bgcolor=LightGray,
+%	fontsize=\small
+}
+
 
 \usepackage[square, numbers, comma, sort&compress]{natbib}  
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
@@ -282,11 +284,24 @@ text centered, trapezium stretches=true, draw=black,
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PREPARE TITLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{
+%		\blue Project Report \\
+	\blueb \thesubject}
+\author{\theauthor (18MCEC10)}
+\date{\monthyeardate\today}
+
 % -------------------------------------------------------------------
 % BEGIN THE DOCUMENT ------------------------------------------------
 % -------------------------------------------------------------------
+\usepackage{atbegshi}% http://ctan.org/pkg/atbegshi
+\AtBeginDocument{\AtBeginShipoutNext{\AtBeginShipoutDiscard}}
 \begin{document}
+\pagestyle{empty}
 \maketitle
+\newpage
 
 
 \setstretch{1.0}
@@ -296,12 +311,10 @@ text centered, trapezium stretches=true, draw=black,
 
 \pagestyle{fancy}
 \renewcommand{\thepage}{\roman{page}}
+
 \include{sections/declaration}
-
 \include{sections/certificate}
-
 \include{sections/abstract}
-
 \include{sections/acknowledgements}
 
 \pagestyle{fancy}  
@@ -310,7 +323,7 @@ text centered, trapezium stretches=true, draw=black,
 \tableofcontents  % Write out the Table of Contents
 \listoffigures \addcontentsline{toc}{chapter}{List of Figures}
 
-\pagenumbering{arabic}architecture
+\pagenumbering{arabic}
 
 \include{sections/introduction/introduction}
 \include{sections/introduction/design}

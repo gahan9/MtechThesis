@@ -1,0 +1,74 @@
+\subsection{Graphics Controller}
+Most graphics controllers are PCI controllers. The graphics drivers managing those controllers are also PCI drivers. However, while most graphics controllers are PCI controllers, graphics controllers can make use of other buses, such as USB buses. Graphics drivers have these characteristics:
+\begin{itemize}
+	\item UEFI graphics drivers follow the UEFI driver model.
+	\item Depending on the adapter that the driver manages, a graphics driver can be categorized as either a single or a multiple output adapter.
+	\item The graphics driver must create child handles for each output.
+	\item Graphics drivers must create child handles for some of the graphics output ports and attach the Graphics Output Protocol (GOP Protocol), EDID Discovered Protocol, and EDID Active Protocol to each active handle that the driver produced.
+	\item Graphics drivers are chip-specific because of the requirement to initialize and manage the graphics device.
+A UEFI driver is required for any PC hardware device needed for the boot process to complete. Hardware devices can be categorized into the following:
+	\item Graphic output devices: Simple text, graphics output.
+	\item Console devices: Simple input provider, simple input ex, simple pointer — mice, serial I/O protocol (remote consoles) 
+\end{itemize}
+Note that independent hardware vendors (IHVs) can choose not to implement all of the required elements of the UEFI specification. For example, all elements might not be implemented on a specialized system configuration that does not support all the services and functionality implied by the required elements. Also, some elements are required depending on a specific platform's features. Some elements are required depending on the features that a specific driver requires. Other elements are recommended based on coding experience, for reasons of portability, and/or for other considerations. It is recommended that you implement all required and recommended elements in your drivers.
+
+\subsubsection{Graphics Output Protocol}
+The GOP (Graphics Output Protocol) Driver is part of the UEFI boot time drivers responsible for bringing up the display during bios boot. This driver enables logo display during bios boot time. This paper has a GOP device driver written for an Intel’s IoT Android platform which is responsible for display control until the operating system and in turn the display controller of the system gains the control.
+
+\subsubsection{GOP Overview}
+The GOP driver is a replacement for legacy video BIOS and enables the use of UEFI pre-boot firmware without CSM. The GOP driver can be 32-bit, 64-bit, or IA-64 with no binary compatibility. UEFI pre-boot firmware architecture (32/64-bit) must match the GOP driver architecture (32/64-bit). The Intel Embedded Graphics Drivers' GOP driver can either be fast boot (speed optimized and platform specific) or generic (platform agnostic for selective platforms).
+
+EFI defines two types of services: boot services and runtime services. Boot services are available only while the firmware owns the platform (i.e., before the ExitBootServices call), and they include text and graphical consoles on various devices, and bus, block and file services. Runtime services are still accessible while the operating system is running; they include services such as date, time and NVRAM access. In addition, the Graphics Output Protocol (GOP) provides limited runtime services support. The operating system is permitted to directly write to the frame buffer provided by GOP during runtime mode. However, the ability to change video modes is lost after transitioning to runtime services mode until the OS graphics driver is loaded. This paper includes a GOP driver written for an IoT's platform using the development kit EDK II which is responsible for the display during booting process until the operating system gains control of the display and invoke display devices.
+
+\subsubsection{GOP DRIVER}
+The EFI specification defined a UGA (Universal Graphic Adapter) protocol to support device-independent graphics. UEFI did not include UGA and replaced it with GOP (Graphics Output Protocol), with the explicit goal of removing VGA hardware dependencies. The two are similar.
+
+
+\begin{table}
+	\centering
+	\renewcommand\arraystretch{2}
+	\caption{Difference between Video BIOS and \gls{gop}}\label{table:video-bios-vs-gop}
+	\begin{tabular}{p{5cm} | p{5cm}}
+		Bus Type & Clock Frequency
+		\\ \hline \hline
+		$ 64 \ KB $ limit & execution No $ 64 \ KB $ limit. $ 32-bit $ protected mode
+		\\ \hline
+		CSM is needed with UEFI system firmware & No need for CSM. Speed optimized (fast boot)
+		\\ \hline
+		$ 16-bit $ The VBIOS works with both $ 32-bit $ and $ 64-bit $ architectures & The UEFI pre-boot firmware architecture must match the GOP driver.
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+Table \ref{table:video-bios-vs-gop} gives a quick comparison of GOP and video BIOS.
+
+
+\subsubsection{GOP Integration}
+The platform firmware must meet the following requirements for GOP Driver integration:
+\begin{itemize}
+	\item Platform firmware must be compliant to UEFI 2.1 or later.
+	\item Platform must enumerate and initialize the graphics device.
+	\item Platform must allocate enough graphics frame buffer memory required to support the native mode resolution of the integrated display.
+	\item The platform must produce the standard \verb|EFI_PCI_IO_PROTOCOL| and as well as the \verb|EFI_DEVICE_PATH_PROTOCOL| on the graphics device handle. Additionally, the platform must produce \verb|PLATFORM_GOP_POLICY_PROTOCOL|.
+	\item The platform firmware must not launch the legacy Video BIOS.
+\end{itemize}
+
+The GOP Driver solution comprises the following files shown in Table \ref{table:gop-driver-files} GOP driver files.
+
+\begin{table}
+	\centering
+	\renewcommand\arraystretch{2}
+	\caption{\gls{gop} Driver files}\label{table:gop-driver-files}
+	\begin{tabular}{l | p{5cm} | p{5cm}}
+		File Name & Description & Format
+		\\ \hline \hline
+		\verb|GopDriver.efi| & The GOP driver binary & Uncompressed PE/COFF image
+		\\ \hline
+		\verb|Vbt.bin| & Contains Video BIOS Table (VBT) data & Raw Binary
+		\\ \hline
+		\verb|Vbt.bsf| & BMP script file. Required for modifying Vbt.bin using BMP tool & Text
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+Customize the VBT data file\verb| Vbt.bin| as per platform requirements and the corresponding BSF file. Integrate \verb|Vbt.bin| and \verb|GopDriver.efi| files into the platform firmware image. The process of accomplishing this step is determined by the platform implementer, specific to the platform firmware implementation.
