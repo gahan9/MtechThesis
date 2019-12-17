@@ -11,3 +11,5 @@
 *.mintedcmd
 coverpages.tex
 Sample_Report.tex 
+_minted-main 
+main.lof 
