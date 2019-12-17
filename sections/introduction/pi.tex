@@ -1,5 +1,13 @@
 \subsection{Platform Initialization \gls{pi} Boot Sequence}
-PI compliant system firmware must support the six phases: security (\gls{sec}), pre-efi initialization (\gls{pei}), driver execution environment (\gls{dxe}), boot device selection (\gls{bds}), run time (RT) services and After Life (transition from the OS back to the firmware) of system. Refer to Figure \ref{fig:design-pi-boot-phases} below.
+Platform Initialization \gls{pi} compliant system firmware has to support the six phases: 
+\begin{enumerate}
+	\item Security (\gls{sec}) Phase
+	\item Pre-efi Initialization (\gls{pei}) Phase
+	\item Driver Execution Environment (\gls{dxe}) Phase
+	\item Boot device selection (\gls{bds}) Phase
+	\item Run time (RT) services and After Life (AL) (transition from the OS back to the firmware) of system. 
+\end{enumerate}
+Figure \ref{fig:design-pi-boot-phases} describes the phases and transition in detail.
 
 \begin{figure}[h]
 	\includegraphics[width=\linewidth]{PI_Boot_Phases}
@@ -7,14 +15,14 @@ PI compliant system firmware must support the six phases: security (\gls{sec}), 
 \end{figure}
 
 \subsection{Security (\gls{sec})}
-The Security (SEC) phase is the first phase in the PI Architecture and is responsible for the following:
+The Security (SEC) phase is the initial phase in the PI Architecture and is liable for the following:
 \begin{itemize}
-	\item Handling all platform restart events
-	\item Creating a temporary memory store
-	\item Serving as the root of trust in the system
-	\item Passing handoff information to the PEI Foundation
+	\item Handling restart events of all platform
+	\item Creation of a temporary memory store
+	\item Bringing the root of trust in the system
+	\item Transit handoff information to next phase - the PEI Foundation
 \end{itemize}
-The security section may contain modules with code written in assembly. Therefore, some EDK II module development environment (MDE) modules may contain assembly code. Where this occurs, both Windows and GCC versions of assembly code are provided in different files
+The security section may have the modules with source code scripted in assembly language. Hence, some \gls{edk2} module development environment (MDE) modules can consist of assembly code. During Occurrence of this, both Windows and GCC versions of assembly language code are served in different files.
 
 \subsection{Pre-EFI Initialization (\gls{pei})}
 The Pre-EFI Initialization (PEI) phase described in the PI Architecture specifications is invoked quite betimes in the boot period. Specifically, after about preliminary processing in the Security (SEC) phase, any machine restart event will invoke the PEI phase.
@@ -23,7 +31,7 @@ The PEI phase is designed to be developed in many parts and consists of:
 	\item PEI Foundation (core code)
 	\item Pre-EFI Initialization Modules (specialized plug-ins)
 \end{itemize}
-The PEI phase initially operates with the platform in a nascent state, leveraging only on-processor resources, such as the processor cache as a call stack, to dispatch Pre-EFI Initialization Modules (PEIMs).
+The PEI phase at first operates with the platform in a developing state, holding only on-processor resources, such as the cache of processor for call stack, to dispatch the Pre-EFI Initialization Modules (PEIMs).
 
 The PEI phase cannot assume the availability of amounts of memory (RAM) as DXE and hence PEI phase limits its support to the following:
 \begin{itemize}
@@ -36,9 +44,9 @@ The PEI phase cannot assume the availability of amounts of memory (RAM) as DXE a
 These PEIMs are responsible for the following:
 \begin{itemize}
 	\item Initializing some permanent memory complement
-	\item Describing the memory in Hand-Off Blocks (HOBs)
-	\item Describing the firmware volume locations in HOBs
-	\item Passing control into the Driver Execution Environment (DXE) phase
+	\item Characterizing the memory in Hand-Off Blocks (HOBs)
+	\item Characterizing the firmware volume locations in HOBs
+	\item Transit the control into next phase - the Driver Execution Environment (DXE) phase
 \end{itemize}
 
 Figure \ref{fig:design-pei-operation-diagram} shows a diagram describes the action carried out during the PEI phase
@@ -50,7 +58,7 @@ Figure \ref{fig:design-pei-operation-diagram} shows a diagram describes the acti
 \end{figure}
 
 \subsubsection{PEI Services}
-The PEI Foundation establishes a system table named the PEI Services Table that is visible to all Pre-EFI Initialization Modules (PEIMs) in the system. A PEI Service is defined as a function, command, or other capability manifested by the PEI Foundation when that service’s initialization requirements are met. Because the PEI phase has no permanent memory available until nearly the end of the phase, the range of services created during the PEI phase cannot be as rich as those created during later phases. Because the location of the PEI Foundation and its temporary RAM is not known at build time, a pointer to the PEI Services Table is passed into each PEIM’s entry point and also to part of each PEIM-to-PEIM Interface (PPI). 
+The PEI Foundation institutes a system table for the PEI Services named as PEI Services Table that is viewable to all \gls{pei} Modules (PEIMs) in the system. A PEI Service is defined as a method, command or other potentiality manifested by the PEI Foundation when that service's initialization needs are met. As the PEI phase having no permanent memory available until almost the end of the phase, all the various types of services created during this phase (PEI phase) cannot be as enrich as those created during later phases. A pointer to PEI Services Table is sent into entry point of each PEIM's and also to part of each PEIM-to-PEIM Interface (PPI) because the location of PEI Foundation and its temporary memory is unknown at build time. 
 
 The PEI Foundation provides the classes of services listed in Table \ref{table:design-pei-foundation-class-service}
 
@@ -97,28 +105,30 @@ The PEI Dispatcher is basically a state machine which is implemented in the PEI 
 
 Dependency expressions are coherent combinations of PEIM-to-PEIM Interfaces (PPIs). These expressions distinguish the PPIs that must be available for use before a given PEIM can be invoked. The PEI Dispatcher references the PPI database in the PEI Foundation to conclude which PPIs have to be installed and evaluate the dependency expression for the PEIM. If PPI has already been installed then dependency expression will evaluate to \verb|TRUE|, which notifies  PEI Dispatcher it can run PEIM. At this stage, the PEI Foundation handovers control to the PEIM with \verb|TRUE| dependency expression. 
 
-The PEI Dispatcher will exit Once the PEI Dispatcher has examined and evaluated all of the PEIMs in all of the uncovered firmware volumes and no more PEIMs can be dispatched (i.e. the dependency expressions do not evaluate from \verb|FALSE| to \verb|TRUE|). At this stage, the PEI Dispatcher cannot invoke any additional PEIMs. The PEI Foundation then takes back control from the PEI Dispatcher and invokes the \verb|DXE IPL PPI| to pass control to the DXE phase of execution.
+The PEI Dispatcher will exit Once the PEI Dispatcher has examined and evaluated all of the PEIMs in all of the uncovered firmware volumes and no more PEIMs can be dispatched (i.e. the dependency expressions (\gls{depex}) do not evaluate from \verb|FALSE| to \verb|TRUE|). At this stage, the PEI Dispatcher cannot invoke any additional PEIMs. The PEI Foundation then takes back control from the PEI Dispatcher and calls the \verb|DXE IPL PPI| to navigate control to the DXE phase of execution.
 
 \subsection{Drive Execution Environment (\gls{dxe})}
-Prior to the DXE phase, the Pre-EFI Initialization (PEI) phase is responsible for initializing permanent memory in the platform so that the DXE phase can be loaded and executed. The state of the system at the end of the PEI phase is passed to the DXE phase through a list of position independent data structures called Hand-Off Blocks (HOBs). HOBs are described in detail in the Platform Initialization Specification.
-There are several components in the DXE phase:
-\begin{itemize}
+Before the DXE phase, the Pre-EFI Initialization (PEI) phase is held responsible for initializing permanent memory in the platform. Hence, DXE phase can be loaded and executed. At the very end of the PEI phase, state of the system is handed over to the DXE phase through Hand-Off Blocks (list of position independent data structures). 
+
+There are three components in the DXE phase:
+\begin{enumerate}
 	\item DXE Foundation
 	\item DXE Dispatcher
 	\item A set of DXE Drivers
-\end{itemize}
+\end{enumerate}
 
 \subsection{Boot Device Selection (\gls{bds})}
-The Boot Device Selection (BDS) phase is implemented as part of the BDS Architectural Protocol. The DXE Foundation will hand control to the BDS Architectural Protocol after all of the DXE drivers whose dependencies have been satisfied have been loaded and executed by the DXE Dispatcher. The BDS phase is responsible for the following:
+The BDS Architectural Protocol has part of implementation of the Boot Device Selection (BDS) phase. After evaluation of all of the DXE drivers dependencies, DXE drivers with satisfied dependencies are loaded and executed by the DXE Dispatcher, the DXE Foundation will pass the control to the BDS Architectural Protocol. The BDS phase held responsible for the following:
+
 \begin{itemize}
 	\item Initializing console devices
 	\item Loading device drivers
-	\item Attempting to load and execute boot selections
+	\item Attempt of loading and executing boot selections
 \end{itemize}
 
 \subsection{Transient System Load (TSL) and Runtime (RT)}
-The Transient System Load (TSL) is primarily the OS vendor provided boot loader. Both the TSL and the Runtime Services (RT) phases may allow access to persistent content, via UEFI drivers and UEFI applications. Drivers in this category include PCI Option ROMs.
+Primarily the OS vendor provides boot loader known as The Transient System Load (TSL). TSL and Runtime Services (RT) phases may allow access to persistent content, via UEFI drivers and applications. Drivers in this category include PCI Option ROMs.
 
 \subsection{After Life (AL)}
-The After Life (AL) phase consists of persistent UEFI drivers used for storing the state of the system during the OS orderly shutdown, sleep, hibernate or restart processes.
+The After Life (AL) phase contains the persistent UEFI drivers used to store the state of the system during the OS systematically shutdown, sleep, hibernate or restart processes.
 

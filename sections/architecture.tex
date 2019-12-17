@@ -11,7 +11,7 @@ The basic Platform Initialization firmware storage concepts include:
 \end{itemize}
 
 \subsection{Design of Firmware Storage}
-Design of firmware storage describes how files should be stored and accessed in non-volatile storage. Any firmware implementations must support and follow the standard \gls{pi} Firmware Volume and Firmware File System Format.
+Design of firmware storage describes how files should be stored and accessed in non-volatile storage. Implementation of any firmware must support and follow the standard \gls{pi} Firmware Volume structure and the structure of Firmware File System Format.
 
 \paragraph{Firmware Device} is a persistent physical repository containing data and/or firmware code. Typically it is a flash component but may also be some other type of persistent storage. A single physical firmware device may be partitioned into multiple smaller pieces to form multiple logical firmware devices. Likewise, multiple firmware devices may be aggregated into one larger logical firmware device.
 
