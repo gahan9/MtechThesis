@@ -1,13 +1,11 @@
-\section{Introduction}
-\subsection{Uncore Intellectual Properties}
-Intel System on a Chip (SoC) features a new set of Intel Uncore Intellectual Property (IP)
-for every generation. The Uncore encompasses system agent (SA), memory and Uncore agents
-such as graphics controller, display controller, memory controller and Input Output (IO). The
-Uncore IPs are Peripheral Component Interface Express (PCIe), Graphics Processing Engine
-(GPE), Thunderbolt, Imaging Processing Agent (IPU), North Peak (NPK), Virtualization
-Technology for directed-IO (Vt-d), Volume Management Device (VMD).
+\section{Introduction}\label{section-introduction}
+Intel System on a Chip (\gls{soc}) features a new set of Intel Uncore Intellectual Property (IP) for every generation.
+Section \ref{section-introduction} covers the introduction and overview of BIOS, UEFI and it's role and major components - Advanced Configuration and Power Interface (\gls{acpi}), Peripheral Component Interconnect Express (\gls{pcie}) and Graphics Controller. Section \ref{section-design} describes the design of UEFI and the boot phases in detail. The study of the BIOS binary structure and mapping of each components byte and alignment is described in Section \ref{section-architecture}. Proposed work to reducing the process of build iteration described in Section \ref{section-proposed-work}. 
 
-PCI Express abbreviated as PCIe or PCI-E, is designed to replace the older PCI standards.
+\subsection{Uncore Intellectual Properties}
+The Uncore encompasses system agent (SA), memory and Uncore agents such as graphics controller, display controller, memory controller and Input Output (IO). The Uncore IPs are Peripheral Component Interface Express (PCIe), Graphics Processing Engine (GPE), Thunderbolt, Imaging Processing Agent (IPU), North Peak (NPK), Virtualization Technology for directed-IO (Vt-d), Volume Management Device (VMD).
+
+PCI Express abbreviated as \gls{pci} or \gls{pcie}, is designed to replace the older PCI standards.
 A data communication system is developed for use the transfer data between the host and the
 peripheral devices via PCIe. Thunderbolt is the brand name of a hardware interface developed
 by Intel that allows the connection of external peripherals to a computer. Thunderbolt combines

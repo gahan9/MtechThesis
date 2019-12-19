@@ -1,0 +1,12 @@
+\section{Proposed Work}\label{section-proposed-work}
+The iteration of the development could be reduce in three ways:
+\begin{enumerate}
+    \item Processing Debug/Unsigned BIOS
+    \item Modification of BIOS to \gls{soc}
+    \item Processing Firmwares individually
+\end{enumerate}
+
+\subsection{Processing Unsigned debug BIOS}
+Before Releasing the BIOS firmware for public use, those are signed for security and integrity purpose, however the debug BIOS which are used Pre-release to test and verify all the functional features until all the requirements are met.
+
+Every \gls{soc} system which are under test known is \gls{sut} are configured in such a way that it supports debug BIOS. The proposed framework is designed to simulate the process of \gls{sut} in terms of processing BIOS binary similar to \gls{sut} performs it after flashing BIOS firmware on \gls{soc}.
