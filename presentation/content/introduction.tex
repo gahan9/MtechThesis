@@ -1,0 +1,36 @@
+\begin{frame}[allowframebreaks]{Major Components}
+    \begin{redblock}{TianoCore}
+        The community supporting an open source implementation of the Unified Extensible Firmware Interface (UEFI).
+    \end{redblock}
+    
+    \begin{greenblock}{UEFI \footnote{Unified Extensible Firmware Interface}}
+        Specifies the layer between an operating system and the platform firmware.
+    \end{greenblock}
+    
+    \begin{blueblock}{EDK II}
+    A modern, feature-rich, cross-platform firmware development environment for the UEFI and UEFI Platform Initialization (PI) specifications.
+    \end{blueblock}
+
+    \begin{redblock}{ACPI \footnote{Advanced Configuration and Power Interface} Component Architecture}
+        A major goal of the architecture is to isolate all operating system dependencies to a relatively small translation or conversion layer (the OS Services Layer) so that the bulk of the ACPICA code is independent of any individual operating system.
+    \end{redblock}
+
+
+    \begin{greenblock}{PCIe \footnote{Peripheral Component Interconnect Express}}
+        A major goal of the architecture is to isolate all operating system dependencies to a relatively small translation or conversion layer (the OS Services Layer) so that the bulk of the ACPICA code is independent of any individual operating system.
+    \end{greenblock}
+
+\end{frame}
+
+\begin{frame}{PC Architecture of Intel}
+    \begin{itemize}
+        \item Every Intel architecture hardware platform includes 2 major components:
+            \begin{itemize}
+                \item Microprocessor Chip
+                \item Companion Chip (PCH) 
+            \end{itemize}
+        \item Previously, Intel Processors were paired with 2 companion chips: North Bridge \& South Bridge
+        \item Now, the functions of the north bridge are usually included in the processor itself.
+        \item South Bridge is replaced by the PCH (Platform Control Hub)
+    \end{itemize}
+\end{frame}
