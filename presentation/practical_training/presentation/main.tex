@@ -1,0 +1,177 @@
+\documentclass{beamer}
+\input{FrontMatter/preamble.tex}
+\usetheme{ULB}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEPARTMENT LOGO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\DepartmentLogo{theme/logos/QuIC.png}
+% In the folder "Im/theme/logos/" please import the Department logo image. This will appear at north east corner of every frame
+
+\setcounter{DepartmentLogo}{2}
+% Please select 0 if you want a blank NE corner for each frame
+% Please select 1 if you want the Department Logo only on the Title Page (NE corner)
+% Please select 2 if you want the Department Logo on each frame (still NE corner)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FACULTY LOGO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\FacultyLogo{theme/logos/EPB.png}
+% In the folder "Im/theme/logos/" please import the Faculty logo image. This will appear at south east corner of title frame
+
+\setcounter{FacultyLogo}{1}
+% Please select 1 if you want the Faculty Logo to be displayed in the sE corner of the title frame
+% Please select 0 if you want a blank SE corner for the title frame
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FOOTLINE MANAGEMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{FootlineChoice}{2}
+% Please select value 0,1, or 2 for the footline alignment.
+% All footlines display the [author] in SW corner and [institute] in SE corner,
+% but you can choose between the following options for the center of the footline :
+
+% Footline Aligment 0 : 
+%       Only the current section is displayed. All is aligned with the very bottom of the frame.
+
+% Footline Aligment 1 :
+%       Only the current section is displayed. All is aligned a bit higher to escape potential crops when projecting.
+
+% Footline Aligment 2 : 
+%       Current section and subsection are displayed.  All is aligned a bit higher to escape potential crops when projecting.
+
+% Footline Alignment 3 :
+%       Nothing displayed at center. [author] and [institute] aligned with very bottom of frame.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MAIN BODY OF PRESENTATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{Generic IP independent BIOS Signing and Parsing}
+\date{\today}
+\author[Gahan Saraiya]{Gahan Saraiya}
+\institute[18MCEC10]
+{
+  Institute of Technology\\
+  Nirma University
+}
+
+
+\begin{document}
+
+\begin{frame}[plain,noframenumbering]
+\titlepage
+\end{frame}
+
+
+\AtBeginSection[]
+{
+ \begin{frame}[noframenumbering,plain]{Outline}
+    \tableofcontents[currentsection, currentsubsection, hideothersubsections,subsubsectionstyle=show/show/show/hide]
+    
+ \end{frame} 
+}
+
+
+
+\section{Introduction}
+\begin{frame}{Mandatory Corporate Training}
+Listed Below are Mandatory Corporate Training which are to be completed before starting the ramp up and work.
+\begin{itemize}
+    \item Inside Intel - Know the Organization
+    \item Anticorruption Certification 2019
+    \item Antitrust Awareness 2019
+    \item Code of Conduct Certification 2019
+    \item Export Compliance Written Assurance
+    \item Information Security Awareness 2019
+    \item Keep It Inside Your Role in Protecting Confidential Intel
+    \item Office Ergonomics
+    \item Prevention of Sexual Harassment at Workplace India
+    \item Global Harassment Avoidance Certification Dec 2019
+\end{itemize}
+\end{frame}
+
+\section{Other Project work and training}
+
+\begin{frame}[allowframebreaks]{Other Project work and training}
+
+    \begin{redblock}{June, 2019}
+        \begin{itemize}
+            \item Completion of mandatory corporate training
+            \item Overview of Company workflow
+            \item Gaining access to required hardware and software along with their initial setup for work flow
+            \item Basic overview of work profile
+        \end{itemize}
+    \end{redblock}
+    
+    \begin{greenblock}{July,2019}
+        \begin{itemize}
+            \item Assigned Project to work - Firmware loading and parsing
+            \item Started BIOS Training for newly joined employee - The training includes overview theory by experts to the respective fields and task assignment for hands-on for the project.
+        \end{itemize}
+    \end{greenblock}
+
+    \begin{redblock}{August,2019}
+        \begin{itemize}
+            \item \verb|Continued| BIOS Training
+            \item Delivery of working prototype of firmware loading code-base
+        \end{itemize}
+    \end{redblock}
+
+    \begin{greenblock}{September,2019}
+        \begin{itemize}
+            \item \verb|Continued| BIOS Training Completed.
+            \item Recognition Certificate for outstanding performance on delivery and quality of work on the assigned project for firmware loading
+            \item Project Review - (SKYPE Review)
+        \end{itemize}
+    \end{greenblock}
+
+    \begin{redblock}{October,2019}
+        \begin{itemize}
+            \item Feature development - easing the bios development testing with providing an environment to change, update BIOS setup options
+        \end{itemize}
+    \end{redblock}
+
+    \begin{greenblock}{November,2019}
+        \begin{itemize}
+            \item \verb|Continued| Assigned Project
+            \item Received Job Offer Letter after the end of internship
+        \end{itemize}
+    \end{greenblock}
+
+
+\end{frame}
+
+\section{Awards}
+\begin{frame}{Awards}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Im/figures/award1}
+\end{figure}
+\end{frame}
+
+
+%\nocite{*}
+%\begin{frame}[plain, noframenumbering,allowframebreaks]{References}
+%    \printbibliography
+%\end{frame}
+
+
+%\appendix
+
+%\input{content/Appendix.tex}
+\section*{}
+\begin{frame}{}
+	\centering \Huge
+	\emph{Thank You}
+\end{frame}
+
+\end{document}
