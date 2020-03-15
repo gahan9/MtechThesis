@@ -4,7 +4,7 @@
         \centering
         \includegraphics[width=0.6\linewidth]{Im/figures/research-component.pdf}
         % \caption{Research Component}
-        \label{fig:research-component}
+%        \label{fig:research-component}
     \end{figure}
 \end{frame}
 
@@ -12,16 +12,16 @@
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=0.3\linewidth]{Im/figures/setup-knobs-flow.pdf}
-        \caption{Setup Knobs Modification Flow on \gls{sut}}
+        \caption{Setup Knobs Modification Flow on SUT}
         \label{fig:setup-knobs-flow}
     \end{figure}
     
-    \begin{figure}[htbp]
-        \centering
-        \includegraphics[width=0.3\linewidth]{Im/figures/setup-knobs-flow.pdf}
-        \caption{Setup Knobs Modification Flow on BIOS image}
-        \label{fig:setup-knobs-flow}
-    \end{figure}
+%    \begin{figure}[htbp]
+%        \centering
+%        \includegraphics[width=0.3\linewidth]{Im/figures/setup-knobs-flow-bios.pdf}
+%        \caption{Setup Knobs Modification Flow on BIOS image}
+%        \label{fig:setup-knobs-flow-bios}
+%    \end{figure}
 \end{frame}
 
 
@@ -67,7 +67,7 @@
 \begin{frame}{IP firmware Integration: Structure of Module}
     \begin{figure}[htbp]
         \centering
-        \includegraphics[width=\linewidth]{Im/figures/proposed-work/proposed-structure-firmware-signing}
+        \includegraphics[width=0.9\linewidth]{Im/figures/proposed-work/proposed-structure-firmware-signing}
         \caption{Proposed Structure for firmware signing}\label{fig:proposed-work-proposed-structure-firmware-signing}
     \end{figure}
 \end{frame}
@@ -75,18 +75,18 @@
 
 \begin{frame}{IP firmware Integration: Outcome}
     \begin{itemize}
-        \item Removal of \gls{ip} dependency during firmware loading
-        \item \gls{ip} Subsystem :
+        \item Removal of IP dependency during firmware loading
+        \item IP Subsystem :
         \begin{itemize}
             \item Loader and Verifier
-            \item \gls{ip} is always consumer
+            \item IP is always consumer
         \end{itemize}
-        \item Signature verification using \gls{sha} hash algorithm
+        \item Signature verification using SHA hash algorithm
         \item Seamless Integration of any other hash algorithm for verification
         \item Hardware based and Software based verification support
         \item Prevent common security threats
         \item Allow easier OEM adoption and modification based on the respective design
-        \item Reusability/Portability of design across many \gls{ip}s
+        \item Reusability/Portability of design across many IPs
         \item Generic design which supports any new IP integration
     \end{itemize}
 \end{frame}

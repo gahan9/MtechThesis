@@ -14,24 +14,34 @@
         \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
         
         \node[anchor=south east,inner sep=0pt] at (\the\paperwidth,0)
-            {\includegraphics[width=.3\textwidth,keepaspectratio]{theme/ULB_VINCERE_gray_quart_0_10.jpg}};
+            {
+%            	\includegraphics[width=.3\textwidth,keepaspectratio]{theme/ULB_VINCERE_gray_quart_0_10.jpg}
+            };
         
         \ifnum\value{FacultyLogo}=1
         {
             \node[anchor=south east,inner sep=0pt] at (.998\paperwidth,0.15)
-            {\includegraphics[width=.4\textwidth,keepaspectratio]{\FacultyLogo}};
+            {
+            	\includegraphics[width=.4\textwidth,keepaspectratio]{\FacultyLogo}
+            };
         }\fi
         
         \node[anchor=north west,inner sep=0pt] at (0.02,\the\paperheight)
-            {\includegraphics[width=.7\textwidth,keepaspectratio]{theme/ULB-ligne-droite.jpg}};
+            {
+            	\includegraphics[width=.7\textwidth,keepaspectratio]{theme/ULB-ligne-droite.jpg}
+            };
         
         \node[anchor=south east,inner sep=0pt] at (\the\paperwidth,0)
-            {\includegraphics[width=\the\paperwidth,keepaspectratio]{theme/ULB-ligne_couleurs_horizontale.jpg}};
+            {
+            	\includegraphics[width=\the\paperwidth,keepaspectratio]{theme/ULB-ligne_couleurs_horizontale.jpg}
+            };
         
         \ifnum\value{DepartmentLogo}>0
         {
             \node[anchor=north west, inner sep = 0pt] at (0.9\paperwidth,0.97\paperheight)
-            {\includegraphics[width=0.1\textwidth]{\DepartmentLogo}};
+            {
+            	\includegraphics[width=0.1\textwidth]{\DepartmentLogo}
+            };
         }\fi
             
         % Background for frames other than title page
@@ -42,17 +52,23 @@
         \ifnum\value{DepartmentLogo}>1
         {
             \node[anchor=north west, inner sep = 0pt] at (0.9\paperwidth,0.97\paperheight)
-            {\includegraphics[width=0.1\textwidth]{\DepartmentLogo}};<
+            {
+            	\includegraphics[width=0.1\textwidth]{\DepartmentLogo}
+            };<
         }\fi
         
         \node[anchor=south east,inner sep=0pt] at (\the\paperwidth,0)
-            {\includegraphics[width=.3\textwidth,keepaspectratio]{theme/ULB_VINCERE_gray_quart_0_10.jpg}};
+            {
+%            	\includegraphics[width=.3\textwidth,keepaspectratio]{}
+            };
         
         \node[anchor=north west,inner sep=0pt] at (.05,\the\paperheight)
-            {\includegraphics[height=.7\textheight,keepaspectratio]{theme/ULB-ligne-bas.jpg}};
+            {
+            	\includegraphics[height=.7\textheight,keepaspectratio]{theme/ULB-ligne-bas.jpg}};
         
         \node[anchor=south west,inner sep=0pt] at (.4,0)
-            {\includegraphics[width=.2cm,keepaspectratio]{theme/ULB-ligne_couleurs_verticale.jpg}};
+            {
+            	\includegraphics[width=.2cm,keepaspectratio]{theme/ULB-ligne_couleurs_verticale.jpg}};
    
         \fi    
   \end{tikzpicture}
