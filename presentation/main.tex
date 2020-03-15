@@ -9,7 +9,7 @@
 \def\DepartmentLogo{theme/logos/QuIC.png}
 % In the folder "Im/theme/logos/" please import the Department logo image. This will appear at north east corner of every frame
 
-\setcounter{DepartmentLogo}{2}
+% \setcounter{DepartmentLogo}{2}
 % Please select 0 if you want a blank NE corner for each frame
 % Please select 1 if you want the Department Logo only on the Title Page (NE corner)
 % Please select 2 if you want the Department Logo on each frame (still NE corner)
@@ -72,30 +72,39 @@
 \end{frame}
 
 
-\AtBeginSection[]
-{
- \begin{frame}[noframenumbering,plain]{Outline}
-    \tableofcontents[currentsection, currentsubsection, hideothersubsections,subsubsectionstyle=show/show/show/hide]
+% \AtBeginSection[]
+% {
+%  \begin{frame}[noframenumbering,plain]{Outline}
+%     \tableofcontents[currentsection, currentsubsection, hideothersubsections,subsubsectionstyle=show/show/show/hide]
     
- \end{frame} 
-}
+%  \end{frame} 
+% }
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
 
+\section{About the Project}
+\input{content/about-project.tex}
 
+\section{Motivation}
+% build time, challenges, issues to industry
+\input{content/motivation.tex}
 
-\section{Introduction}
-\input{content/introduction.tex}
+\section{BIOS: Basics}
+% \input{content/introduction.tex}
+\input{content/bios.tex}
 
-\section{Background}
-\input{content/background.tex}
+\section{Requirement Specification}
+\input{content/requirement-specs.tex}
 
-\section{Proposed Work}
+\section{My Contribution}
 \input{content/proposed-work.tex}
 
 \section{Future Scope}
 \input{content/future-scope.tex}
 
-\section{Awards}
-\input{content/awards.tex}
+% \section{Awards}
+% \input{content/awards.tex}
 
 
 %\nocite{*}

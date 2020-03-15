@@ -1,34 +1,31 @@
 
-\begin{frame}{Goal}
-    Major Goal of the proposed work is to speedup Development cycle by reducing the iteration time of the build and deployment of the feature.
+\begin{frame}{My Contribution towards issues/challenges}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{Im/figures/research-component.pdf}
+        % \caption{Research Component}
+        \label{fig:research-component}
+    \end{figure}
+\end{frame}
 
-    \begin{redblock}{Processing Debug/Unsigned BIOS}
-        \begin{enumerate}\label{cli-classification-proposed-work}
-            \item Applying changes directly to the \gls{sut}
-            \item Applying changes on to the BIOS binary
-        \end{enumerate}
-    \end{redblock}
+\begin{frame}[allowframebreaks]{Setup Knobs Modification: Process Flow}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.3\linewidth]{Im/figures/setup-knobs-flow.pdf}
+        \caption{Setup Knobs Modification Flow on \gls{sut}}
+        \label{fig:setup-knobs-flow}
+    \end{figure}
     
-    \begin{greenblock}{Processing Firmware individually}
-        Apply the whole firmware changes individually for BIOS
-    \end{greenblock}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.3\linewidth]{Im/figures/setup-knobs-flow.pdf}
+        \caption{Setup Knobs Modification Flow on BIOS image}
+        \label{fig:setup-knobs-flow}
+    \end{figure}
 \end{frame}
 
 
-\subsubsection{Processing Debug/Unsigned BIOS}
-
-\begin{frame}[allowframebreaks]{Basic requirements to be fulfilled}
-    \begin{itemize}
-        \item Provide a solution which can work across all the platform binary and \gls{sut}
-        \item Provide a driver in BIOS firmware to aid the framework run directly on \gls{sut}
-        \item Provide a generic solution for both classification listed in \ref{cli-classification-proposed-work}
-        \item Parsing the information from system/bin and simulate it to the framework
-        \item Applying changes performed while simulation of framework
-        \item Integration of new features and support for any new modules should be seamless
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{Implementation Snaps}
+\begin{frame}[allowframebreaks]{Setup Knobs Modification: Implementation Snaps}
     
     \begin{figure}[htbp]
         \centering
@@ -55,26 +52,19 @@
     \end{figure}
 \end{frame}
 
-\subsubsection{Processing Firmware individually}
-\begin{frame}{Primary Goals}
+\begin{frame}{Setup Knobs Modification: Outcome}
     \begin{itemize}
-        \item Remove other Intellectual Property's dependency (\gls{ip} dependency) during firmware loading
-        \item \gls{ip} Subsystem :
-        \begin{itemize}
-            \item Loader and Verifier
-            \item \gls{ip} is always consumer
-        \end{itemize}
-        \item Signature verification using \gls{sha} hash algorithm and should be ease support for adding new algorithmic support as needed.
-        \item Should support hardware based and software based verification support
-        modifying memory requirements for given IP without impacting eco-system
-        \item Prevent common security threats
-        \item Allow easier OEM adoption and modification based on the respective design
-        \item Reusability/Portability of design across many \gls{ip}s
-        \item Generic design which supports any new IP integration
+        \item Cross platform usage
+        \item API as a driver in BIOS Firmware
+        \item Generic solution for usage types - on \textbf{SUT}, on \textbf{BIOS image}
+        \item Information parsing and simulation
+        \item Realtime sync for simulation changes
+        \item Seamless Integration
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Structure of Module}
+
+\begin{frame}{IP firmware Integration: Structure of Module}
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=\linewidth]{Im/figures/proposed-work/proposed-structure-firmware-signing}
@@ -82,3 +72,21 @@
     \end{figure}
 \end{frame}
 
+
+\begin{frame}{IP firmware Integration: Outcome}
+    \begin{itemize}
+        \item Removal of \gls{ip} dependency during firmware loading
+        \item \gls{ip} Subsystem :
+        \begin{itemize}
+            \item Loader and Verifier
+            \item \gls{ip} is always consumer
+        \end{itemize}
+        \item Signature verification using \gls{sha} hash algorithm
+        \item Seamless Integration of any other hash algorithm for verification
+        \item Hardware based and Software based verification support
+        \item Prevent common security threats
+        \item Allow easier OEM adoption and modification based on the respective design
+        \item Reusability/Portability of design across many \gls{ip}s
+        \item Generic design which supports any new IP integration
+    \end{itemize}
+\end{frame}
