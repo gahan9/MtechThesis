@@ -1,14 +1,23 @@
-\begin{frame}{Implementation of Parsing}
-	Flow diagram of BIOS Image parsing
-\end{frame} 
+%\begin{frame}{Implementation of Parsing}
+%	Flow diagram of BIOS Image parsing
+%\end{frame} 
 
-\begin{frame}{Implementation of Parsing: Architecture of BIOS Image}
-	Architecture
+\begin{frame}{Implementation of Parsing: Format of BIOS Image}
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.5\linewidth]{Im/figures/bios-as-filesystem.pdf}
+%		\caption{Each Firmware Volume in BIOS Image}
+%		\label{fig:the-firmware-volume-format}
+	\end{figure}
 \end{frame}
 
 \begin{frame}{Implementation of Parsing: Work Flow}
-	offset parsing
-	next offset... 'algorithm'
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\linewidth]{Im/figures/uefi-parser.pdf}
+		%		\caption{Each Firmware Volume in BIOS Image}
+		%		\label{fig:uefi-parser-flow}
+	\end{figure}
 \end{frame}
 
 \begin{frame}{Outcome}
