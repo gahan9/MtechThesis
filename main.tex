@@ -55,9 +55,10 @@
 %    {\thesection} {3pt} {} } 
 
 % Glossaries build
-\usepackage[acronym]{glossaries}
+\usepackage{glossaries}
 \makeglossaries
 \loadglsentries{sections/glossaries}
+%\makenoidxglossaries
 
 
 \usepackage{longtable}
@@ -331,8 +332,11 @@ text centered, trapezium stretches=true, draw=black,
 \include{sections/introduction/introduction}
 \include{sections/introduction/design}
 \include{sections/architecture}
+\include{sections/smm}
 \include{sections/framework}
 \include{sections/future}
 
+\clearpage
 \printglossary[type=main]
+%\printnoidxglossaries[type=main]
 \end{document}

@@ -1,33 +1,117 @@
 \section{Proposed Work}\label{section-proposed-work}
-The iteration of the development could be reduce in two ways:
-\begin{enumerate}
-    \item Processing Debug/Unsigned BIOS in section \ref{subsection-processing-bios}
-    \item Processing Firmware individually in section \ref{subsection-processing-firmware}
-\end{enumerate}
+In general to generate BIOS image (*.rom file), compilation of XYZ.c (source code) has to be done, this compilation not only
+involves compilation of DXE driver, PEI driver, EFI Application but also includes pre-processing checks, compression of raw files which takes huge amount of time depending on the system configuration. Implementation of this project aids in reduction of this compilation time.
 
-\subsection{Processing Unsigned debug BIOS}\label{subsection-processing-bios}
+\subsection{Stack holders}\label{subsection-stack-holders}
+The proposed work is applicable but not limited to below stack holders:
+\begin{itemize}
+	\item BIOS development team
+	\item Automation team
+	\item Validation team
+	\item Other Development team who wishes to ease the debugging process
+\end{itemize}
+
+\subsection{Issues}\label{subsection-issues}
+The Proposed work is capable of mitigating below issues:
+\begin{itemize}
+	\item Generation of BIOS image - includes compilation of whole source code
+	\item Time complexity - took enormous amount of time to generate the BIOS image 
+	\item Accessing and modifying BIOS Setup Option(s) remotely
+	\item Firmware Flashing of BIOS remotely
+	\item Updating CPU microcode
+	\item Summarizing changes among BIOS image
+	\item Avoiding exposing the source code support for OEM to fill their OEM information
+	\item Avoid setting of BIOS development platform for stack holders which are not meant to be the BIOS developer
+	\item Runtime BIOS Support for temporary UEFI variable creation
+\end{itemize}
+
+\subsection{Requirements}
+\subsubsection{Software Requirements}
+\begin{itemize}
+	\item Visual C/C++ binaries
+	\item Python 3
+	\item Visual Studio Code (IDE)
+	\item Memory Access Interface - supported mechanism to communicate over target memory 
+\end{itemize}
+
+\subsection{Development Process of Modules}
+Framework development process is driven by implementation of independent modules which can serve functionality and having flexibility to integration to the framework.
+
+
+% ========================================================================
+% MODULE 1
+% ========================================================================
+\subsection{Module 1: Processing Firmware individually}\label{subsection-processing-firmware}
+To process apply the whole firmware changes individually for BIOS, signing is require to be performed for individual Firmware before stitching it to the BIOS binary in the valid structure.
+
+\subsubsection{Primary Goals of the module}
+\begin{itemize}
+	\item Remove other Intellectual Property's dependency (\gls{ip} dependency) during firmware loading
+	\item \gls{ip} Subsystem :
+	\begin{itemize}
+		\item Loader and Verifier
+		\item \gls{ip} is always consumer
+	\end{itemize}
+	\item Signature verification using \gls{sha} hash algorithm and should be ease support for adding new algorithmic support as needed.
+	\item Should support hardware based and software based verification support
+	modifying memory requirements for given IP without impacting eco-system
+	\item Prevent common security threats
+	\item Allow easier OEM adoption and modification based on the respective design
+	\item Reusability/Portability of design across many \gls{ip}s
+	\item Generic design which supports any new IP integration
+\end{itemize}
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/proposed-structure-firmware-signing}
+	\caption{Proposed Structure for firmware signing}\label{fig:proposed-work-proposed-structure-firmware-signing}
+\end{figure}
+
+Note: Due to Confidentiality other details of this module is not to be disclosed such as flow diagram, structures or pseudo code.
+
+% ========================================================================
+% MODULE 2
+% ========================================================================
+\subsection{Module 2: Setup Knob modification}\label{module-setup-knob-modification}
+
+\subsubsection{Processing Unsigned debug BIOS}\label{subsection-processing-bios}
 Before Releasing the BIOS firmware for public use, those are signed for security and integrity purpose, however the debug BIOS which are used Pre-release to test and verify all the functional features until all the requirements are met.
 
 Every \gls{soc} system which are under test known is \gls{sut} are configured in such a way that it supports debug BIOS. The proposed framework is designed to simulate the process of \gls{sut} in terms of processing BIOS binary similar to \gls{sut} performs it after flashing BIOS firmware on \gls{soc}. 
 
-
 Processing the debug BIOS can be classified in to two ways:
 \begin{enumerate}\label{cli-classification-proposed-work}
 	\item Applying changes directly to the \gls{sut}
-	\item Applying changes on to the BIOS binary
+	\item Applying changes on to the BIOS image
 \end{enumerate}
 
 At the high level the flow for both the above classification remains the same but will be differentiated at the backend support. An additional driver is attached with BIOS firmware to aid the framework to be able to apply changes directly to the \gls{sut}.
 
+\subsubsection{Flow of the module}
+Figure \ref{fig:setup-knobs-flow} describes the flow of setup knobs modification on the System Under Test (SUT).
 
-\subsubsection{Basic requirements to be fulfilled}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/setup-knobs-flow}
+	\caption{Flow of Setup Knobs Modification}\label{fig:setup-knobs-flow}
+\end{figure}
+
+The iteration of the development could be reduce in two ways:
+\begin{enumerate}
+	\item Processing Debug/Unsigned BIOS in section \ref{subsection-processing-bios}
+	\item Processing Firmware individually in section \ref{subsection-processing-firmware}
+\end{enumerate}
+
+
+\subsubsection{Outcome of Module}
 \begin{itemize}
+	\item Cross platform usage of the module
 	\item Provide a solution which can work across all the platform binary and \gls{sut}
 	\item Provide a driver in BIOS firmware to aid the framework run directly on \gls{sut}
 	\item Provide a generic solution for both classification listed in \ref{cli-classification-proposed-work}
 	\item Parsing the information from system/bin and simulate it to the framework
-	\item Applying changes performed while simulation of framework
-	\item Integration of new features and support for any new modules should be seamless
+	\item Real time sync with simulation framework
+	\item Seamless Integration of any new features or modules
 \end{itemize}
 
 \subsubsection{Framework Proof of Concept and working demo}
@@ -58,7 +142,7 @@ Figure \ref{fig:proposed-work-bios-gui-initial-config} shows the prompt asked to
 \end{figure}
 
 
-Figure \ref{fig:proposed-work-bios-gui-acpi-knobs} shows the view that how an options in the module simulation is loaded.
+%Figure \ref{fig:proposed-work-bios-gui-acpi-knobs} shows the view that how an options in the module simulation is loaded.
 
 \begin{table}
 	\centering
@@ -77,54 +161,92 @@ Figure \ref{fig:proposed-work-bios-gui-acpi-knobs} shows the view that how an op
 	\end{tabular}
 \end{table}
 
-\begin{figure}[!htbp]
-	\centering
-	\includegraphics[width=0.8\linewidth]{proposed-work/bios-gui-acpi-knobs}
-	\caption{Setup Options listed under ACPI Configurations}\label{fig:proposed-work-bios-gui-acpi-knobs}
-\end{figure}
+%\begin{figure}[!htbp]
+%	\centering
+%	\includegraphics[width=0.8\linewidth]{proposed-work/bios-gui-acpi-knobs}
+%	\caption{Setup Options listed under ACPI Configurations}\label{fig:proposed-work-bios-gui-acpi-knobs}
+%\end{figure}
 
 Table \ref{table:interpretation-of-buttons-in-module} describes the interpretation of each button action on specific condition as remarks if applicable
 
 
-Navigation through the various BIOS pages can be done as shown in Figure \ref{fig:proposed-work-bios-gui-accessing-menu}.
+%Navigation through the various BIOS pages can be done as shown in Figure \ref{fig:proposed-work-bios-gui-accessing-menu}.
+
+%\begin{figure}[!htbp]
+%	\centering
+%	\includegraphics[width=0.8\linewidth]{proposed-work/bios-gui-accessing-menu}
+%	\caption{Navigating through BIOS setup page}\label{fig:proposed-work-bios-gui-accessing-menu}
+%\end{figure}
+
+%Figure \ref{fig:proposed-work-bios-gui-view-changes} displays list of changes made in setup options across any setup page and listed separately to compare with previous value, discard or apply the new values.
+
+%\begin{figure}[!htbp]
+%	\centering
+%	\includegraphics[width=\linewidth]{proposed-work/bios-gui-view-changes}
+%	\caption{Viewing all the changes made during current session}\label{fig:proposed-work-bios-gui-view-changes}
+%\end{figure}
+
+
+% ========================================================================
+% MODULE 3
+% ========================================================================
+\subsection{Module 3: Parsing}\label{module-parsing}
+Figure \ref{fig:bios-as-filesystem} represents the overview of the BIOS as a File system  which is interpreted and parsed from the BIOS image. Detail architecture of the same is explained in Section \ref{section-architecture}
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{proposed-work/bios-gui-accessing-menu}
-	\caption{Navigating through BIOS setup page}\label{fig:proposed-work-bios-gui-accessing-menu}
+	\includegraphics[width=\linewidth]{proposed-work/bios-as-filesystem}
+	\caption{Overview of BIOS image as a File System}\label{fig:bios-as-filesystem}
 \end{figure}
 
-Figure \ref{fig:proposed-work-bios-gui-view-changes} displays list of changes made in setup options across any setup page and listed separately to compare with previous value, discard or apply the new values.
+\subsubsection{Flow of the module}
+Figure \ref{fig:uefi-parser} describes the flow of the Parsing module. The Initial part is performed by user who is responsible to select valid memory interface to work. Note that some memory interface are supported by the module which requires additional hardware and software setup which are considered to be the part of dependency of interface itself which is not in the scope of the module.
+
+When User select valid Interface the module will determine whether user is on Target \gls{sut} or on the local BIOS image.
+If user is working on SUT with valid memory interface and privileges then BIOS image will be parsed from the memory.
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=\linewidth]{proposed-work/bios-gui-view-changes}
-	\caption{Viewing all the changes made during current session}\label{fig:proposed-work-bios-gui-view-changes}
+	\includegraphics[width=\linewidth]{proposed-work/uefi-parser}
+	\caption{Flow of Parser}\label{fig:uefi-parser}
 \end{figure}
 
+As on both the cases BIOS Image is available to act on, the module will start the parsing of the BIOS image as interpretation described in Figure \ref{fig:bios-as-filesystem}. It parses All the valid firmware volumes only till the end of BIOS image (skips the free space or firmware volumes with invalid signature and GUID). Decompression of file system under the firmware volume if any is handled by the module too, for the decompression of file system it uses the binary for decompression technique available to public i.e. lzma, tianocore, brotli etc.
 
-\subsection{Processing Firmware individually}\label{subsection-processing-firmware}
-To process apply the whole firmware changes individually for BIOS, signing is require to be performed for individual Firmware before stitching it to the BIOS binary in the valid structure.
 
-\subsubsection{Primary Goals of the module}
+\subsubsection{Outcome of Module}
 \begin{itemize}
-	\item Remove other Intellectual Property's dependency (\gls{ip} dependency) during firmware loading
-	\item \gls{ip} Subsystem :
-		\begin{itemize}
-			\item Loader and Verifier
-			\item \gls{ip} is always consumer
-		\end{itemize}
-	\item Signature verification using \gls{sha} hash algorithm and should be ease support for adding new algorithmic support as needed.
-	\item Should support hardware based and software based verification support
-	modifying memory requirements for given IP without impacting eco-system
-	\item Prevent common security threats
-	\item Allow easier OEM adoption and modification based on the respective design
-	\item Reusability/Portability of design across many \gls{ip}s
-	\item Generic design which supports any new IP integration
+	\item Human Readable interpretation of BIOS image
+	\item Possible to debug the BIOS via setup knobs comparison
+	\item Lookup of order of the module in BIOS image as readable file system 
+	\item Verification of integration of module via GUID
+	\item Extracting and storing file system or module of BIOS image by GUID
+	\item Summarizing changes of two BIOS image
 \end{itemize}
 
+
+
+% ========================================================================
+% MODULE 4
+% ========================================================================
+\subsection{Module 4: Runtime UEFI variable Creation}\label{module-runtime-uefi-variable-creation}
+Each variable in BIOS has a scope for each variable where Runtime support is one of the attribute, to simply state the run time variable one can interpret it as the variable which will be available during and after the completion boot flow (while OS is running). Such a variable require special access mechanism, which is carried out by the System Management mode \gls{smm} described in Section \ref{section-smm}.
+
+Earlier Challenges are described as below:
+\begin{itemize}
+	\item Providing and maintaining native driver support from BIOS for creation of UEFI variable
+	\item Setting of Build environment for non-BIOS development team
+\end{itemize} 
+
+Note: As all the variable created at runtime the scope of such variable are limited to the flashing of the BIOS. i.e. when BIOS is flashed/re-flashed or updated, those variable won't be available on the SUT.
+
+\subsubsection{Flow of the module}
+
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=\linewidth]{proposed-work/proposed-structure-firmware-signing}
-	\caption{Proposed Structure for firmware signing}\label{fig:proposed-work-proposed-structure-firmware-signing}
+	\includegraphics[width=1\linewidth]{proposed-work/nvar_web_GUI_flow}
+	\caption{Flow of Nvar Web GUI}\label{fig:nvar_web_GUI_flow}
 \end{figure}
+
+
+

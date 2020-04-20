@@ -335,7 +335,7 @@ bit $ integer that follows the $ 32-bit $ section header. Figures \ref{fig:archi
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{architecture/format-of-a-section-above-16Mb}
-	\caption{Format of a Section using ExtendedLegth field $ 16Mb $}\label{fig:architecture-format-of-a-section-above-16Mb}
+	\caption{Format of a Section using Extended Length field $ 16Mb $}\label{fig:architecture-format-of-a-section-above-16Mb}
 \end{figure}
 
 
@@ -355,7 +355,7 @@ corrupted and a crisis recovery is initiated.All FFS files, including files of t
 multiple pad files with this file type to have the same Name field in the file header. No checks for
 duplicate files should be performed on pad files.
 
-\inputminted{c}{code/architecture-file-system-initialization.c}\label{code:architecture-file-system-initialization}
+%\inputminted{c}{code/architecture-file-system-initialization.c}\label{code:architecture-file-system-initialization}
 
 \subsection{Traversal and Access to Files}
 The Security (SEC), PEI, and early DXE code must be able to traverse the FFS and read and execute
