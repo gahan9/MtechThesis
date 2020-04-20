@@ -1,11 +1,17 @@
-del *.acn
-del *.aux
-del *.glo
-del *.ilg
-del *.ist
-del *.lof
-del *.log
-del *.out
-del *.toc
+REMdel *.acn
+REM del *.aux
+REM del *.glo
+REM del *.ilg
+REM del *.ist
+REM del *.lof
+REM del *.log
+REM del *.out
+REM del *.toc
 
-del main.gls && makeindex main.glo -s main.ist -o main.gls
+REM del *.gls
+
+echo Making Glossaries
+makeindex main.glo -s main.ist -o main.gls
+
+REM echo Compiling pdf...
+REM pdflatex.exe -synctex=1 -interaction=nonstopmode -shell-escape main.tex
