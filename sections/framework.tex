@@ -1,13 +1,12 @@
 \section{Proposed Work}\label{section-proposed-work}
-In general to generate BIOS image (*.rom file), compilation of XYZ.c (source code) has to be done, this compilation not only
-involves compilation of DXE driver, PEI driver, EFI Application but also includes pre-processing checks, compression of raw files which takes huge amount of time depending on the system configuration. Implementation of this project aids in reduction of this compilation time.
+In general to generate BIOS image (*.rom file), compilation of XYZ.c (source code) has to be done, this compilation not only involves compilation of DXE driver, PEI driver, EFI Application but also includes pre-processing checks, compression of raw files which takes huge amount of time depending on the system configuration. Implementation of this project aids in reduction of this compilation time.
 
 \subsection{Stack holders}\label{subsection-stack-holders}
 The proposed work is applicable but not limited to below stack holders:
 \begin{itemize}
-	\item BIOS development team
-	\item Automation team
-	\item Validation team
+	\item \textbf{BIOS development team} : main development group in contributing BIOS firmware, this is the only stockholder who are having access to the BIOS development environment and access to the source code of the complete BIOS firmware
+	\item \textbf{Validation team} : performs various validation on developed BIOS image
+	\item \textbf{Automation team} : brings various integration and validation automation to module(s)
 	\item Other Development team who wishes to ease the debugging process
 \end{itemize}
 
@@ -15,7 +14,7 @@ The proposed work is applicable but not limited to below stack holders:
 The Proposed work is capable of mitigating below issues:
 \begin{itemize}
 	\item Generation of BIOS image - includes compilation of whole source code
-	\item Time complexity - took enormous amount of time to generate the BIOS image 
+	\item Time complexity - took enormous amount of time to generate the BIOS image
 	\item Accessing and modifying BIOS Setup Option(s) remotely
 	\item Firmware Flashing of BIOS remotely
 	\item Updating CPU microcode
@@ -31,7 +30,7 @@ The Proposed work is capable of mitigating below issues:
 	\item Visual C/C++ binaries
 	\item Python 3
 	\item Visual Studio Code (IDE)
-	\item Memory Access Interface - supported mechanism to communicate over target memory 
+	\item Memory Access Interface - supported mechanism to communicate over target memory
 \end{itemize}
 
 \subsection{Development Process of Modules}
@@ -77,7 +76,7 @@ Note: Due to Confidentiality other details of this module is not to be disclosed
 \subsubsection{Processing Unsigned debug BIOS}\label{subsection-processing-bios}
 Before Releasing the BIOS firmware for public use, those are signed for security and integrity purpose, however the debug BIOS which are used Pre-release to test and verify all the functional features until all the requirements are met.
 
-Every \gls{soc} system which are under test known is \gls{sut} are configured in such a way that it supports debug BIOS. The proposed framework is designed to simulate the process of \gls{sut} in terms of processing BIOS binary similar to \gls{sut} performs it after flashing BIOS firmware on \gls{soc}. 
+Every \gls{soc} system which are under test known is \gls{sut} are configured in such a way that it supports debug BIOS. The proposed framework is designed to simulate the process of \gls{sut} in terms of processing BIOS binary similar to \gls{sut} performs it after flashing BIOS firmware on \gls{soc}.
 
 Processing the debug BIOS can be classified in to two ways:
 \begin{enumerate}\label{cli-classification-proposed-work}
@@ -92,7 +91,7 @@ Figure \ref{fig:setup-knobs-flow} describes the flow of setup knobs modification
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=\linewidth]{proposed-work/setup-knobs-flow}
+	\includegraphics[width=0.9\linewidth]{proposed-work/setup-knobs-flow}
 	\caption{Flow of Setup Knobs Modification}\label{fig:setup-knobs-flow}
 \end{figure}
 
@@ -105,13 +104,13 @@ The iteration of the development could be reduce in two ways:
 
 \subsubsection{Outcome of Module}
 \begin{itemize}
-	\item Cross platform usage of the module
-	\item Provide a solution which can work across all the platform binary and \gls{sut}
-	\item Provide a driver in BIOS firmware to aid the framework run directly on \gls{sut}
-	\item Provide a generic solution for both classification listed in \ref{cli-classification-proposed-work}
-	\item Parsing the information from system/bin and simulate it to the framework
-	\item Real time sync with simulation framework
-	\item Seamless Integration of any new features or modules
+	\item The module is capable of cross platform usage.
+	\item The module can work with all the platform binary and \gls{sut}.
+	\item A communication bridge as a driver in BIOS firmware to aid the framework run directly on \gls{sut} is implemented.
+	\item Generic solution is provided for end-user while running any of the classification listed in \ref{cli-classification-proposed-work}.
+	\item Simulating the information from system or binary image is provided as native GUI application.
+	\item Real time sync with simulation framework is supported.
+	\item Seamless Integration of any new features or modules in framework is made possible.
 \end{itemize}
 
 \subsubsection{Framework Proof of Concept and working demo}
@@ -126,7 +125,7 @@ Figure \ref{fig:proposed-work-bios-gui-initial-config} shows the prompt asked to
 		\item \verb|offline| - to work on BIOS binary
 	\end{itemize}
 	\item Access Method - selecting valid access method for working on \gls{sut}
-	\item Publish all? - Boolean options to decide whether to evaluate \gls{depex} or not. 
+	\item Publish all? - Boolean options to decide whether to evaluate \gls{depex} or not.
 \end{itemize}
 
 \begin{figure}[!htbp]
@@ -148,7 +147,7 @@ Figure \ref{fig:proposed-work-bios-gui-initial-config} shows the prompt asked to
 	\centering
 	\renewcommand{\arraystretch}{2}
 	\caption{Interpretation of buttons on Virtual Setup Page GUI}\label{table:interpretation-of-buttons-in-module}
-	\begin{tabular}{l | p {6cm}}
+	\begin{tabular}{l | p {8cm}}
 		Button & Interpretation
 		\\ \hline \hline
 		Push Changes & Apply changes to system if online mode else apply changes to `bin` file
@@ -157,7 +156,7 @@ Figure \ref{fig:proposed-work-bios-gui-initial-config} shows the prompt asked to
 		\\ \hline Reload & Reload the GUI
 		\\ \hline Discard Changes & Discard any change made, any value if modified are restored to current value
 		\\ \hline Load Defaults & Restore to default values and revert any changes made
-		\\ \hline 
+		\\ \hline
 	\end{tabular}
 \end{table}
 
@@ -216,10 +215,10 @@ As on both the cases BIOS Image is available to act on, the module will start th
 
 \subsubsection{Outcome of Module}
 \begin{itemize}
-	\item Human Readable interpretation of BIOS image
-	\item Possible to debug the BIOS via setup knobs comparison
-	\item Lookup of order of the module in BIOS image as readable file system 
-	\item Verification of integration of module via GUID
+	\item Human Readable interpretation of BIOS image is provided.
+	\item Possible to debug the BIOS via setup knobs comparison.
+	\item Lookup of order of the module in BIOS image as readable file system is also possible.
+	\item Verification of integration of module via GUID can be done.
 	\item Extracting and storing file system or module of BIOS image by GUID
 	\item Summarizing changes of two BIOS image
 \end{itemize}
@@ -236,7 +235,7 @@ Earlier Challenges are described as below:
 \begin{itemize}
 	\item Providing and maintaining native driver support from BIOS for creation of UEFI variable
 	\item Setting of Build environment for non-BIOS development team
-\end{itemize} 
+\end{itemize}
 
 Note: As all the variable created at runtime the scope of such variable are limited to the flashing of the BIOS. i.e. when BIOS is flashed/re-flashed or updated, those variable won't be available on the SUT.
 

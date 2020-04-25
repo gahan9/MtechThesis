@@ -1,14 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Journal Article
-% 
+%
 % Gahan M. Saraiya
 % 18MCEC10
 %
 % References
 % ==========
-% 
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[a4paper,12pt,oneside]{Thesis}
+\documentclass[a4paper,12pt]{Thesis}
 %\usepackage[a4paper]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -51,8 +51,8 @@
 %
 %%define new section style
 %\newcommand{\mysection}{
-%    \titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}} 
-%    {\thesection} {3pt} {} } 
+%    \titleformat{\section} [runin] {\usefont{OT1}{lmss}{b}{n}\color{MyColor1}}
+%    {\thesection} {3pt} {} }
 
 % Glossaries build
 \usepackage[acronym]{glossaries}
@@ -91,12 +91,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %		!!!EQUATION (ARRAY) --> USING ALIGN INSTEAD
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%using amsmath package to redefine eq. numeration (1.1, 1.2, ...) 
+%using amsmath package to redefine eq. numeration (1.1, 1.2, ...)
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 %\renewcommand{\theequation}{\thesection\arabic{equation}}
 %
-%%set box background to grey in align environment 
+%%set box background to grey in align environment
 %\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
 %\makeatletter
 %\patchcmd{\@Aboxed}{\boxed{#1#2}}{\colorbox{black!15}{$#1#2$}}{}{}%
@@ -113,18 +113,18 @@
 \usepackage{neuralnetwork}
 \pgfplotsset{compat=1.5.1}
 \usetikzlibrary{snakes, arrows, shapes, shapes.geometric, calc, automata, positioning}
-\tikzstyle{startstop} = [rectangle, rounded corners, minimum height=1cm, minimum width=2cm, 
-text centered, trapezium stretches=true, draw=black, 
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum height=1cm, minimum width=2cm,
+text centered, trapezium stretches=true, draw=black,
 %fill=red!30
 ]
 
-\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, trapezium stretches=true, minimum height=1cm, text centered, draw=black, 
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, trapezium stretches=true, minimum height=1cm, text centered, draw=black,
 %fill=blue!30
 ]
-\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, trapezium stretches=true, 
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, trapezium stretches=true,
 %fill=orange!30
 ]
-\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, trapezium stretches=true, 
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, trapezium stretches=true,
 %fill=green!30
 ]
 \tikzstyle{arrow} = [thick,->,>=stealth]
@@ -136,7 +136,7 @@ text centered, trapezium stretches=true, draw=black,
 		minimum size=1cm
 	},
 	neuron missing/.style={
-		draw=none, 
+		draw=none,
 		scale=4,
 		text height=0.333cm,
 		execute at begin node=\color{black}$\vdots$
@@ -147,7 +147,7 @@ text centered, trapezium stretches=true, draw=black,
 % -------------------------------------------------------------------------------
 % *** INDIAN RUPEE SYMBOL ***
 % -------------------------------------------------------------------------------
-\usepackage{tfrupee} 
+\usepackage{tfrupee}
 % ------------ INDIAN RUPEE SYMBOL END ---------------------------
 
 
@@ -194,14 +194,14 @@ text centered, trapezium stretches=true, draw=black,
   filecolor=black,
   linkbordercolor={0 0 1}
 }
- 
+
 \renewcommand\lstlistingname{Algorithm}
 \renewcommand\lstlistlistingname{Algorithms}
 \def\lstlistingautorefname{Alg.}
 
 \lstdefinestyle{Python}{
     language        = Python,
-    frame           = lines, 
+    frame           = lines,
     basicstyle      = \footnotesize,
     keywordstyle    = \color{blue},
     stringstyle     = \color{green},
@@ -246,22 +246,22 @@ text centered, trapezium stretches=true, draw=black,
 %\definecolor{LightGray}{gray}{0.9}
 
 \setminted[text]{
-	frame=lines, 
+	frame=lines,
 	breaklines,
 	baselinestretch=1.2,
 	bgcolor=LightGray,
 %	fontsize=\small
 }
 \setminted[bash]{
-%	frame=lines, 
+%	frame=lines,
 	breaklines,
 	baselinestretch=1.2,
 	bgcolor=LightGray,
 %	fontsize=\small
 }
 \setminted[python]{
-	frame=lines, 
-	breaklines, 
+	frame=lines,
+	breaklines,
 	linenos,
 	baselinestretch=1.2,
 %	bgcolor=LightGray,
@@ -269,8 +269,8 @@ text centered, trapezium stretches=true, draw=black,
 }
 
 \setminted[c]{
-	frame=lines, 
-	breaklines, 
+	frame=lines,
+	breaklines,
 	linenos,
 	baselinestretch=1.2,
 %	bgcolor=LightGray,
@@ -278,7 +278,7 @@ text centered, trapezium stretches=true, draw=black,
 }
 
 
-\usepackage[square, numbers, comma, sort&compress]{natbib}  
+\usepackage[square, numbers, comma, sort&compress]{natbib}
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
 % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
 %\hypersetup{urlcolor=blue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
@@ -314,14 +314,15 @@ text centered, trapezium stretches=true, draw=black,
 \pagestyle{fancy}
 \renewcommand{\thepage}{\roman{page}}
 
+\include{sections/title}
 \include{sections/declaration}
 \include{sections/certificate}
 \include{sections/abstract}
 \include{sections/acknowledgements}
 
-\pagestyle{fancy}  
+\pagestyle{fancy}
 
-%\lhead{\emph{Contents}}  
+%\lhead{\emph{Contents}}
 \tableofcontents  % Write out the Table of Contents
 
 \newpage
