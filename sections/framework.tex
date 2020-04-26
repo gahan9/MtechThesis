@@ -24,7 +24,7 @@ The Proposed work is capable of mitigating below issues:
 	\item Runtime BIOS Support for temporary UEFI variable creation
 \end{itemize}
 
-\subsection{Requirements}
+\subsection{Requirements}\label{subsection-requirements}
 \subsubsection{Software Requirements}
 \begin{itemize}
 	\item Visual C/C++ binaries
@@ -86,6 +86,14 @@ Processing the debug BIOS can be classified in to two ways:
 
 At the high level the flow for both the above classification remains the same but will be differentiated at the backend support. An additional driver is attached with BIOS firmware to aid the framework to be able to apply changes directly to the \gls{sut}.
 
+\subsubsection{Additional Tech Stack Used}
+Below are the listed technologies consumed in development of this module in addition to the already specified requirements in Section \ref{subsection-requirements}
+\begin{itemize}
+	\item tkinter
+	\item XML
+	\item JSON
+\end{itemize}
+
 \subsubsection{Flow of the module}
 Figure \ref{fig:setup-knobs-flow} describes the flow of setup knobs modification on the System Under Test (SUT).
 
@@ -102,18 +110,7 @@ The iteration of the development could be reduce in two ways:
 \end{enumerate}
 
 
-\subsubsection{Outcome of Module}
-\begin{itemize}
-	\item The module is capable of cross platform usage.
-	\item The module can work with all the platform binary and \gls{sut}.
-	\item A communication bridge as a driver in BIOS firmware to aid the framework run directly on \gls{sut} is implemented.
-	\item Generic solution is provided for end-user while running any of the classification listed in \ref{cli-classification-proposed-work}.
-	\item Simulating the information from system or binary image is provided as native GUI application.
-	\item Real time sync with simulation framework is supported.
-	\item Seamless Integration of any new features or modules in framework is made possible.
-\end{itemize}
-
-\subsubsection{Framework Proof of Concept and working demo}
+\subsubsection{Screenshots of Module}
 As a \gls{poc} for the framework, this section shows snapshots of the working module to mimic the setup options of BIOS, however as a simulation framework, it also provides quite more features which are not available in the actual BIOS due to memory limitation.
 
 Figure \ref{fig:proposed-work-bios-gui-initial-config} shows the prompt asked to user to select basic configurations before launching the module of framework. Configurations available to select are:
@@ -185,6 +182,16 @@ Table \ref{table:interpretation-of-buttons-in-module} describes the interpretati
 %	\caption{Viewing all the changes made during current session}\label{fig:proposed-work-bios-gui-view-changes}
 %\end{figure}
 
+\subsubsection{Outcome of Module}
+\begin{itemize}
+	\item The module is capable of cross platform usage.
+	\item The module can work with all the platform binary and \gls{sut}.
+	\item A communication bridge as a driver in BIOS firmware to aid the framework run directly on \gls{sut} is implemented.
+	\item Generic solution is provided for end-user while running any of the classification listed in \ref{cli-classification-proposed-work}.
+	\item Simulating the information from system or binary image is provided as native GUI application.
+	\item Real time sync with simulation framework is supported.
+	\item Seamless Integration of any new features or modules in framework is made possible.
+\end{itemize}
 
 % ========================================================================
 % MODULE 3
@@ -197,6 +204,14 @@ Figure \ref{fig:bios-as-filesystem} represents the overview of the BIOS as a Fil
 	\includegraphics[width=\linewidth]{proposed-work/bios-as-filesystem}
 	\caption{Overview of BIOS image as a File System}\label{fig:bios-as-filesystem}
 \end{figure}
+
+\subsubsection{Additional Tech Stack Used}
+Below are the listed technologies consumed in development of this module in addition to the already specified requirements in Section \ref{subsection-requirements}
+\begin{itemize}
+	\item Decompression binaries
+	\item XML
+	\item JSON
+\end{itemize}
 
 \subsubsection{Flow of the module}
 Figure \ref{fig:uefi-parser} describes the flow of the Parsing module. The Initial part is performed by user who is responsible to select valid memory interface to work. Note that some memory interface are supported by the module which requires additional hardware and software setup which are considered to be the part of dependency of interface itself which is not in the scope of the module.
@@ -239,13 +254,132 @@ Earlier Challenges are described as below:
 
 Note: As all the variable created at runtime the scope of such variable are limited to the flashing of the BIOS. i.e. when BIOS is flashed/re-flashed or updated, those variable won't be available on the SUT.
 
-\subsubsection{Flow of the module}
+\subsubsection{Additional Tech Stack Used}
+Below are the listed technologies consumed in development of this module in addition to the already specified requirements in Section \ref{subsection-requirements}
+\begin{itemize}
+	\item HTML/CSS
+	\item javascript
+	\item Jquery
+	\item Ajax
+	\item Flask
+	\item XML
+	\item JSON
+\end{itemize}
 
+\subsubsection{Flow of the module}
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1\linewidth]{proposed-work/nvar_web_GUI_flow}
 	\caption{Flow of Nvar Web GUI}\label{fig:nvar_web_GUI_flow}
 \end{figure}
+The Flow of the module is described in section \ref{subsubsection-screenshots} along with screenshots which is easier to interpret the flow chart in Figure \ref{fig:nvar_web_GUI_flow}
 
+\subsubsection{Screenshots of Module}\label{subsubsection-screenshots}
+Whenever the User launches the module the home page screen to select valid communication interface will appear as displayed in Figure \ref{fig:uefi-variable-home}. This is the crucial stage as if valid interface for communication is not selected one may not be able to use the functionality of the service.
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/home}
+	\caption{Home Page to Create UEFI Variable}\label{fig:uefi-variable-home}
+\end{figure}
+
+After selection of valid Interface one may operate the desired options listed in navigation bar which are:
+
+\begin{table}
+	\centering
+	\renewcommand{\arraystretch}{2}
+	\caption{Navigation Bar Action}\label{table:navbar-action}
+	\begin{tabular}{l | p {8cm}}
+		Button & Interpretation
+		\\ \hline \hline
+		Create Variable & Opens a form to create new Variable as in Figure \ref{fig:uefi-variable-create-nvar}
+		\\ \hline Display Created Variable & lists out created variable as in Figure \ref{fig:uefi-variable-created-option}
+		\\ \hline Generate XML & Generate XML from the stored session database as in Figure \ref{fig:uefi-variable-generate-xml}
+		\\ \hline Save XML & Saves the generated XML on the storage device
+		\\ \hline Save to SUT & Applies the Pending changes action (Create/Delete/Modify) to the \gls{sut}
+		\\ \hline View JSON & View the stored session database in the json format as in Figure \ref{fig:uefi-variable-represent-json}
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+
+Figure \ref{fig:uefi-variable-created-option} lists the variable created under the current session which is to be applied 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/created-option}
+	\caption{Variables created or exists on \gls{sut}}\label{fig:uefi-variable-created-option}
+\end{figure}
+
+Figure \ref{fig:uefi-variable-create-nvar} displays form which allows user to create Variable, where user needs to specify the name of the variable with certain restriction of input field. To identify and lookup the Variable the GUID is required which is automatically generated by the module with required format, however if user wishes then they can modify the GUID.
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/create-nvar}
+	\caption{Create new UEFI Variable on \gls{sut}}\label{fig:uefi-variable-create-nvar}
+\end{figure}
+
+
+Figure \ref{fig:uefi-variable-var-options} opens the list of the options if created and allows to edit their current values too. However one can also add the new option to the Variable. It allows user to create various types of options under the variable which are oneof type as in Figure \ref{fig:uefi-variable-add-option}, string type as in Figure \ref{fig:uefi-variable-string}, numeric type as in Figure \ref{fig:uefi-variable-numeric} and the checkbox type which allows user to toggle the option value in as Boolean interpretation. Common fields for creating options including its name, type, description and size.
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/var-options}
+	\caption{Options listed under Variable}\label{fig:uefi-variable-var-options}
+\end{figure}
+
+If user wants to change the value set for the variable created while creation of option as described in Figure \ref{fig:uefi-variable-edit-option} forms one can actually modify the value.
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/edit-option}
+	\caption{Edit the Existing Option Created under Variable \gls{sut}}\label{fig:uefi-variable-edit-option}
+\end{figure}
+
+The highlighted prompt in Figure \ref{fig:uefi-variable-add-option} allows user to create the choices for the option where one of the multiple values to be selected as a result, By clicking \verb|Add Option| button user can create choices and under drop down menu besides Value, user can select default value to be selected for the option. 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/add-option}
+	\caption{Create New Option(s) under Variable - Oneof Type}\label{fig:uefi-variable-add-option}
+\end{figure}
+
+Option type string as in Figure \ref{fig:uefi-variable-string} allows user to create a option which accepts minimum and maximum characters to be supported in the string as well as the default string value to be selected. 
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/string}
+	\caption{Create New Option(s) under Variable - String Type}\label{fig:uefi-variable-string}
+\end{figure}
+
+To set the numeric input for the option, minimum and maximum value along with the default value to be set as in Figure \ref{fig:uefi-variable-numeric}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/numeric}
+	\caption{Create New Option(s) under Variable - Numeric Type}\label{fig:uefi-variable-numeric}
+\end{figure}
+
+For the future use one can create a reserved space under the UEFI variable as in Figure \ref{fig:uefi-variable-reserved-space}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/reserved-space}
+	\caption{Create Reserved Space for future use under Variable}\label{fig:uefi-variable-reserved-space}
+\end{figure}
+
+
+Figure \ref{fig:uefi-variable-generate-xml} shows the XML which is generated from the existing and newly created variables and options under it.
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/generate-xml}
+	\caption{Generate XML \gls{sut}}\label{fig:uefi-variable-generate-xml}
+\end{figure}
+
+Figure \ref{fig:uefi-variable-represent-json} represents session data of existing and newly created data (if any) as json
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{proposed-work/uefi-variables/represent-json}
+	\caption{Generate XML \gls{sut}}\label{fig:uefi-variable-represent-json}
+\end{figure}
+
+
+\subsubsection{Outcome of the module}
+\begin{itemize}
+	\item Enables creation of UEFI variable from OS layer.
+	\item Lifts headache of maintaining variable creation from BIOS development for individuals.
+\end{itemize}
 
 
