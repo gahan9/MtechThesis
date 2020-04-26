@@ -8,7 +8,7 @@
 % ==========
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[a4paper,12pt]{Thesis}
+\documentclass[a4paper,12pt,oneside]{Thesis}
 %\usepackage[a4paper]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -329,12 +329,15 @@ text centered, trapezium stretches=true, draw=black,
 \listoffigures % \addcontentsline{toc}{chapter}{List of Figures}
 
 \pagenumbering{arabic}
-
+%\chapter{Introduction}
 \include{sections/introduction/introduction}
+%\chapter{Prerequisite Study}
 \include{sections/introduction/design}
 \include{sections/architecture}
 \include{sections/smm}
+%\chapter{Implementation}
 \include{sections/framework}
+%\chapter{Future Scope}
 \include{sections/future}
 
 \clearpage

@@ -3,7 +3,11 @@
 \abstract{
 \addtocontents{toc}{\vspace{1em}}  
 
-Intel System on a Chip (\gls{soc}) features a new set of Intel Intellectual Property (\gls{ip}) for every generation. \gls{bios} involves development of major individual components such as Processor, Graphics/Memory Controller, Input/Output Controller hub, System Monitor/Management Bus, Direct Media Interface, SATA/IDE/USB, Peripheral Component Interconnect (\gls{pci}), Voltage Regulator and Advanced Configuration and Power Interface (\gls{acpi}) for every Intel System on a Chip (\gls{soc}). Duration of every iteration of the development of any such components takes a much longer duration to build the BIOS binary and executing on hardware/\gls{soc} and verifying the functional work flow from logs. Even for some minor changes such as changing setup option value takes a high amount of time for iteration which is indeed slowing down the process of release and development of the Intel Intellectual Property (\gls{ip}). Major aim of this project will be to introduce a framework which can be used to reduce the cost of each build and test iteration for product development.
+Intel System on a Chip (\gls{soc}) features a new set of Intel Intellectual Property (\gls{ip}) for every generation. \gls{bios} involves development of major individual components such as Processor, Graphics/Memory Controller, Input/Output Controller hub, System Monitor/Management Bus, Direct Media Interface, SATA/IDE/USB, Peripheral Component Interconnect (\gls{pci}), Voltage Regulator and Advanced Configuration and Power Interface (\gls{acpi}) for every Intel System on a Chip (\gls{soc}). Section \ref{section-introduction} describes all the basic information required on the Intel \gls{soc}.
+
+Section \ref{section-design} involves the design of the Basic Boot Flow of the BIOS followed by Section \ref{section-architecture} and Section \ref{section-smm} explains the architecture and protocols which are the concept used to build the proposed framework which is described under Section \ref{section-proposed-work} to aid the development and debugging iteration for various stakeholders including but not limited to BIOS Developers, Validation Engineers, Automation team. 
+
+The framework is designed and implemented to aid the development process by eliminating longer duration of common debugging steps and providing a sophisticated way to build and test the various scenarios includes but not limited to Setup Options, Firmware Flashing, UEFI Variable Creation.
 
 }
 

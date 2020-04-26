@@ -40,38 +40,39 @@ Framework development process is driven by implementation of independent modules
 % ========================================================================
 % MODULE 1
 % ========================================================================
-\subsection{Module 1: Processing Firmware individually}\label{subsection-processing-firmware}
-To process apply the whole firmware changes individually for BIOS, signing is require to be performed for individual Firmware before stitching it to the BIOS binary in the valid structure.
 
-\subsubsection{Primary Goals of the module}
-\begin{itemize}
-	\item Remove other Intellectual Property's dependency (\gls{ip} dependency) during firmware loading
-	\item \gls{ip} Subsystem :
-	\begin{itemize}
-		\item Loader and Verifier
-		\item \gls{ip} is always consumer
-	\end{itemize}
-	\item Signature verification using \gls{sha} hash algorithm and should be ease support for adding new algorithmic support as needed.
-	\item Should support hardware based and software based verification support
-	modifying memory requirements for given IP without impacting eco-system
-	\item Prevent common security threats
-	\item Allow easier OEM adoption and modification based on the respective design
-	\item Reusability/Portability of design across many \gls{ip}s
-	\item Generic design which supports any new IP integration
-\end{itemize}
-
-\begin{figure}[!htbp]
-	\centering
-	\includegraphics[width=\linewidth]{proposed-work/proposed-structure-firmware-signing}
-	\caption{Proposed Structure for firmware signing}\label{fig:proposed-work-proposed-structure-firmware-signing}
-\end{figure}
-
-Note: Due to Confidentiality other details of this module is not to be disclosed such as flow diagram, structures or pseudo code.
+%\subsection{Module 1: Processing Firmware individually}\label{subsection-processing-firmware}
+%To process apply the whole firmware changes individually for BIOS, signing is require to be performed for individual Firmware before stitching it to the BIOS binary in the valid structure.
+%
+%\subsubsection{Primary Goals of the module}
+%\begin{itemize}
+%	\item Remove other Intellectual Property's dependency (\gls{ip} dependency) during firmware loading
+%	\item \gls{ip} Subsystem :
+%	\begin{itemize}
+%		\item Loader and Verifier
+%		\item \gls{ip} is always consumer
+%	\end{itemize}
+%	\item Signature verification using \gls{sha} hash algorithm and should be ease support for adding new algorithmic support as needed.
+%	\item Should support hardware based and software based verification support
+%	modifying memory requirements for given IP without impacting eco-system
+%	\item Prevent common security threats
+%	\item Allow easier OEM adoption and modification based on the respective design
+%	\item Reusability/Portability of design across many \gls{ip}s
+%	\item Generic design which supports any new IP integration
+%\end{itemize}
+%
+%\begin{figure}[!htbp]
+%	\centering
+%	\includegraphics[width=\linewidth]{proposed-work/proposed-structure-firmware-signing}
+%	\caption{Proposed Structure for firmware signing}\label{fig:proposed-work-proposed-structure-firmware-signing}
+%\end{figure}
+%
+%Note: Due to Confidentiality other details of this module is not to be disclosed such as flow diagram, structures or pseudo code.
 
 % ========================================================================
-% MODULE 2
+% MODULE 1
 % ========================================================================
-\subsection{Module 2: Setup Knob modification}\label{module-setup-knob-modification}
+\subsection{Module: Setup Knob modification}\label{module-setup-knob-modification}
 
 \subsubsection{Processing Unsigned debug BIOS}\label{subsection-processing-bios}
 Before Releasing the BIOS firmware for public use, those are signed for security and integrity purpose, however the debug BIOS which are used Pre-release to test and verify all the functional features until all the requirements are met.
@@ -89,7 +90,7 @@ At the high level the flow for both the above classification remains the same bu
 \subsubsection{Additional Tech Stack Used}
 Below are the listed technologies consumed in development of this module in addition to the already specified requirements in Section \ref{subsection-requirements}
 \begin{itemize}
-	\item tkinter
+	\item Tkinter
 	\item XML
 	\item JSON
 \end{itemize}
@@ -194,9 +195,9 @@ Table \ref{table:interpretation-of-buttons-in-module} describes the interpretati
 \end{itemize}
 
 % ========================================================================
-% MODULE 3
+% MODULE 2
 % ========================================================================
-\subsection{Module 3: Parsing}\label{module-parsing}
+\subsection{Module: Parsing}\label{module-parsing}
 Figure \ref{fig:bios-as-filesystem} represents the overview of the BIOS as a File system  which is interpreted and parsed from the BIOS image. Detail architecture of the same is explained in Section \ref{section-architecture}
 
 \begin{figure}[!htbp]
@@ -241,9 +242,9 @@ As on both the cases BIOS Image is available to act on, the module will start th
 
 
 % ========================================================================
-% MODULE 4
+% MODULE 3
 % ========================================================================
-\subsection{Module 4: Runtime UEFI variable Creation}\label{module-runtime-uefi-variable-creation}
+\subsection{Module: Runtime UEFI variable Creation}\label{module-runtime-uefi-variable-creation}
 Each variable in BIOS has a scope for each variable where Runtime support is one of the attribute, to simply state the run time variable one can interpret it as the variable which will be available during and after the completion boot flow (while OS is running). Such a variable require special access mechanism, which is carried out by the System Management mode \gls{smm} described in Section \ref{section-smm}.
 
 Earlier Challenges are described as below:
@@ -257,11 +258,11 @@ Note: As all the variable created at runtime the scope of such variable are limi
 \subsubsection{Additional Tech Stack Used}
 Below are the listed technologies consumed in development of this module in addition to the already specified requirements in Section \ref{subsection-requirements}
 \begin{itemize}
-	\item HTML/CSS
-	\item javascript
-	\item Jquery
-	\item Ajax
 	\item Flask
+	\item Ajax
+	\item jQuery
+	\item Javascript
+	\item HTML/CSS
 	\item XML
 	\item JSON
 \end{itemize}
@@ -272,7 +273,7 @@ Below are the listed technologies consumed in development of this module in addi
 	\includegraphics[width=1\linewidth]{proposed-work/nvar_web_GUI_flow}
 	\caption{Flow of Nvar Web GUI}\label{fig:nvar_web_GUI_flow}
 \end{figure}
-The Flow of the module is described in section \ref{subsubsection-screenshots} along with screenshots which is easier to interpret the flow chart in Figure \ref{fig:nvar_web_GUI_flow}
+The Flow of the module is described in section \ref{subsubsection-screenshots} along with screenshots which is easier to interpret the flow chart in Figure \ref{fig:nvar_web_GUI_flow}.
 
 \subsubsection{Screenshots of Module}\label{subsubsection-screenshots}
 Whenever the User launches the module the home page screen to select valid communication interface will appear as displayed in Figure \ref{fig:uefi-variable-home}. This is the crucial stage as if valid interface for communication is not selected one may not be able to use the functionality of the service.
