@@ -1,10 +1,10 @@
 \section{Proposed Work}\label{section-proposed-work}
 In general to generate BIOS image (*.rom file), compilation of XYZ.c (source code) has to be done, this compilation not only involves compilation of DXE driver, PEI driver, EFI Application but also includes pre-processing checks, compression of raw files which takes huge amount of time depending on the system configuration. Implementation of this project aids in reduction of this compilation time.
 
-\subsection{Stack holders}\label{subsection-stack-holders}
-The proposed work is applicable but not limited to below stack holders:
+\subsection{Stake holders}\label{subsection-stack-holders}
+The proposed work is applicable but not limited to below stake holders:
 \begin{itemize}
-	\item \textbf{BIOS development team} : main development group in contributing BIOS firmware, this is the only stockholder who are having access to the BIOS development environment and access to the source code of the complete BIOS firmware
+	\item \textbf{BIOS development team} : main development group in contributing BIOS firmware, this is the only stake holder who are having access to the BIOS development environment and access to the source code of the complete BIOS firmware
 	\item \textbf{Validation team} : performs various validation on developed BIOS image
 	\item \textbf{Automation team} : brings various integration and validation automation to module(s)
 	\item Other Development team who wishes to ease the debugging process
@@ -20,7 +20,7 @@ The Proposed work is capable of mitigating below issues:
 	\item Updating CPU microcode
 	\item Summarizing changes among BIOS image
 	\item Avoiding exposing the source code support for OEM to fill their OEM information
-	\item Avoid setting of BIOS development platform for stack holders which are not meant to be the BIOS developer
+	\item Avoid setting of BIOS development platform for stake holders which are not meant to be the BIOS developer
 	\item Runtime BIOS Support for temporary UEFI variable creation
 \end{itemize}
 
