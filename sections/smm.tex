@@ -1,6 +1,6 @@
 \section{System Management Mode (\gls{smm})}\label{section-smm}
 \subsection{Overview}
-On IA-32 processors, System Management Mode (\gls{smm}) is a mode of operation which is distinct from the flat model, protected mode operation of the DXE and PEI phases. It is defined as a real-mode environment with 32-bit data access and its activated in effect to an interrupt type or using the System Management Interrupt (\gls{smi}) pin. Note that SMM is OS-transparent mode of operation and is distinct operational mode and also it coexist within and OS runtime.
+On IA-32 processors, System Management Mode (\gls{smm}) is a manner of operation which is different from flat modal so as from protected mode of the DXE and PEI phases. It is outlined as a real mode environs with $ 32-bit $ data bus access and its carried out in effect to either with a specified interrupt type or with the System Management Interrupt (\gls{smi}) pin. Note that Operation mode of SMM is OS independent mode and is discrete operational mode, however it may also lies in both within and OS runtime.
 
 \begin{figure}[!htbp]
 	\centering
@@ -12,76 +12,69 @@ On IA-32 processors, System Management Mode (\gls{smm}) is a mode of operation w
 \subsection{System Management System Table (\gls{smst})}
 System Management System Table (\gls{smst}) is core mechanism of SMM handler to pass information and enabling activity.
 
-SMST table provides access to the SMST-based services, known as SMM Services. Driver can only use SMM services while executing within the SMM context. \verb|EFI_SMM_BASE_PROTOCOL.GetSmstLocation()| service used to discover the address of SMST.
+SMST table allows access to service based on the SMST which also known as SMM Services. Driver can only use SMM services during execution inside context of the SMM. \verb|EFI_SMM_BASE_PROTOCOL.GetSmstLocation()| service used to discover the address of SMST.
 
-SMST is a set of capabilities exported for use by any driver that is loaded into SMRAM. It's akin to the EFI System Table, where it is a fixed set of services and data, by design, and does not acknowledge to the extensibility of an EFI protocol interface.
+SMST is a set of potentiality exported for utilization by any driver that is loaded into \gls{smram}. It's similar to the EFI System Table except that by design it's fixed set of services and data and also doesn't acknowledge to the resiliency of an EFI protocol interface.
 
 SMM infrastructure component of Framework provides SMST, which manages:
 \begin{itemize}
-	\item Dispatching drivers in SMM
-	\item Allocations of SMRAM
-	\item Transitioning the framework into and out of the respective SMM of the processor
+	\item Dispatching drivers inside SMM
+	\item Allocation of memory (\gls{smram})
+	\item Switching the framework in and out of the applicable SMM of the processor
 \end{itemize}
 
 \subsection{SMM and Available Services}\label{subsection-smm-available-services}
 
 \subsubsection{SMM Services}\label{subsection-smm-services}
-The model of SMM in the Framework will have constraints similar to those of EFI runtime drivers.
-Specifically, the dispatch of drivers in SMM will not be able to use core protocol services. There
-will be SMST-based services, called SMM Services, that the drivers can access using an SMM
-equivalent of the EFI System Table, but the core protocol services will not necessarily be available
-during runtime.
-Instead, the full collection of EFI Boot Services and EFI Runtime Services are available only
-during the driver load or "constructor" phase. This constructor visibility is useful in that the SMM
-driver can leverage the rich set of EFI services to do the following:
-\begin{itemize}
-	\item Marshall interfaces to other EFI services.
-	\item Discover EFI protocols that are published by peer SMM drivers during their constructor phases.
-\end{itemize}
-This design makes the EFI protocol database useful to these drivers while outside of SMM and
-during their initial load within SMM.
-The SMST-based services that are available include the following:
-\begin{itemize}
-	\item A minimal, blocking variant of the device I/O protocol
-	\item A memory allocator from SMM memory
-\end{itemize}
-These services are exposed by entries in the System Management System Table (SMST)
+As EFI runtime drivers have their constraints, similarly the model of SMM  framework will have them too. Especially, dispatch of drivers in SMM won't be capable of using any core protocol service. However SMST-based services, called SMM Services allows the drivers to be access using an SMM identical of the EFI System Table, but services of the core protocol won't grantees the availability in runtime. As an alternative, the complete mass of EFI Boot Services and EFI Runtime Services can be available while the driver loading or "constructor" phase. 
 
-\subsubsection{SMM Library (SMLib Services)}\label{subsection-smm-lib}
-Additional services in the SMM Library (SMLib) are exposed as conventional EFI protocols that
-are located during the constructor phase of the SMM driver in SMM. For example, the status code
-equivalent in SMM is simply an EFI protocol whose interface references an SMM-based driver's
-service. Other SMM drivers locate this SMM-based status code and can use it during runtime to
-emit error or progress information.
+With utilizing the visibility of constructor, SMM driver is capable to leveraging rich set of EFI service to perform:
+\begin{itemize}
+	\item Marshall interface for EFI services.
+	\item Observing EFI protocols which are populated by other SMM drivers while in constructor phase.
+\end{itemize}
+
+For drivers while not in SMM and during the initial load inside SMM, EFI protocol database becomes quite useful by utilizing design.
+
+Available services which are SMST-based includes:
+\begin{itemize}
+	\item Negligible, blocking kind of the device Input/Output protocol
+	\item Memory allocator from SMRAM
+\end{itemize}
+These services are exposed through the entries present in the System Management System Table (SMST).
+
+\subsubsection{SMM Library}\label{subsection-smm-lib}
+During constructor phase of SMM driver inside SMM, all additional service within SMM Library (SMLib) are uncovered like EFI protocols. i.e., An identical status code in SMM is merely an EFI protocol with interface referencing an SMM-based driver service. To avoid error or information of progress during runtime, other SMM drivers also locates this SMM based status code.
 
 \subsection{SMM Drivers}\label{subsection-smm-drivers}
-\subsubsection{Loading Drivers into SMM}
-Driver loading modal into SMM is that the DXE SMM runtime driver contains a dependency expression that at least have the \verb|EFI_SMM_BASE_PROTOCOL|. This dependency is essential because the DXE runtime driver that is planned for SMM will use the \verb|EFI_SMM_BASE_PROTOCOL| to reload itself into SMM and re-execute its entry point in SMM. Also, other SMM-loaded protocols allowed to be situated in the dependency expression of a given SMM DXE runtime driver. The principle of the DXE Dispatcher, verifying if the GUIDs for the protocols that are exist in the protocol database can then be used to identify if the driver can be loaded. 
+\subsubsection{Process to Load Drivers in SMM}
+Process to load driver modal in SMM is merely a DXE SMM runtime driver having a DEPEX (dependency expression) having at least \verb|EFI_SMM_BASE_PROTOCOL|. This kind of dependency is essential as the DXE runtime driver which is planned for SMM will utilize the \verb|EFI_SMM_BASE_PROTOCOL| to load up itself again in SMM and re-execute its entry point. Also, other SMM-loaded protocols permitted to be stayed in the DEPEX of specified SMM DXE runtime driver. Principle of the DXE Dispatcher is to verifying if the GUIDs to be consumed by the protocols does exists in the database of protocol and capable to identifying if the driver can be loaded or not.
 
-Once loaded into SMM, the DXE SMM runtime driver can utilize a very minor set of services. While in its constructor entry point, the driver can use EFI Boot Services as it runs in the boot service space and SMM. In this second entry point in SMM, the driver can do several things:
+After formerly loaded in SMM the DXE SMM runtime driver becomes capable utilize only minor set of services. While in its constructor entry point, the driver can use EFI Boot Services as it executes within space of boot service and SMM.
 
+In secondary entry point in SMM driver is capable to perform:
 \begin{itemize}
-	\item Register an interface in the conventional protocol database to name the SMM resident interfaces to future-loaded SMM drivers
-	\item Register with the SMM infrastructure code for a callback in effect to an SMI pin activation or an SMI based message from outside of SMM Code (i.e. a boot service, runtime agent)
+	\item Registration of an interface - In the formal protocol database, naming the SMM occupant interfaces with future-loaded SMM drivers
+	\item Registration with the SMM codebase - For a callback hook in effect to an SMI pin stimulation or an SMI based interrupt message from outside of SMM Code (i.e. a boot service, runtime agent)
 \end{itemize}
 
-After this \textbf{constructor} phase in SMM, the SMM driver should not depend upon any other boot services because the operational mode of execution can migrate away from these services (the \verb|ExitBootServices()| call is asynchronous to calling the SMM infrastructure code). Several EFI Runtime Services can have the bulk of their processing shifted into SMM, and the runtime visible portion would simply be a proxy that uses the \verb|EFI_SMM_BASE_PROTOCOL| to callback into SMM to carry out the services. Having a proxy allows for a model of sharing error handling code, such as flash access services, along with runtime code, such as the EFI Runtime Services \verb|GetVariable()| or \verb|SetVariable()|.
+After this \textbf{constructor} phase in SMM, the SMM driver needs not be rely on any other boot services as the mode of operation to carrying out execution can move away from these services. Many EFI Runtime Services could possess the majority of their execution shifted into SMM and viewable runtime portion simply becomes a proxy which merely utilizes the \verb|EFI_SMM_BASE_PROTOCOL| to perform callback in SMM to carry out services. By Possessing a proxy which allows for a modal of sharing code blocks of error handling, like services for flash access and also the EFI Runtime Services \verb|GetVariable()| or \verb|SetVariable()|.
 
-\subsubsection{IA-32 SMM Drivers}
-In SMM the IA-32 runtime drivers are not callable because of the \verb|SetVirtualAddress()| action that is performed upon the image. As such, code that needs to be accessible between SMM and EFI runtime needs to migrate into SMM.
+\subsubsection{SMM Drivers for IA-32}
+In SMM the \say{IA-32 runtime drivers} can not called as on the image the action by \verb|SetVirtualAddress()| is performed. Hence, code segment that requires to be accessible among SMM and EFI runtime needs to be migrated in SMM.
 
-\subsubsection{Itanium® Processor Family SMM Drivers}
-From Platform Management Interrupt (\gls{pmi}) the runtime drivers for the Itanium® processor family are callable as each is a variant of position-independent code (PIC) runtime driver.
+\subsubsection{"Itanium® Processor Family" SMM Drivers}
+From \say{Platform Management Interrupt (\gls{pmi})} the runtime drivers for the \say{Itanium® processor family} are called as if each of them is kind of \say{Position Independent Code (PIC) runtime driver}.
 
 \subsection{SMM Protocols}\label{subsection-smm-protocols}
 System Architecture of SMM broke in to below two parts:
 \begin{itemize}
-	\item SMM Base Protocol - published by a processor and its responsible for: 
+	\item \say{SMM Base Protocol} - exposed by the processor. This protocol is liable to perform: 
 		\begin{itemize}
 			\item To initialize the state of processor
 			\item Registration of the handlers
 		\end{itemize}
-	\item SMM Access Protocol - interprets the specific enable and locking techniques that an IA-32 memory controller might support during execution in SMM. (Not needed for Itanium® processor family)
+	\item \say{SMM Access Protocol} - interprets the specific enabling and locking mechanism that an IA-32 memory controller may allows during execution in SMM. (Not needed for \say{Itanium® processor family})
 \end{itemize}
 
 \subsubsection{SMM Protocols for IA-32}
@@ -92,54 +85,54 @@ Figure \ref{fig:published-protocols-for-ia-32-systems} shows the SMM protocols w
 	\caption{Protocols Published for IA-32 Systems}\label{fig:published-protocols-for-ia-32-systems}
 \end{figure}
 
-\subsubsection{SMM Protocols for Itanium®-Based Systems}
-Figure \ref{fig:published-protocols-for-itanium-systems} shows the SMM protocols which are published for an Itanium®-Based system.
+\subsubsection{SMM Protocols for "Itanium®-Based Systems"}
+Figure \ref{fig:published-protocols-for-itanium-systems} shows the way SMM protocols are published for an \say{Itanium®-Based system}.
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{smm/published-protocols-for-itanium-systems}
-	\caption{Protocols Published for Itanium®-Based Systems}\label{fig:published-protocols-for-itanium-systems}
+	\caption{Protocols Published for "Itanium®-Based Systems"}\label{fig:published-protocols-for-itanium-systems}
 \end{figure}
 
 
-\subsection{SMM Infrastructure Code and Dispatcher}
-SMM Infrastructure Code centers within the SMM Dispatcher. Role of SMM Dispatcher is to hand over the control to the SMM handlers in an orderly manner. SMM Infrastructure Code assists to drive SMM to SMM communication. SMM handlers are PE32+ images that have and image type of \verb|EFI_IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER|.
+\subsection{SMM Dispatcher and infrastructure}
+SMM Code segment lies within the SMM Dispatcher. Major Role of SMM Dispatcher is to give the control mode to the SMM handlers in a systematic methodology. SMM Infrastructure Code aids to drive communication for SMM to SMM. SMM handlers are PE32+ images.
 
 \subsection{Initializing SMM Phase}
-The SMM driver for the Framework is essentially a enrollment vehicle for dispatching drivers in response to the:
+The SMM driver for the Framework is fundamentally a enrollment transport mode to dispatch the drivers in outcome to the:
 \begin{itemize}
 	\item System Management Interrupts for IA-32
 	\item Platform Management Interrupts (PMIs) for Itanium® processor family
 \end{itemize}
 
-\subsection{Relation of System Management RAM (SMRAM) to main memory}
-Figure \ref{fig:smram-relationship-to-main-memory} shows relationship between SMRAM and main memory in IA-32.
+\subsection{Relation of "System Management RAM (\gls{smram})" to conventional memory}
+Figure \ref{fig:smram-relationship-to-main-memory} shows relationship between SMRAM and main memory in IA-32. Where SMRAM is isolated secure part inside the conventional main memory.
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{smm/smram-relationship-to-main-memory}
-	\caption{SMRAM relationship to main memory}\label{fig:smram-relationship-to-main-memory}
+	\caption{SMRAM kinship with conventional memory}\label{fig:smram-relationship-to-main-memory}
 \end{figure}
 
-\subsection{Processor Execution Mode}\label{subsection-processor-execution-mode}
-SMM is entered asynchronously to the main flow of program. SMM was originally designed to be clear to the OS and provides a transparent power management facility. 
+\subsection{Execution Mode of SMM on Processor}\label{subsection-processor-execution-mode}
+SMM is acceded asynchronously with the ongoing main flow of program. SMM was primitively developed to be clear to the OS and provide a power management facility more transparent.
 
 Preboot agents are responsible to initiate alternate uses of SMM which are:
 \begin{itemize}
-	\item Workarounds for chipset errata
-	\item Error logging
-	\item Platform security
+	\item Applicable Workaround for \gls{soc} exaggeration
+	\item Logging of error(s)
+	\item Security for the platform
 \end{itemize}
 
-A \gls{smi} can be entered by energizing either the SMI logic pin on the baseboard dedicated or using the local APIC.
+A \gls{smi} can be launched by energizing either the SMI logic pin via dedicated on the board or by utilizing the local APIC.
 
-Itanium® architecture has no separated processor mode for the manageability interruption, but it supports Platform Management Interrupt (\gls{pmi}), which is a maskable interruption. Also, another way to enter PMI is using a message on local Streamlined Advanced Programmable Interrupt Controller (\gls{sapic}).
+\say{Itanium® architecture} possess no independent separate mode for processor for the tractability of interruption however it does supports \say{Platform Management Interrupt (\gls{pmi})} which indeed is a maskable interruption. However, there is this another way to enter PMI using a interrupt message on local \say{Streamlined Advanced Programmable Interrupt Controller (\gls{sapic})}.
 
-This architecture describes a mechanism for loading modules of needful code that substantiate the functionality mentioned above. The instantiation of protocol that enables the loading of handler images runs in normal boot-services memory. Only handler need to run in the \gls{smram}.
+This architecture informs a techniques to load modules of needful code segment that substantiate the functionality specified above. The internal representation of protocol which enables the loading of images of various handler and runs in normal memory of boot-services. Only the handlers does to run in \gls{smram}.
 
-\subsection{Access to Platform Resources}\label{subsection-access-to-platform-resources}
-As a policy outcome, execution of SMM handlers is logically precluded from accessing traditional memory resources. Hence, there is no ease binding technique through a call or trap interface to leverage services in the preempted, non-SMM state.
+\subsection{Accessing Platform Resources}\label{subsection-access-to-platform-resources}
+As par policy outcome process of the execution of SMM handlers is reasonably prevents from accessing conventional memory resources. Hence, there does not exist any ease binding technique such as a call or trap interface to render the services in preemptive bid of non-SMM state.
 
-Besides, SMM Services - the library of service, supports a subset of the core EFI services, i.e. memory allocation, device I/O protocol, and others. Also, SMM driver execution mode has the same structure as the EFI baseline - namely a components that runs in boot services mode and that can perhaps execute in runtime. Another mechanism occurs using an unregister event when \verb|ExitBootServices()| is invoked.
+Besides, SMM Services - the library of service which abides a sub set of the core EFI services, i.e. device input-output protocol, memory allocation and others. Also, execution mode of SMM driver has the equivalent structure as per the EFI criterion - namely a components which executes under boot services and it could perhaps run in runtime mode. When \verb|ExitBootServices()| invoked, the mechanism of an unregister event occurs.
 
 
 

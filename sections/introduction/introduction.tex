@@ -2,128 +2,81 @@
 Intel System on a Chip (\gls{soc}) features a new set of Intel Uncore Intellectual Property (IP) for every generation.
 Section \ref{section-introduction} covers the introduction and overview of BIOS, UEFI and it's role and major components - Advanced Configuration and Power Interface (\gls{acpi}), Peripheral Component Interconnect Express (\gls{pcie}) and Graphics Controller. Section \ref{section-design} describes the design of UEFI and the boot phases in detail. The study of the BIOS binary structure and mapping of each components byte and alignment is described in Section \ref{section-architecture}. Proposed work to reducing the process of build iteration described in Section \ref{section-proposed-work}. 
 
-\subsection{Uncore Intellectual Properties}
-The Uncore encompasses system agent (SA), memory and Uncore agents such as graphics controller, display controller, memory controller and Input Output (IO). The Uncore IPs are Peripheral Component Interface Express (PCIe), Graphics Processing Engine (GPE), Thunderbolt, Imaging Processing Agent (IPU), North Peak (NPK), Virtualization Technology for directed-IO (Vt-d), Volume Management Device (VMD).
+\subsection{Uncore \gls{ip}}
+The Uncore encompasses system agent (SA), memory and Uncore agents such as graphics controller, display controller, memory controller and Input Output (IO).The Uncore IPs are Peripheral Component Interface Express (PCIe), Graphics Processing Engine (GPE), Thunderbolt, Imaging Processing Agent (IPU), North Peak (NPK), Virtualization Technology for directed-IO (Vt-d), Volume Management Device (VMD).
 
-PCI Express abbreviated as \gls{pci} or \gls{pcie}, is designed to replace the older PCI standards.
-A data communication system is developed for use the transfer data between the host and the
-peripheral devices via PCIe. Thunderbolt is the brand name of a hardware interface developed
-by Intel that allows the connection of external peripherals to a computer. Thunderbolt combines
-PCI Express (PCIe) and DisplayPort (DP) into two serial signals, and additionally provides DC
-power, all in one cable. Graphics Processing Engine (GPE), Integrated graphics, shared graphics
-solutions, integrated graphics processors (IGP) or unified memory architecture (UMA) utilize a
-portion of a computer's system RAM rather than dedicated graphics memory. GPEs can be
-integrated onto the motherboard as part of the chipset. Virtual Technology for Directed-IO (Vt-d)
-is an input/output memory management unit (IOMMU) allows guest virtual machines to directly
-use peripheral devices, such as Ethernet, accelerated graphics cards, and hard-drive controllers,
-through DMA and interrupt remapping.
+PCI Express abbreviated as \gls{pci} or \gls{pcie}, is designed to replace the older PCI standards. A data communicating system is highly-developed via PCIe for use the transfer data between the host and the peripheral devices. Intel developed the hardware interface which allows the connection of external peripherals to a computer called Thunderbolt. This interface not only has PCI Express (PCIe) and DisplayPort (DP) combined into two serial signals but additionally provides DC power also, bundled in just one cable.
+\say{Graphics Processing Engine (GPE)}, \say{Integrated graphics}, \say{shared graphics solutions}, \say{integrated graphics processors (IGP)} or \say{unified memory architecture(UMA)} utilize a portion of a memory of computer system instead of having dedicated graphics memory.
+GPEs can be integrated onto the motherboard as part of the chipset. Guest virtual machines use Virtual Technology for Directed-IO (Vt-d), an input/output memory management unit(IOMMU), to directly use peripheral devices, such as hard-drive controllers, accelerated graphics cards and Ethernet, through interrupt remapping.
 
 \subsection{Legacy \gls{bios} and \gls{uefi}}
 
-\paragraph{\gls{bios}} is the dominant standard which defines a firmware interface.
+\paragraph{\gls{bios}} is the governing reference which specifies a firmware interface.
 
-"Legacy" (as in Legacy \gls{bios}), in the context of firmware specifications, refer to an older, widely used specification. Major responsibility of \gls{bios} is to set up the hardware, load and start an \gls{os}. When the system boots, the BIOS initializes and identifies system devices including video display card, mouse, hard disk drive, keyboard, solid state drive and other hardware followed by locating software held on a boot device i.e. a hard disk or removable storage such as CD/DVD or USB and loads and executes that software, giving it control of the computer. This process is also referred to as "booting" or "boot strapping".
+"Legacy" (as in Legacy \gls{bios}) -  in terms of firmware specifications it refers to an older, broadly used specification. Major responsibility of \gls{bios} is to initialize the hardware devices, loading and commencing an \gls{os}. When the system boots, the BIOS initializes and identifies every connected system devices including keyboard, mouse, hard disk drive, solid state drive, video display card and other hardware followed by locating software stored on a boot device i.e. a hard disk or removable storage such as USB or CD/DVD and loads and executes that software, transferring control of the system to it. This flow of actions is also known as "booting" or "boot strapping".
 
 \subsubsection{Background of Legacy \gls{bios}}
-In 1980s, IBM developed the personal computer with a 16-bit BIOS with the aim of ending the BIOS after the first 250,000 products. Legacy BIOS is based upon Intel's original 16-bit architecture, ordinarily referred to as  "8086" architecture. And as technology advanced, Intel extended that 8086 architecture from 16 to 32-bit.
-Legacy BIOS is able to run different \gls{os}, such as MS-DOS, equally well on systems other than IBM. Additionally, Legacy BIOS has a defined OS-independent interface for hardware that enables interrupts to communicate with video, disk and keyboard services along with the BIOS ROM loader and bootstrap loader, to name a few.
+In 1980s, IBM developed the personal computer with a 16-bit BIOS with the aim of ending the BIOS after the first 250,000 products. Legacy BIOS is based upon Intel’s original 16-bit architecture, ordinarily referred to as "8086" architecture. And as technology advanced, Intel extended that 8086 architecture from 16 to 32-bit. Legacy BIOS is able to run different \gls{os} very well irrespective if the system is IBM or not. Additionally, Legacy BIOS also has a defined OS-independent interface for hardware that enables interrupts to communicate with keyboard, disk and video services along with the BIOS ROM loader and bootstrap loader, to name a few.
 
 Use of legacy BIOS is diminishing and is expected to be phased out in new systems by the year 2020.
 
 \subsubsection{Limitations of legacy BIOS}
-Over the years, many new configuration and power management technologies were integrated
-into BIOS implementations as well as support for many generations of Intel® architecture
-hardware. However certain limitations of BIOS implementations such as 16-bit addressing mode,
-1 MB addressable space, PC AT hardware dependencies and upper memory block (UMB)
-dependencies persisted throughout the years. The industry also began to have need for methods to
-ensure quality of individual firmware modules as well as the ability to quickly integrate libraries
-of third-party firmware modules into a single platform solution across multiple product lines.
-These inherent limitations and existing market demands opened the opportunity for a fresh BIOS
-architecture to be developed and introduced to the market. The UEFI specifications and resulting
-implementations have begun to effectively address these persisting market needs.
+With progress in technologies, the BIOS implementations were also updated with many new configuration and power management technologies and added support for many generations of Intel® architecture hardware. Although a few of limitations namely, upper memory block (UMB) dependencies, PC AT hardware dependencies, 1 MB addressable space and 16-bit addressing mode persisted throughout the years. The need to integrate libraries of third-party firmware modules into a single platform solution across multiple product lines and ensuring quality of individual firmware modules arises in the industries. The existing market demands to overcome inherent limitations lead towards development of a fresh BIOS architecture which is introduced in market as The UEFI specifications.
 
-One of the critical maintenance challenges for BIOS is that each implementation has tended to
-be highly customized for the specific motherboard on which it is deployed. Moving component
-modules across designs typically requires significant porting, integration, testing and debug work.
-This is one of the markets challenges the UEFI architecture promises to address.
+One major problem with existing BIOS implementations is that since they are highly customized for a specific motherboard, there maintenance is difficult. A lot of effort is required in significant porting, integration, testing and debug work of changes in component modules. The UEFI architecture is designed to considering these limitations and to resolve them.
+
 
 \subsection{Unified Extensible Firmware Interface (\gls{uefi})}
-\gls{uefi} was developed as a replacement for legacy BIOS to streamline the booting process, and act as the interface between a operating system and its platform firmware. It not only replaces most BIOS functions, but also offers a rich extensible pre-OS environment with advanced boot and runtime services.
-Unified Extensible Firmware Interface (\gls{uefi}) is grounded in Intel's initial Extensible Firmware Interface (EFI) specification 1.10, which defines a software interface between an operating system and platform firmware. The UEFI architecture allows users to execute applications on a command line interface. It has intrinsic networking capabilities and is designed to work with multi-processors (MP) systems.
+\gls{uefi} is a replacement for legacy BIOS to act as the interface between a operating system and its platform firmware streamlining the booting process. It offers a rich extensible pre-OS environment with advanced boot and runtime services, replacing most BIOS functions. Unified Extensible Firmware Interface (UEFI) is grounded in Intel’s initial Extensible Firmware Interface (EFI) specification 1.10, which defines a software interface between an operating system and platform firmware. It has intrinsic networking capabilities,  is designed to work with multi-processors (MP) system and also allows users to execute applications on a command line interface.
 
 \begin{figure}[h]
+	\centering
 	\includegraphics[width=\linewidth]{uefi_board_of_directors}
 	\caption{Board of Directors of UEFI Forum}\label{fig:introduction-uefi-board-of-directors}
 \end{figure}
 
-The UEFI Forum board of directors consists of representatives from 11 industry leaders as described in Figure \ref{fig:introduction-uefi-board-of-directors}. These involved organizations work to ensure that the UEFI specifications meet industry needs.
+The UEFI Forum board of directors consists of representatives from 11 industry leaders as described in Figure \ref{fig:introduction-uefi-board-of-directors}. These organizations work to ensure that the UEFI specifications meet industry needs.
 
-UEFI uses a different interface for boot services and runtime services but UEFI does not specify how "Power On Self Test" (POST) and Setup are implemented - those are BIOS' primary functions.
+UEFI uses a different interface for runtime services and boot services but UEFI does not specify how "Power On Self Test" (POST) and Setup are implemented those are BIOS’ primary functions.
 
 \subsubsection{\gls{uefi} Driver Model Extension}
-Access to boot devices is provided through a set of protocol interfaces. One purpose of the
-UEFI Driver Model is to provide a replacement for \verb|PC-AT|-style option ROMs. It is important
-to point out that drivers written to the UEFI Driver Model are designed to access boot devices in
-the pre-boot environment. They are not designed to replace the high-performance, OS-specific
-drivers.
+Boot devices are accessible via a set of protocol interfaces. The UEFI Driver Model provides a replacement for PC-AT-style option ROMs.
 
-The UEFI Driver Model is designed to support the execution of modular pieces of code,
-also known as drivers, that run in the pre-boot environment. These drivers may manage or control
-hardware buses and devices on the platform, or they may provide some software-derived, platform specific service. The UEFI Driver Model also contains information required by UEFI driver writers to design and implement any combination of bus drivers and device drivers that a platform
-might need to boot a UEFI-compliant OS.
+The UEFI Driver Model was not designed to replace the high-performance OS specific drivers but to access boot devices in the pre-boot environment, to support the execution of modular pieces of code, also known as drivers.These drivers control hardware buses and devices on the platform, and also they may provide some software-derived, platform specific service. The information required by the driver developers for implementing combination of bus drivers which boot an UEFI-complaint OS are included in the UEFI Driver Model.
 
-The UEFI Driver Model is designed to be generic and can be adapted to any type of bus or
-device. The UEFI Specification describes how to write PCI bus drivers, PCI device drivers, USB
-bus drivers, USB device drivers, and SCSI drivers. Additional details are provided that allow UEFI
-drivers to be stored in PCI option ROMs, while maintaining compatibility with legacy option ROM
-images.
+Thus the UEFI Driver Model is designed to be generic.The UEFI Specification describes how to write USB bus drivers, USB device drivers, PCI device drivers, PCI bus drivers and SCSI drivers.
+Additional details are provided that allow UEFI drivers to be stored in PCI option ROMs, while maintaining compatibility with legacy option ROM images.
 
-One of the design goals in the UEFI Specification is keeping the driver images as small as
-possible. However, if a driver is required to support multiple processor architectures, a driver
-object file would also be required to be shipped for each supported processor architecture. To
-address this space issue, this specification also defines the EFI Byte Code Virtual Machine. A
-UEFI driver can be compiled into a single EFI Byte Code object file. UEFI Specificationcomplaint firmware must contain an EFI Byte Code interpreter. This allows a single EFI Byte
-Code object file that supports multiple processor architectures to be shipped. Another space saving
-technique is the use of compression. This specification defines compression and decompression
-algorithms that may be used to reduce the size of UEFI Drivers, and thus reduce the overhead
-when UEFI Drivers are stored in ROM devices.
+The UEFI Specification is designed keeping in mind the goal of having compact driver images. However to facilitate support for multiple processor architectures, a driver object file for each architecture is required to be included leading to a space issue. To resolve this issue, UEFI defines EFI Byte Code Virtual Machine. Every driver file is compiled into just a single EFI Byte Code object which is run by an UEFI Byte Code Interpreter included in the UEFI Specification complaint firmware. Another very common method to resolve this issue is compression. The UEFI specification defined compression and decompression algorithms which may be used to reduce the size of UEFI Drivers.
 
-The information contained in the UEFI Specification can be used by OSVs, IHVs, OEMs,
-and firmware vendors to design and implement firmware conforming to this specification, drivers
-that produce standard protocol interfaces, and operating system loaders that can be used to boot
-UEFI compliant operating systems.
+This information can used by OEMs, IHVs, OSVs, and firmware vendors for developing drivers that produce standard protocol interfaces, and operating system loaders that can be used to boot UEFI compliant operating systems.
 
 \subsubsection{\gls{uefi}'s Role in boot process}
 
 During the boot process, UEFI speaks to the operating system loader and acts as the interface between the operating system and the BIOS.
 
-The \verb|PC-AT| boot environment presents significant challenges to innovation within the
-industry. Each new platform capability or hardware innovation requires firmware developers to
-craft increasingly complex solutions, and often requires OS developers to make changes to their
-boot code before customers can benefit from the innovation. This can be a time-consuming process
-requiring a significant investment of resources. The primary goal of the UEFI specification is to
-define an alternative boot environment that can alleviate some of these considerations. In this goal, the specification is like other existing boot specifications.
+The \verb|PC-AT| boot environment is challenging to innovate as each new firmware capability requires firmware developers to craft more complex solutions, often requiring OS developers to make changes to their boot code. Since this is a time-consuming process and also required investment of resources, the UEFI specification undertakes it as a primary goal to overcome this issue.
 
 \subsection{Comparing of Legacy \gls{bios} and \gls{uefi}}
 
 \begin{table}
 	\centering
 	\renewcommand{\arraystretch}{2}
-	\caption{Legacy BIOS v/s UEFI}\label{table:legacy-bios-vs-uefi}
+	\caption{Comparison of Legacy BIOS and UEFI}\label{table:legacy-bios-vs-uefi}
 	\begin{tabular}{l | p{5cm} | p{5cm}}
 		& Legacy BIOS & EFI
 		\\ \hline \hline
-		Language & Assembly & C ($ 99\% $)
+		Programming Language used & Assembly Language & C Language ($ 99\% $)
 		\\ \hline
-		Resource & Interrupt Hardcode Memory Access hardcore I/O Access & Diver, Protocols
+		Resources & Interrupt Hardcode Memory Access hardcore Input/Output Access & Divers, Handlers and Protocols
 		\\ \hline
-		Processor & x86 16-bit & CPU Protects Mode (Flat Mode)
+		Processor Type & $ x86 $ $ 16-bit $ & CPU Protects Mode
 		\\ \hline
-		Expand & Hook Interrupt & Load Driver
+		Expand & Interrupt through hook & Driver to be loaded
 		\\ \hline
-		OS Bridge & ACPI & Run Time Driver Software
+		OS Communication Bridge & via ACPI & through runtime driver
 		\\ \hline
-		$ 3^{rd} $ Party ISV \& IHV & Bas for Support & Easy for Support and for Multi Platforms
+		$ 3^{rd} $ Party ISV \& IHV & Support Bas & Ease of Support and for Cross-Platforms
 		\\ \hline
 	\end{tabular}
 \end{table}

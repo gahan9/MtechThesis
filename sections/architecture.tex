@@ -1,34 +1,39 @@
 \section{Architecture of BIOS Firmware}\label{section-architecture}
 \subsection{Overview}
-The basic Platform Initialization firmware storage concepts include:
+If you interpret BIOS image as close look then it is nothing but the file system which is made in a byte format to be read by low level programming language which is most efficient method to store the data or content.
+
+The concept of initialization of Platform includes the execution of this BIOS image which is stored on the every \gls{soc}
+
+The components which plays role in Platform Initialization are listed below:
 \begin{itemize}
-	\item Firmware Volumes (\gls{fv})
-	\item Firmware File Systems (\gls{ffs})
-	\item Firmware Files
-	\item Standard Binary Layout
-	\item Pre-EFI Initialization (\gls{pei}) PEIM-to-PEIM Interfaces (PPIs)
+	\item Firmware Volume (\gls{fv}) - consists of one or more firmware file systems
+	\item Firmware File System (\gls{ffs}) which consists of one or more firmware files
+	\item Firmware File - Encapsulated section or leaf section
+	\item Reference Layout of Binary
+	\item Pre-EFI Initialization (\gls{pei}) PEIM to PEIM Interfaces (PPIs)
 	\item Driver Execution Environment (\gls{dxe}) Protocols
 \end{itemize}
 
 \subsection{Design of Firmware Storage}
-Design of firmware storage describes how files should be stored and accessed in non-volatile storage. Implementation of any firmware must support and follow the standard \gls{pi} Firmware Volume structure and the structure of Firmware File System Format.
+Design of firmware storage elaborates the way that how files needs to be stored and accessed in nonvolatile storage environment. Implementation of any firmware has to support and follow the standard structure for \gls{pi} Firmware Volume and the structure of \gls{ffs}.
 
-\paragraph{Firmware Device} is a persistent physical repository containing data and/or firmware code. Typically it is a flash component but may also be some other type of persistent storage. A single physical firmware device may be partitioned into multiple smaller pieces to form multiple logical firmware devices. Likewise, multiple firmware devices may be aggregated into one larger logical firmware device.
+\paragraph{Firmware Device} - a persistent physical repository consisting data and/or firmware code. Typically it is a component of flash but may also be any other type of persistent storage. Singular physical firmware device can be partitioned in to multiple other smaller pieces to form many other logical firmware devices from it and vice-versa.
 
-\paragraph{Flash} devices are most usual non-volatile repository for firmware volumes. Often, flash devices are partitioned into sectors or blocks of possibly differing sizes, each with various run-time characteristics.
+
+\paragraph{Flash} devices are most usual nonvolatile storage mechanism for firmware volumes. Often, flash devices are partitioned into many sectors or blocks of potentially differing sizes, each along with various runtime characteristics.
 
 In the design of Firmware File System (\gls{ffs}), several observed unique qualities of flash devices are listed below:
 \begin{itemize}
-	\item Can be erased on a sector-by-sector basis. After ensuring, all bits of sector return their \verb|erase value|\footnote{either all $0$ or all $1$}.
-	\item Can be written on a bit-by-bit basis. i.e. if erase value is $ 0 $ then bit value $ 0 $ can be changed to $ 1 $.
-	\item Only by performing erase operation on an entire flash sector, \verb|non-erase value| can change to \verb|erase value|.
+	\item Erase operation processed on the basis of sector-by-sector. After ensuring, every bits of sector return their \verb|erase value|\footnote{either all $0$ or all $1$}.
+	\item Write operation can be performed on a bit-by-bit basis. i.e. In case erase value is $ 0 $ then bit value $ 0 $ can be changed to $ 1 $.
+	\item Only by performing erase operation on the whole flash sector, \verb|non-erase value| can change to \verb|erase value|.
 	\item Capable of enable/disable reads and writes to individual flash sectors or the entire flash.
-	\item Writes and erases are longer operations than reads.
-	\item Many times place restrictions on the trading operations that can be performed while a write or erase is occurring.
+	\item Operations like writes and erases are much longer than reads operation.
+	\item Many times places restraints on the trading operations that can be executed while a write or erase is in progress.
 \end{itemize}
 
-\subsection{Firmware Volumes (\gls{fv})}
-A Firmware Volume (\gls{fv}) is a logical firmware device. Firmware Volume is the basic storage repository for data and/or code. Each and every firmware volume is organized into a file system. As such, the file is the base unit of storage for firmware.
+\subsection{Firmware Volume (\gls{fv})}
+The BIOS image is consisting of one or more logical firmware devices known as a Firmware Volume (\gls{fv}). Firmware Volume is the very basic and efficient logical storage mechanism for data and/or code. If you consider file system as a basic unit then firmware volume is unionized into these one or more file system units.
 Table \ref{table:firmware-volume-attributes} describes attributes in each firmware volume.
 
 \begin{table}[!htbp]
@@ -40,44 +45,35 @@ Table \ref{table:firmware-volume-attributes} describes attributes in each firmwa
 		\\ \hline \hline
 		Name & each volume has a unique identifier name having UEFI Globally Unique Identifier (GUID). 
 		\\ \hline
-		Size & describes total size of all volume data (including any header, files and free space)
+		Size & describes total size of all data (includes all information like headers, files and free/reserved space)
 		\\ \hline
-		Format & describes Firmware File System (FFS) used in the body of the volume.
+		Format & describes type of Firmware File System (FFS) which is unionized in construction of the volume.
 		\\ \hline
-		Memory Mapped? & some volumes may be memory-mapped, indicates that the entire contents of the volume appear at once in the memory address space of the processor. 
+		Memory is Mapped or not? & some volumes may requires to be memory-mapped which determines whether the entire content of the volume can appear at once in the processor's memory address space. 
 		\\ \hline
-		Sticky Write? & Some volumes may require special erase cycles in order to change bits from a
-		non-erase value to an erase value
+		Sticky Write? & Specifies whether or not special erase cycles requires in order to change value of bits into an erase value from non-erase value
 		\\ \hline
-		Erase Polarity & If a volume supports \textit{Sticky Write}, then all bits within the volume will return
-		to this value (0 or 1) after an erase cycle
+		Erase Polarity & In case a volume supports \textit{Sticky Write}, then after processing an erase cycle every bits in the volume will return to this value ($ 0 $ or $ 1 $)
 		\\ \hline
-		Alignment & The first byte of a volume is required to be aligned on some power-of-two
-		boundary. At a minimum, this must be greater than or equal to the highest file alignment value.
-		If \verb|EFI_FVB2_WEAK_ALIGNMENT| is set in the volume header then the first byte of the volume
-		can be aligned on any power-of-two boundary. A weakly aligned volume can not be moved from
-		its initial linked location and maintain its alignment.
+		Alignment & A volume is required to be aligned on some power-of-two ($ 2^x $) boundary such that $ minimum >= \text{highest file alignment value} $.
 		\\ \hline
-		Read Enable/Disable Capable/Status & Volumes may have the ability to change from readable
-		to hidden
+		Enable/Disable Read capable status & Decides whether to keep volumes as hidden from readable or not
 		\\ \hline
-		Write Enable/Disable Capable/Status & Volumes may have the ability to change from writable
-		to write protected
+		Enable/Disable Write capable Status & Decides whether to keep volumes as hidden from writable or not
 		\\ \hline
-		Lock Capable/Status & Volumes may be able to have their capabilities locked
+		Lock Capable/Status & Volumes could also have their locking mechanism
 		\\ \hline
-		Read-Lock Capable/Status & Volumes may have the ability to lock their read status
+		Read-Lock Capable/Status & Volumes could also have the power to lock their read status
 		\\ \hline
-		Write-Lock Capable/Status & Volumes may have the ability to lock their write status
+		Write-Lock Capable/Status & Volumes could also have the power to lock their write status
 		\\ \hline
 	\end{tabular}
 \end{table}
 
-Firmware volumes may also contain additional information describing the mapping between OEM
-file types and a \verb|GUID|.
+Apart from this Firmware volumes also consisting of few more information about the correspondence between OEM file types and a \verb|GUID|.
 
 \subsection{Firmware File System (\gls{ffs})}
-A Firmware File System (\gls{ffs}) describes the structure of files and (optional) free space within the firmware volume. Each firmware file systems has a unique GUID, which is used by the firmware to associate a driver with a newly exposed firmware volume.
+The logical data payload within firmware volume is known as a Firmware File System (\gls{ffs}) which illustrates the structure of files and free space (if any). To affiliate a driver to firmware volume every firmware file systems contains a globally unique ID (GUID).
 
 
 \begin{table}[h]
@@ -87,92 +83,39 @@ A Firmware File System (\gls{ffs}) describes the structure of files and (optiona
 	\begin{tabular}{p{4cm} | p{11cm}}
 		\textbf{Attribute} & \textbf{Description}
 		\\ \hline \hline
-		Name & each volume has a unique identifier name having UEFI Globally Unique Identifier (GUID). File names must be unique within a firmware volume. Some file names have special significance.
+		Name & each volume has a unique identifier name having UEFI Globally Unique Identifier (\gls{guid}). Name of the File(s) has to be unique within a same firmware volume.
 		\\ \hline
-		Type & Each file has a type. There are four ranges of file types: Normal (0x00-0xBF), OEM	(0xC0-0xDF), Debug (0xE0-0xEF) and Firmware Volume Specific (0xF0-0xFF). More file types information are described in Table \ref{table:firmware-file-types}.
+		Type & Type of the individual file which can be Normal, OEM, Debug, FV Specific. More file types information are described in Figure \ref{fig:firmware-file-types}.
 		\\ \hline
-		Alignment & Each file’s data can be aligned on some power-of-two boundary. The specific boundaries that are supported depend on the alignment and format of the firmware volume. If \verb|EFI_FVB2_WEAK_ALIGNMENT| is set in the volume header then file alignment does not
+		Alignment & Every data of file to be aligned on some power-of-two ($ 2^x $) boundary such that these boundaries are founded depending on the alignment of firmware volume.
 		\\ \hline
-		Size & Describes size of each file, each file's data is zero or more bytes
+		Size & Describes size of each file which consists of data of size zero or more bytes
 		\\ \hline
 	\end{tabular}
 \end{table}
 
-Firmware files are code and/or data stored in firmware volumes. Attributes of files are described in Table \ref{table:firmware-files-attributes}.
+Firmware files consists of code or raw data or both. Attributes of files are described in Table \ref{table:firmware-files-attributes}.
 
-Specific firmware volume formats may support additional attributes, such as integrity verification and staged file creation. The file data of certain file types is sub-divided in a standardized fashion into Firmware File Sections.
+Integrity check and staged file creation are some extra attribute formats which might spotted in some firmware volume. Firmware File Sections are unit which unionized in a standard fashion to form certain file types for the file data.
 
-Non-standard file types are supported through the use of the OEM file types (described in detail in Table \ref{table:firmware-file-types}).
+OEM file types (described in detail in Figure \ref{fig:firmware-file-types}) enables to support non-standard file types.
 
-In the PEI phase, file-related services are provided through the PEI Services Table, using \verb|FfsFindNextFile|, \verb|FfsFindFileByName| and \verb|FfsGetFileInfo|. In the DXE phase, file related services are provided through the \\ \verb|EFI_FIRMWARE_VOLUME2_PROTOCOL| services attached to a volume's handle (\verb|ReadFile|, \verb|ReadSection|, \verb|WriteFile| and \verb|GetNextFile|).
+PEI phase is responsible to serve the file related services which are carried out using PEI Service Table. On the Other hand the \\ \verb|EFI_FIRMWARE_VOLUME2_PROTOCOL| services which are attached to a volume's handle (\verb|ReadFile|, \verb|ReadSection|, \verb|WriteFile| and \verb|GetNextFile|) are responsible to carried out file related services in DXE phase.
 
 \subsubsection{Firmware File Types}
-Consider an application file named FOO.EXE. The format of the contents of \verb|FOO.EXE| is implied by the ".EXE" in the file name. Depending on the operating environment, this extension typically indicates that the contents of FOO.EXE are a PE/COFF image and follow the PE/COFF image format.
+If you consider an application with file name such as \texttt{XYZ.exe}, in which content format of \verb|XYZ.exe| is implied by the ".exe" in the file name. Based on the situation of operation, this extension normally signals the contents of \verb|XYZ.exe|. The PI Firmware File System characterizes the contents of a file that is returned by the firmware volume interface.
 
-Similarly, the PI Firmware File System defines the contents of a file that is returned by the firmware volume interface.
+Firmware File System of the Platform Initialization dictates an enumeration of many file types. For example, the type
+\verb|EFI_FV_FILETYPE_RAW| implies that the file is a RAW Binary Data. In the same way, files with the type \verb|EFI_FV_FILETYPE_SMM_CORE| supports MM traditional mode .
 
-The PI Firmware File System defines an enumeration of file types. For example, the type
-\verb|EFI_FV_FILETYPE_DRIVER| indicates that the file is a DXE driver and is interesting to the DXE
-Dispatcher. In the same way, files with the type \verb|EFI_FV_FILETYPE_PEIM| are interesting to the
-PEI Dispatcher.
-
-\begin{table}[!htbp]
+\begin{figure}[!htbp]
 	\centering
-	\renewcommand{\arraystretch}{1.2}
-	\caption{Firmware File Types}\label{table:firmware-file-types}
-	\begin{tabular}{l | p{1cm} | p{6cm}}
-		Name & Value & Description
-		\\ \hline \hline
-		\verb|FV_FILETYPE_RAW| & $ 0x1 $ & Binary Data
-		\\ \hline
-		\verb|FV_FILETYPE_FREEFORM| & $ 0x2 $ & Sectioned Data
-		\\ \hline
-		\verb|FV_FILETYPE_SECURITY_CORE| & $ 0x3 $ & Platform core code used during the SEC phase
-		\\ \hline
-		\verb|FV_FILETYPE_PEI_CORE| & $ 0x4 $ & PEI Foundation
-		\\ \hline
-		\verb|FV_FILETYPE_DXE_CORE| & $ 0x5 $ & DXE Foundation
-		\\ \hline
-		\verb|FV_FILETYPE_PEIM| & $ 0x6 $ & PEI Module (PEIM)
-		\\ \hline
-		\verb|FV_FILETYPE_DRIVER| & $ 0x7 $ & DXE Driver
-		\\ \hline
-		\verb|FV_FILETYPE_COMBINED_PEIM_DRIVER| & $ 0x8 $ & Combined PEIM/DXE Driver
-		\\ \hline
-		\verb|FV_FILETYPE_APPLICATION| & $ 0x9 $ & Application
-		\\ \hline
-		\verb|FV_FILETYPE_SMM| & $ 0xa $ & Contains a PE32+ image that will be loaded into MMRAM in MM Traditional Mode
-		\\ \hline
-		\verb|FV_FILETYPE_FIRMWARE_VOLUME_IMAGE| & $ 0xb $ & Firmware Volume Image
-		\\ \hline
-		\verb|FV_FILETYPE_COMBINED_SMM_DXE| & $ 0xc $ & Contains PE32+ image that will be dispatched by the DXE Dispatcher and will also be loaded into MMRAM in MM Tradition Mode
-		\\ \hline
-		\verb|FV_FILETYPE_SMM_CORE| & $ 0xd $ & MM Foundation that support MM Traditional Mode
-		\\ \hline
-		\verb|EFI_FV_FILETYPE_MM_STANDALONE| & $ 0xe $ & Contains PE32+ image that will be loaded into MMRAM in MM Standalone Mode
-		\\ \hline
-		\verb|EFI_FV_FILETYPE_MM_CORE_STANDALONE| & $ 0xf $ & Contains PE32+ image that support MM Tradition Mode and MM Standalone Mode
-		\\ \hline
-		\verb|FV_FILETYPE_OEM_MIN| & $ 0xc0 $ & OEM File Type
-		\\ \hline
-		\verb|FV_FILETYPE_OEM_MAX| & $ 0xdf $ & OEM File Type
-		\\ \hline
-		\verb|FV_FILETYPE_DEBUG_MIN| & $ 0xe0 $ & Debug/Test File Type
-		\\ \hline
-		\verb|FV_FILETYPE_DEBUG_MAX| & $ 0xef $ & Debug/Test File Type
-		\\ \hline
-		\verb|FV_FILETYPE_FFS_MIN| & $ 0xf0 $ & Firmware File System Specific File Type
-		\\ \hline
-		\verb|FV_FILETYPE_FFS_MAX| & $ 0xff $ & Firmware File System Specific File Type
-		\\ \hline
-		\verb|FV_FILETYPE_FFS_PAD| & $ 0xf0 $ & Pad file for FFS
-		\\ \hline
-	\end{tabular}
-\end{table}
+	\includegraphics[width=0.9\linewidth]{architecture/firmware-file-type}
+	\caption{Firmware File Type}\label{fig:firmware-file-types}
+\end{figure}
 
-\subsection{Firmware File Sections}
-Firmware file sections are separate discrete “parts” within certain file types. Each section has the
-following attributes:
+\subsection{Firmware File Section}
+Firmware File Section is individual distinct unit of certain file types which has following attributes:
 \begin{table}[!htbp]
 	\begin{tabular}{l | p{9cm}}
 		Attribute & Description
@@ -184,11 +127,12 @@ following attributes:
 	\end{tabular}
 \end{table}
 
-While there are many types of sections, they fall into the following two broad categories:
+However as many as types of sections are present, they eventually fall in one of the below broadly described categories:
 \begin{itemize}
-	\item \textbf{Encapsulation sections} - containers that hold other sections.
-	The sections contained within an encapsulation section are known as child sections, and the encapsulation section is known as the parent section are known as the parent section. An encapsulation section's	children may be leaves and/or more encapsulation sections and are called peers relative to each other. An encapsulation section does not contain data directly; instead it is just a vessel that ultimately terminates in leaf sections. Files that are built with sections can be thought of as a tree, with encapsulation sections as nodes and	leaf sections as the leaves. The file image itself can be thought of as the root and may contain an arbitrary number of sections. Sections that exist in the root have no parent section but are still considered peers.
-	\item \textbf{Leaf Sections} - Unlike encapsulation sections, leaf sections directly contain data and do not contain other sections. The format of the data contained within a leaf section is defined by the type of the section.
+	\item \textbf{Encapsulation section} - logical storage consisting of the one or more section.
+	The child section(s) which are lying within the encapsulation section (parent section) can be another encapsulation section or a leaf section which are also called relative peers to each other. An encapsulation section never consists of data in itself; however it is just a container that ultimately ends in leaf section(s). Files which are stacked with section can be imagined as tree consisting of nodes (encapsulation section) and	leaves (leaf section). The root which can be interpreted as the file image itself may have a discrete number of sections. Sections that exist in the root have no parent section but are still considered peers.
+	
+	\item \textbf{Leaf Sections} - Contrary to the encapsulation section, leaf section does contain data and only data within it. Type of section defines which kind of data is stored within the leaf section.
 \end{itemize}
 
 \begin{figure}[!htbp]
@@ -197,39 +141,39 @@ While there are many types of sections, they fall into the following two broad c
 	\caption{Example File System Image}\label{fig:architecture-firmware-file-system-representation}
 \end{figure}
 
-In the example shown in Figure \ref{fig:architecture-firmware-file-system-representation}, the file image root contains two encapsulation sections (E0 and E1) and one leaf section (L3). The first encapsulation section (E0) contains children, all of which are leaves (L0, L1, and L2). The second encapsulation section (E1) contains two children, one that is an encapsulation (E2) and the other that is a leaf (L6). The last encapsulation section (E2) has two children that are both leaves (L4 and L5).
+As illustrated in Figure \ref{fig:architecture-firmware-file-system-representation}, the root which we interpret as the file image has two encapsulation sections which are $ E0 $, $ E1 $ and one leaf section which is $ L3 $. $ E0 $ which is the first encapsulation section possessing three child node which are all leaves ($ L0 $, $ L1 $, and $ L2 $). $ E1 $ is the another encapsulation section which possesses only two children, where one of them is encapsulation ($ E2 $) and the another is the leaf ($ L6 $). $ E2 $ which is the very last encapsulation section consists two children which are both leaves only ($ L4 $ and $ L5 $).
 
-In the PEI phase, section-related services are provided through the PEI Service Table, using \verb|FfsFindSectionData|. In the DXE phase, section-related services are provided through the \verb|EFI_FIRMWARE_VOLUME2_PROTOCOL| services attached to a volume's handle (\verb|ReadSection|).
+With the help of \verb|FfsFindSectionData|, services related to section are populated with the help of PEI Service Table in the PEI phase. On the other hand \verb|ReadSection| which is attached to service protocol \verb|EFI_FIRMWARE_VOLUME2_PROTOCOL| responsible to populate services related to section during the DXE phase.
 
 \subsection{Firmware File Section Types}
-Table \ref{table:architectural-section-types} list outs the defined architectural section types.
+Subjective types of section are described in Table \ref{table:architectural-section-types}.
 
 \begin{table}[!htbp]
 	\centering
 	\renewcommand{\arraystretch}{1.2}
-	\caption{Architectural Section Types}\label{table:architectural-section-types}
+	\caption{Types of Section}\label{table:architectural-section-types}
 	\begin{tabular}{p{7cm} | l | p{5cm}}
-		Name & Value & Description
+		Name of Section & Value & Details
 		\\ \hline \hline
-		\verb|EFI_SECTION_COMPRESSION| & $ 0x1 $ & Encapsulation section where other sections are compressed
+		\verb|EFI_SECTION_COMPRESSION| & $ 0x1 $ & non-leaf section containing compressed section(s) within
 		\\ \hline
-		\verb|EFI_SECTION_GUID_DEFINED| & $ 0x2 $ & Encapsulation section used during the build process but not required for execution
+		\verb|EFI_SECTION_GUID_DEFINED| & $ 0x2 $ & non-leaf section which only to be used while in process of build and not for execution
 		\\ \hline
-		\verb|EFI_SECTION_DISPOSABLE| & $ 0x3 $ & Encapsulation section used during the build process but not required for execution
+		\verb|EFI_SECTION_DISPOSABLE| & $ 0x3 $ & non-leaf section which only to be used while in process of build and not for execution
 		\\ \hline
-		\verb|EFI_SECTION_PE32| & $ 0x10 $ & PE32+ Executable image
+		\verb|EFI_SECTION_PE32| & $ 0x10 $ & Image executable of PE32+
 		\\ \hline
-		\verb|EFI_SECTION_PIC| & $ 0x11 $ & Position-Independent Code
+		\verb|EFI_SECTION_PIC| & $ 0x11 $ & Code independent of position
 		\\ \hline
-		\verb|EFI_SECTION_TE| & $ 0x12 $ & Terse Executable Image
+		\verb|EFI_SECTION_TE| & $ 0x12 $ & Image of Terse Executable
 		\\ \hline
-		\verb|EFI_SECTION_DXE_DEPEX| & $ 0x13 $ & DXE Dependency Expression
+		\verb|EFI_SECTION_DXE_DEPEX| & $ 0x13 $ & Expression for DXE driver dependency
 		\\ \hline
-		\verb|EFI_SECTION_VERSION| & $ 0x14 $ & Version, Text and numeric
+		\verb|EFI_SECTION_VERSION| & $ 0x14 $ & version of the section - text/numeric
 		\\ \hline
-		\verb|EFI_SECTION_USER_INTERFACE| & $ 0x15 $ & User-Friendly name of the driver
+		\verb|EFI_SECTION_USER_INTERFACE| & $ 0x15 $ & Human readable and easily interpretable name for driver
 		\\ \hline
-		\verb|EFI_SECTION_COMPATIBILITY16| & $ 0x16 $ & DOS-style 16-bit EXE
+		\verb|EFI_SECTION_COMPATIBILITY16| & $ 0x16 $ & 16-bit exe of DOS fashion
 		\\ \hline
 		\verb|EFI_SECTION_FIRMWARE_VOLUME_IMAGE| & $ 0x17 $ & PI Firmware Volume Image
 		\\ \hline
@@ -237,17 +181,17 @@ Table \ref{table:architectural-section-types} list outs the defined architectura
 		\\ \hline
 		\verb|EFI_SECTION_RAW| & $ 0x19 $ & Raw data
 		\\ \hline
-		\verb|EFI_SECTION_PEI_DEPEX| & $ 0x1b $ & PEI Dependency Expression
+		\verb|EFI_SECTION_PEI_DEPEX| & $ 0x1b $ & Expression for PEI driver dependency
 		\\ \hline
-		\verb|EFI_SECTION_SMM_DEPEX| & $ 0x1c $ & Leaf section type for determining the dispatch order for an MM Traditional driver in MM Traditional Mode or MM Standalone driver in MM Standalone Mode.
+		\verb|EFI_SECTION_SMM_DEPEX| & $ 0x1c $ & Leaf section which determine the order of dispatch for the MM Traditional driver in SMM.
 		\\ \hline
 	\end{tabular}
 \end{table}
 
 \subsection{PI Architecture Firmware File System Format}
-This section describes the standard binary encoding for PI Firmware Files, PI Firmware Volumes, and the PI Firmware File System. Implementations that allow the non-vendor firmware files or firmware volumes to be introduced into the system must support the standard formats. This section also describes how features of the standard format map into the standard PEI and DXE interfaces.
+Basic encoding of binary used for PI firmware file, firmware volume and file system is illustrated in this section. Development which carries out the non-vendor firmware files or firmware volumes to be enclosed into the system must have the standard formats. These sections also describes the way features of the standard format mapped into the standard interfaces of DXE and PEI.
 
-The standard firmware file and volume format also introduces additional attributes and capabilities that are used to guarantee the integrity of the firmware volume. The standard format is broken into three levels: the firmware volume format, the firmware file system format, and the firmware file format.
+The standard format of firmware file and volume also brings in extra dimensions and potential that are used to assure the unity of firmware volume. The standard format is unionized by three different levels: firmware volume, firmware file system, and firmware file.
 
 \begin{figure}[!htbp]
 	\centering
@@ -255,169 +199,100 @@ The standard firmware file and volume format also introduces additional attribut
 	\caption{The Firmware Volume Format}\label{fig:architecture-the-firmware-volume-format}
 \end{figure}
 
-The standard firmware volume format (Figure \ref{fig:architecture-the-firmware-volume-format}) consists of two parts: the firmware volume header and the firmware volume data. The firmware volume header describes all of the attributes specified in “Firmware Volumes” on Table \ref{table:firmware-volume-attributes}. The header also contains a GUID which describes the format of the firmware file system used to organize the firmware volume data. The firmware volume header can support other firmware file systems other than the PI Firmware File System.
+The guided formatting of firmware volume (Figure \ref{fig:architecture-the-firmware-volume-format}) made of two parts: 
+The FV header and FV data. Header of FV describes every attributes mentioned in “Firmware Volumes” in Table \ref{table:firmware-volume-attributes}. This header also has \gls{guid} which identifies format of the firmware file system utilized to orchestrate data in the firmware volume. The \say{firmware volume header} is compatible with every other firmware file systems except the PI Firmware File System.
 
-The PI Firmware File System format describes how firmware files and free space are organized
-within the firmware volume.
-
-The PI Firmware File format describes how files are organized. The firmware file format consists of
-two parts: the firmware file header and the firmware file data.
+\say{Firmware File System format} explains the way the firmware files and free space are conceived inside the firmware volume. However on the other hand \say{Firmware File format} describes how files are organized. The firmware file format made of two parts: the firmware file header and the firmware file data.
 
 \subsubsection{Firmware Volume Format}
-he PI Architecture Firmware Volume format describes the binary layout of a firmware volume.
-The firmware volume format consists of a header followed by the firmware volume data. The
-firmware volume header is described by \verb|EFI_FIRMWARE_VOLUME_HEADER|.
-The format of the firmware volume data is described by a GUID. Valid files system GUID values
-are \verb|EFI_FIRMWARE_FILE_SYSTEM2_GUID| and \verb|EFI_FIRMWARE_FILE_SYSTEM3_GUID|.
+The PI Architecture Firmware Volume format key outs the binary structure of a firmware volume. The firmware volume format possesses a FV header followed by the FV data. The FV header is represented by variable \verb|EFI_FIRMWARE_VOLUME_HEADER|.
+The format layout of the FV data is described by a GUID. Valid files system GUID values are \verb|EFI_FIRMWARE_FILE_SYSTEM2_GUID| and \verb|EFI_FIRMWARE_FILE_SYSTEM3_GUID|.
 
 \subsubsection{Firmware File System Format}
-The PI Architecture Firmware File System is a binary layout of file storage within firmware
-volumes. It is a flat file system in that there is no provision for any directory hierarchy; all files
-reside in the root directly. Files are stored end to end without any directory entry to describe which files are present. Parsing the contents of a firmware volume to obtain a listing of files present requires walking the firmware volume from beginning to end.
+The PI Architecture Firmware File System is a binary design of logical file storage within firmware volumes. It is a flat file system in which there is no rendering of any directory hierarchy structure. Each and every files lies directly in the root of the storage. Files are stored end to end without any directory entry to explain which files are present. Parsing the information stored in a firmware volume to find a itemization of files exists needs the complete walk through over the firmware volume in and out.
 
-\paragraph{Firmware File System GUID} The PI Architecture firmware volume header contains a data field for the file system GUID. There are two valid FFS file system, the GUID is defined as \verb|EFI_FIRMWARE_FILE_SYSTEM2_GUID| and \verb|EFI_FIRMWARE_FILE_SYSTEM3_GUID|.
-If the FFS file system is backward compatible with \verb|EFI_FIRMWARE_FILE_SYSTEM2_GUID| and supports files larger than $ 16 \ MB $ then \verb|EFI_FIRMWARE_FILE_SYSTEM3_GUID| is used.
+\paragraph{Firmware File System GUID} The firmware volume header has a unique data field for the file system GUID. The two valid FFS file systems are defined by the GUID values in variable \verb|EFI_FIRMWARE_FILE_SYSTEM2_GUID| and \verb|EFI_FIRMWARE_FILE_SYSTEM3_GUID|. In case of the FFS file system, if it does allows files larger than $ 16 \ MB $ along with backward compatibility \verb|EFI_FIRMWARE_FILE_SYSTEM2_GUID| then \verb|EFI_FIRMWARE_FILE_SYSTEM3_GUID| is used.
 
-\paragraph{Volume Top File} A Volume Top File (VTF) is a file that must be located such that the last byte of the file is also the last byte of the firmware volume. Regardless of the file type, a VTF must have the file name GUID of \verb|EFI_FFS_VOLUME_TOP_FILE_GUID|.
-Firmware file system driver code must be aware of this GUID and insert a pad file as necessary to guarantee the VTF is located correctly at the top of the firmware volume on write and update operations. File length and alignment requirements must be consistent with the top of volume. Otherwise, a write error occurs and the firmware volume is not modified.
+\paragraph{Volume Top File} known as VTF is a file that has to be presented such that the very last byte of file is also the very last byte of the firmware volume. Irrespective of type of the file, a VTF have to have GUID for the file name which is declared as variable \verb|EFI_FFS_VOLUME_TOP_FILE_GUID|.
+Driver cide if Firmware file system has to be exposed of this GUID and infix an alignment pad file as and when needed to assure that the VTF is situated correctly at the top of the firmware volume. Length and alignment of File requirements needs to be coherent with the top of volume so that a write error does occurs and the unwanted firmware volume modification can be prevented.
 
 \subsection{Firmware File Format (\gls{ffs})}
-All FFS files begin with a header that is aligned on an $ 8-byte $ boundary with respect to the beginning
-of the firmware volume. FFS files can contain the following parts:
+Every FFS files begins with its header data that is aligned on an $ 8-byte $ (which is power-of-two $ 2^3 $) boundary with respect to the origin of the firmware volume. FFS files consists of the below parts:
 \begin{itemize}
 	\item Header
 	\item Data
 \end{itemize}
 
-It is possible to create a file that has only a header and no data, which consumes 24 bytes of space.
-This type of file is known as a zero-length file.
+When a zero-length file is created without any data it still has to have header and will consume minimum $ 24 bytes $ of space.
 
-If the file contains data, the data immediately follows the header. The format of the data within a file
-is defined by the Type field in the header, either \verb|EFI_FFS_FILE_HEADER| or \verb|EFI_FFS_FILE_HEADER2|.
+The data (if any) exists in file then it immediately conjugated after the header. How the data within a file
+is formed can be identified by the \say{Type} field in the header which can be either of \verb|EFI_FFS_FILE_HEADER| and \verb|EFI_FFS_FILE_HEADER2|.
 
-Figure \ref{fig:architecture-typical-ffs-file-layout-less-than-16MB} illustrates the layout of a (typical i.e. \verb|EFI_FFS_FILE_HEADER|) PI Architecture Firmware File smaller than $ 16 Mb $.
+Figure \ref{fig:architecture-typical-ffs-file-layout-less-than-16MB} exemplifies the typical layout of a (i.e. \verb|EFI_FFS_FILE_HEADER|) \say{PI Architecture Firmware File} $ (\leq 16 Mb) $.
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{architecture/typical-ffs-file-layout-less-than-16MB}
-	\caption{Typical FFS File Layout}\label{fig:architecture-typical-ffs-file-layout-less-than-16MB}
+	\caption{Layout representation of FFS File Header $ (\leq 16 Mb) $ }\label{fig:architecture-typical-ffs-file-layout-less-than-16MB}
 \end{figure}
 
-Figure \ref{fig:architecture-typical-ffs-file-layout-greater-than-16MB} illustrates the layout of a PI Architecture Firmware File larger than $ 16 Mb $.
+Figure \ref{fig:architecture-typical-ffs-file-layout-greater-than-16MB} exemplifies the typical layout of \say{PI Architecture Firmware File} $ (> 16 Mb) $.
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{architecture/typical-ffs-file-layout-greater-than-16MB}
-	\caption{File Header 2 layout for files larger than $ 16Mb $}\label{fig:architecture-typical-ffs-file-layout-greater-than-16MB}
+	\caption{Layout representation of FFS File Header 2 layout for files $ (> 16Mb) $}\label{fig:architecture-typical-ffs-file-layout-greater-than-16MB}
 \end{figure}
 
 
 \subsection{Firmware File Section Format}
-This section describes the standard firmware file section layout.
-Each section begins with a section header, followed by data defined by the section type.
-The section headers aligned on 4 byte boundaries relative to the start of the file's image. If padding is
-required between the end of one section and the beginning of the next to achieve the 4-byte
-alignment requirement, all padding bytes must be initialized to zero.
-Many section types are variable in length and are more accurately described as data streams rather
-than data structures.
+Storage Data format mechanism of section is described in this section. Each individual section starts with a section header which is followed by the data defined using the section type. Section headers are always aligned at $ 4-byte $ boundaries with respect to the start of the file image. In case of padding required between the section then to achieve the $ 4-byte $
+alignment as defined, every bit value of padding is set to zero.
+There some section types which are variable in terms of data length and are more precisely represented as data streams instead of data structures.
 
-Regardless of section type, all section headers begin with a $ 24-bit $ integer indicating the section size,
-followed by an 8-bit section type. The format of the remainder of the section header and the section
-data is defined by the section type. If the section size is $ 0xFFFFFF $ then the size is defined by a $ 32-
-bit $ integer that follows the $ 32-bit $ section header. Figures \ref{fig:architecture-format-of-a-section-below-16Mb} and \ref{fig:architecture-format-of-a-section-above-16Mb} shows the general format of a section.
+Irrespective of type of the section, all section headers starts with a $ 24-bit $ integer telling the section size, and $ 8-bit $ section type. The format of the rest of the section header and data is defined by the section type. If size of the section size is $ 0xFFFFFF $ then the size is defined by a $ 32-bit $ integer that follows the $ 32-bit $ section header. Figure \ref{fig:architecture-format-of-a-section-below-16Mb} and Figure \ref{fig:architecture-format-of-a-section-above-16Mb} shows the typical layout of a section data format.
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{architecture/format-of-a-section-below-16Mb}
-	\caption{Format of a Section below $ 16Mb $}\label{fig:architecture-format-of-a-section-below-16Mb}
+	\caption{Section Header Format when $ size < 16Mb $}\label{fig:architecture-format-of-a-section-below-16Mb}
 \end{figure}
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{architecture/format-of-a-section-above-16Mb}
-	\caption{Format of a Section using Extended Length field $ 16Mb $}\label{fig:architecture-format-of-a-section-above-16Mb}
+	\caption{Section Header Format of when $ size \geq 16Mb $  using Extended Length field}\label{fig:architecture-format-of-a-section-above-16Mb}
 \end{figure}
 
 
 \subsection{File System Initialization}\label{subsection:file-system-initialization}
-The algorithm \ref{code:architecture-file-system-initialization} describes a method of FFS initialization that ensures FFS file corruption can be detected regardless of the cause.
-
-The State byte of each file must be correctly managed to ensure the integrity of the file system is
-not compromised in the event of a power failure during any FFS operation. It is expected that an FFS
-driver will produce an instance of the Firmware Volume Protocol and that all normal file operations
-will take place in that context. All file operations must follow all the creation, update, and deletion
-rules described in this specification to avoid file system corruption.
-
-The following \verb|FvCheck()| pseudo code must be executed during FFS initialization to avoid file
-system corruption. If at any point a failure condition is reached, then the firmware volume is
-corrupted and a crisis recovery is initiated.All FFS files, including files of type
-\verb|EFI_FV_FILETYPE_FFS_PAD| must be evaluated during file system initialization. It is legal for
-multiple pad files with this file type to have the same Name field in the file header. No checks for
-duplicate files should be performed on pad files.
-
-\inputminted{c}{code/architecture-file-system-initialization.c}\label{code:architecture-file-system-initialization}
+To ensure unity of the file system it is mandatory to maintain state byte of each file correctly such that it won't compromised even in case of power failure during operation on any FFS. It is desired that an FFS driver produces an instance of Firmware Volume Protocol so that every normal file operations carried out in that context. Every file operations has to follow all the rules of creation, update, and deletion mentioned in this specification to avoid corruption of the file system.
 
 \subsection{Traversal and Access to Files}
-The Security (SEC), PEI, and early DXE code must be able to traverse the FFS and read and execute
-files before a write-enabled DXE FFS driver is initialized. Because the FFS may have
-inconsistencies due to a previous power failure or other system failure, it is necessary to follow a set
-of rules to verify the validity of files prior to using them. It is not incumbent on SEC, PEI, or the
-early read-only DXE FFS services to make any attempt to recover or modify the file system. If any
-situation exists where execution cannot continue due to file system inconsistencies, a recovery boot
-is initiated.
+The Security (SEC), PEI, and early DXE code needs to be capable to traverse the FFS such that it's read and execute operation on files carried out before a write-enabled DXE FFS driver is started it's execution so that the FFS may not have any inconsistencies because of any kind of previous system failure. Hence, it has to follow a set of rules to assert the credibility of files before using them. It is not incumbent on SEC, PEI, or the early read-only DXE FFS services to make any effort to perform recovery or modification the file system. If any case exists where execution can not continue because of inconsistencies in file system, a recovery boot must be initiated.
 
-There is one inconsistency that the SEC, PEI, and early DXE code can deal with without initiating a
-recovery boot. This condition is created by a power failure or other system failure that occurs during
-a file update on a previous boot. Such a failure will cause two files with the same file name GUID to
-exist within the firmware volume. One of them will have the \verb|EFI_FILE_MARKED_FOR_UPDATE|
-bit set in its State field but will be otherwise a completely valid file. The other one may be in any
-state of construction up to and including \verb|EFI_FILE_DATA_VALID|. All files used prior to the
-initialization of the write-enabled DXE FFS driver must be screened with this test prior to their use.
-If this condition is discovered, it is permissible to initiate a recovery boot and allow the recovery
-DXE to complete the update.
-The following pseudo code describes the method for determining which of these two files to use.
-The inconsistency is corrected during the write-enabled initialization of the DXE FFS driver.
+As there is one mutual exclusiveness that the SEC, PEI, and early DXE code can affect without instantiating a recovery boot. This condition can be summoned by any previous system failure such as power failure that come along while a file update on a previous boot. In such case, a failure can cause two files with an identical file name GUID to coexist within the same firmware volume where one of them will have the \verb|EFI_FILE_MARKED_FOR_UPDATE| bit set to its state field but are going to be otherwise totally valid file. The another file may be in unknown state of building up to and including \verb|EFI_FILE_DATA_VALID|. All files used preceding to the initialization of the write-enabled DXE FFS driver must be filtered with this test prior to their use. If this condition is observed, it's tolerable to trigger a recovery boot and allow the recovery DXE to perform the completion of update.
 
-\inputminted{c}{code/architecture-traversal-and-file-access.c}\label{code:architecture-traversal-and-file-access}
+%\inputminted{c}{code/architecture-traversal-and-file-access.c}\label{code:architecture-traversal-and-file-access}
 
 
-\paragraph{Note} There is no check for duplicate files once a file in the \verb|EFI_FILE_DATA_VALID| state is located.
-The condition where two files in a single firmware volume have the same file name GUID and are
-both in the \verb|EFI_FILE_DATA_VALID| state cannot occur if the creation and update rules that are
-defined in this specification are followed.
+\paragraph{Note} There's no ascertain for redundant files once a file found in the \verb|EFI_FILE_DATA_VALID| state. The condition where two files in same firmware volume coexist having the same file name GUID and both are within the \verb|EFI_FILE_DATA_VALID| state cannot occur if the set of rules for creation and update are strictly followed.
 
 \subsection{File Integrity and State}
-File corruption, regardless of the cause, must be detectable so that appropriate file system repair
-steps may be taken. File corruption can come from several sources but generally falls into three
-categories:
+File corruption, no matter the cause, must be detectable in order to carried out appropriate steps for file system repair. File corruption can come from various sources but broadly falls into three categories listed below:
 \begin{itemize}
-	\item General failure
-	\item Erase failure
-	\item Write failure
+	\item Any general failure
+	\item Failure on erase
+	\item Failure on write
 \end{itemize}
 
-A general failure is defined to be apparently random corruption of the storage media. This
-corruption can be caused by storage media design problems or storage media degradation, for
-example. This type of failure can be as subtle as changing a single bit within the contents of a file.
-With good system design and reliable storage media, general failures should not happen. Even so,
-the FFS enables detection of this type of failure.
+A general failure is characterized to be evidently random corruption of the storage media. This corruption can occur because of the design problem or obsolete storage media i.e. This type of failure can be as perceptive as replacing any single bit inside the file content. Using a good design of system along with reliable storage media, general failures can be avoided. However, the FFS enables catching of this kind of failure.
 
-An erase failure occurs when a block erase of firmware volume media is not completed due to a
-power failure or other system failure. While the erase operation is not defined, it is expected that
-most implementations of FFS that allow file write and delete operations will also implement a
-mechanism to reclaim deleted files and coalesce free space. If this operation is not completed
-correctly, the file system can be left in an inconsistent state.
-Similarly, a write failure occurs when a file system write is in progress and is not completed due to a
-power failure or other system failure. This type of failure can leave the file system in an inconsistent
-state.
+An erase failure happens when a block erase of firmware volume media isn't completed because of any system failure i.e. power failure. As the erase operation is not outlined, it is likely that most of the implementation of FFS that allow file write and delete operations will also develop a mechanism to rectify deleted files and unite free space. In case the operation is not carried out successfully, the file system can be left out in a state which is not consistent. 
 
-All of these failures are detectable during FFS initialization, and, depending on the nature of the
-failure, many recovery strategies are possible. Careful sequencing of the State bits during normal
-file transitions is sufficient to enable subsequent detection of write failures. However, the State
-bits alone are not sufficient to detect all occurrences of general and/or erase failures. These types of
-failures require additional support, which is enabled with the file header \verb|IntegrityCheck| field.
-For sample code that provides a method of FFS initialization that can detect FFS file corruption,
-regardless of the cause, see “File System Initialization” on Section \ref{subsection:file-system-initialization}.
+Likewise, a write failure takes place when a file system write is in motion and is left incomplete because of any system failure i.e. power failure. This type of failure can lead the file system to be in an inconsistent state.
+
+All of these failures can be traced while FFS initialization is in progress hence depending on the cause of the failure, many recovery schemes can be carried out.
 
 
 

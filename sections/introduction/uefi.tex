@@ -1,11 +1,8 @@
-\subsection{\gls{uefi} Design Overview}
+\subsection{Design Overview of \gls{uefi}}
 The design of UEFI is based on the following fundamental elements:
 
 \begin{itemize}
-	\item \textbf{Reuse of existing table-based interfaces} - In order to preserve investment in existing infrastructure support code, both in the OS and firmware, a number of existing
-	specifications that are commonly implemented on platforms compatible with supported
-	processor specifications must be implemented on platforms wishing to comply with the
-	UEFI specification.
+	\item \textbf{Reuse of existing table-based interfaces} - In order to preserve investment in existing infrastructure support code, both within the OS and firmware, variety of existing specifications that are commonly implemented on platforms compatible with supported processor specifications must be implemented on platforms wishing to comply with the UEFI specification.
 	\item \textbf{System partition} defines a partition and file system that are designed to allow safe sharing between multiple vendors, and for different purposes. The ability to include a separate, shareable system partition presents an opportunity to increase platform value-add without significantly growing the need for nonvolatile platform memory
 	\item \textbf{Boot services} provide interfaces for devices and system functionality that
 	can be used during boot time. Device access is abstracted through "handles" and
@@ -47,11 +44,13 @@ The UEFI Driver Model has the following goals:
 	\item \textbf{Flexible} - The UEFI Driver Model must support the ability to enumerate all the devices, or to enumerate only those devices required to boot the required OS. The minimum device
 	enumeration provides support for more rapid boot capability, and the full device enumeration provides the ability to perform OS installations, system maintenance, or system diagnostics on any boot device present in the system.
 	\item \textbf{Extensible} - The UEFI Driver Model must be able to extend to future bus types as they
-	are defined.
+	are defined.
+
 	\item \textbf{Portable} - Drivers written to the UEFI Driver Model must be portable between platforms and between supported processor architectures.
 	\item \textbf{Interoperable} - Drivers must coexist with other drivers and system firmware and must do so without generating resource conflicts.
 	\item \textbf{Describe complex bus hierarchies} - The UEFI Driver Model must be able to describe a variety of bus topologies from very simple single bus platforms to very complex platforms
-	containing many buses of various types.
+	containing many buses of various types.
+
 	\item \textbf{Small driver footprint} - The size of executables produced by the UEFI Driver Model must be minimized to reduce the overall platform cost. While flexibility and extensibility
 	are goals, the additional overhead required to support these must be kept to a minimum to
 	prevent the size of firmware components from becoming unmanageable.
