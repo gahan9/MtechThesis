@@ -15,6 +15,30 @@ GPEs can be integrated onto the motherboard as part of the chipset. Guest virtua
 
 "Legacy" (as in Legacy \gls{bios}) -  in terms of firmware specifications it refers to an older, broadly used specification. Major responsibility of \gls{bios} is to initialize the hardware devices, loading and commencing an \gls{os}. When the system boots, the BIOS initializes and identifies every connected system devices including keyboard, mouse, hard disk drive, solid state drive, video display card and other hardware followed by locating software stored on a boot device i.e. a hard disk or removable storage such as USB or CD/DVD and loads and executes that software, transferring control of the system to it. This flow of actions is also known as "booting" or "boot strapping".
 
+Table \ref{table:legacy-bios-vs-uefi} overviews of comparisons of UEFI with legacy BIOS.
+
+\begin{table}
+  \centering
+  \renewcommand{\arraystretch}{2}
+  \caption{Comparison of Legacy BIOS and UEFI}\label{table:legacy-bios-vs-uefi}
+  \begin{tabular}{l | p{5cm} | p{5cm}}
+    & Legacy BIOS & EFI
+    \\ \hline \hline
+    Programming Language used & Assembly Language & C Language ($ 99\% $)
+    \\ \hline
+    Resources & Interrupt Hardcode Memory Access hardcore Input/Output Access & Divers, Handlers and Protocols
+    \\ \hline
+    Processor Type & $ x86 $ $ 16-bit $ & CPU Protects Mode
+    \\ \hline
+    Expand & Interrupt through hook & Driver to be loaded
+    \\ \hline
+    OS Communication Bridge & via ACPI & through runtime driver
+    \\ \hline
+    $ 3^{rd} $ Party ISV \& \gls{ihv} & Support Bas & Ease of Support and for Cross-Platforms
+    \\ \hline
+  \end{tabular}
+\end{table}
+
 \subsubsection{Background of Legacy \gls{bios}}
 In 1980s, IBM developed the personal computer with a 16-bit BIOS with the aim of ending the BIOS after the first 250,000 products. Legacy BIOS is based upon Intel’s original 16-bit architecture, ordinarily referred to as "8086" architecture. And as technology advanced, Intel extended that 8086 architecture from 16 to 32-bit. Legacy BIOS is able to run different \gls{os} very well irrespective if the system is IBM or not. Additionally, Legacy BIOS also has a defined OS-independent interface for hardware that enables interrupts to communicate with keyboard, disk and video services along with the BIOS ROM loader and bootstrap loader, to name a few.
 
@@ -27,7 +51,7 @@ One major problem with existing BIOS implementations is that since they are high
 
 
 \subsection{Unified Extensible Firmware Interface (\gls{uefi})}
-\gls{uefi} is a replacement for legacy BIOS to act as the interface between a operating system and its platform firmware streamlining the booting process. It offers a rich extensible pre-OS environment with advanced boot and runtime services, replacing most BIOS functions. Unified Extensible Firmware Interface (UEFI) is grounded in Intel’s initial Extensible Firmware Interface (EFI) specification 1.10, which defines a software interface between an operating system and platform firmware. It has intrinsic networking capabilities,  is designed to work with multi-processors (MP) system and also allows users to execute applications on a command line interface.
+\gls{uefi} is a replacement for legacy BIOS to act as the interface between a operating system and its platform firmware streamlining the booting process. It offers a rich extensible pre-OS environment with advanced boot and runtime services, replacing most BIOS functions. Unified Extensible Firmware Interface (UEFI) is grounded in Intel’s initial Extensible Firmware Interface (EFI) specification 1.10, which defines a software interface providing linking to an operating system and platform firmware. It has intrinsic networking capabilities,  is designed to work with multi-processors (MP) system and also allows users to execute applications on a command line interface.
 
 \begin{figure}[h]
 	\centering
@@ -45,41 +69,17 @@ Boot devices are accessible via a set of protocol interfaces. The UEFI Driver Mo
 The UEFI Driver Model was not designed to replace the high-performance OS specific drivers but to access boot devices in the pre-boot environment, to support the execution of modular pieces of code, also known as drivers.These drivers control hardware buses and devices on the platform, and also they may provide some software-derived, platform specific service. The information required by the driver developers for implementing combination of bus drivers which boot an UEFI-complaint OS are included in the UEFI Driver Model.
 
 Thus the UEFI Driver Model is designed to be generic.The UEFI Specification describes how to write USB bus drivers, USB device drivers, PCI device drivers, PCI bus drivers and SCSI drivers.
-Additional details are provided that allow UEFI drivers to be stored in PCI option ROMs, while maintaining compatibility with legacy option ROM images.
+Additional details are provided that allow UEFI drivers to be stashed within PCI option ROMs along with maintaining the compatibility with legacy option ROM images.
 
 The UEFI Specification is designed keeping in mind the goal of having compact driver images. However to facilitate support for multiple processor architectures, a driver object file for each architecture is required to be included leading to a space issue. To resolve this issue, UEFI defines EFI Byte Code Virtual Machine. Every driver file is compiled into just a single EFI Byte Code object which is run by an UEFI Byte Code Interpreter included in the UEFI Specification complaint firmware. Another very common method to resolve this issue is compression. The UEFI specification defined compression and decompression algorithms which may be used to reduce the size of UEFI Drivers.
 
-This information can used by OEMs, \gls{ihv}s, OSVs, and firmware vendors for developing drivers that produce standard protocol interfaces, and operating system loaders that can be used to boot UEFI compliant operating systems.
+This information can used by OEMs, \gls{ihv}s, OSVs, and firmware vendors for developing drivers that produce standard protocol interfaces, and operating system loaders which could be utilized to boot UEFI compliant OS.
 
 \subsubsection{\gls{uefi}'s Role in boot process}
 
-During the boot process, UEFI speaks to the operating system loader and acts as the interface between the operating system and the BIOS.
+During the boot process, UEFI speaks to the operating system loader and acts as the interface linking the operating system and the BIOS.
 
-The \verb|PC-AT| boot environment is challenging to innovate as each new firmware capability requires firmware developers to craft more complex solutions, often requiring OS developers to make changes to their boot code. Since this is a time-consuming process and also required investment of resources, the UEFI specification undertakes it as a primary goal to overcome this issue.
-
-\subsection{Comparing of Legacy \gls{bios} and \gls{uefi}}
-
-\begin{table}
-	\centering
-	\renewcommand{\arraystretch}{2}
-	\caption{Comparison of Legacy BIOS and UEFI}\label{table:legacy-bios-vs-uefi}
-	\begin{tabular}{l | p{5cm} | p{5cm}}
-		& Legacy BIOS & EFI
-		\\ \hline \hline
-		Programming Language used & Assembly Language & C Language ($ 99\% $)
-		\\ \hline
-		Resources & Interrupt Hardcode Memory Access hardcore Input/Output Access & Divers, Handlers and Protocols
-		\\ \hline
-		Processor Type & $ x86 $ $ 16-bit $ & CPU Protects Mode
-		\\ \hline
-		Expand & Interrupt through hook & Driver to be loaded
-		\\ \hline
-		OS Communication Bridge & via ACPI & through runtime driver
-		\\ \hline
-		$ 3^{rd} $ Party ISV \& \gls{ihv} & Support Bas & Ease of Support and for Cross-Platforms
-		\\ \hline
-	\end{tabular}
-\end{table}
+The \verb|PC-AT| boot environment is challenging to innovate as each new firmware capability requires firmware developers to craft more complex solutions, often requiring OS developers to perform manipulation for their boot code. Since this is a time-consuming process and also required investment of resources, the UEFI specification undertakes it as a primary goal to overcome this issue.
 
 
 \input{sections/introduction/acpi}
