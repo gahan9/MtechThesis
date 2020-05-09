@@ -1,15 +1,11 @@
 \subsection{Design Overview of \gls{uefi}}
-The design of UEFI is based on the following fundamental elements:
+The UEFI construction is depending on the below listed primal elements:
 
 \begin{itemize}
-	\item \textbf{Reuse of existing table-based interfaces} - In order to preserve investment in existing infrastructure support code, both within the OS and firmware, variety of existing specifications that are commonly implemented on platforms compatible with supported processor specifications must be implemented on platforms wishing to comply with the UEFI specification.
-	\item \textbf{System partition} defines a partition and file system that are designed to allow safe sharing between multiple vendors, and for different purposes. The ability to include a separate, shareable system partition presents an opportunity to increase platform value-add without significantly growing the need for nonvolatile platform memory
-	\item \textbf{Boot services} provide interfaces for devices and system functionality that
-	can be used during boot time. Device access is abstracted through "handles" and
-	"protocols". This facilitates reuse of investment in existing BIOS code by keeping
-	underlying implementation requirements out of the specification without burdening the
-	consumer accessing the device.
-	\item \textbf{Runtime services} - A minimal set of runtime services is presented to ensure appropriate	abstraction of base platform hardware resources that may be needed by the OS during its	normal operations.
+	\item \textbf{Re-utilizing of already existing interfaces} - In order to keep up assets in existing infrastructure  codebase, both at the OS and firmware level, many different existing specifications which are usually implemented on platforms harmonious with supported processor specifications has to be developed on platforms which is able to comply with specification of the UEFI.
+	\item \textbf{System partition} characterizes a partition and file system which are to developed to grant safe sharing between various different vendors and various purposes. The power to include a disjoint, shareable system partition exists a chance to gain platform value-add without importantly thriving the need for nonvolatile memory of platform.
+	\item \textbf{Boot services} are responsible to offer interfaces for devices and system functionality which could be utilized during the time of ongoing boot process. Device access is abstracted by \say{handles} and \say{protocols}. This features reuse the investment in already existing BIOS codebase by persisting underlying implementation necessity out of the specification without giving execution load to the consumer accessing device.
+	\item \textbf{Runtime services} - A stripped set of runtime services is given to guarantee seize abstraction for resources of platform hardware which could be required by the OS while its conventional operations.
 \end{itemize}
 
 \begin{figure}[h]
@@ -18,71 +14,45 @@ The design of UEFI is based on the following fundamental elements:
 	\caption{UEFI Conceptual Overview}\label{fig:design-uefi-conceptual-overview}
 \end{figure}
 
-\textbf{Error! Reference source not found} illustrates the interactions of the various components of an UEFI specification-compliant system that are used to accomplish platform and OS boot.
+\textbf{Error! Reference source not found} determines the fundamental interaction of the different component parts of an UEFI specification-amenable system which are utilized to carry out platform and OS boot.
 
-The platform firmware can retrieve the OS loader image from the System Partition. The
-specification provides for a variety of mass storage device types including disk, CD-ROM, and
-DVD as well as remote boot via a network. Through the extensible protocol interfaces, it is possible
-to add other boot media types, although these may require OS loader modifications if they require
-use of protocols other than those defined in this document.
+From the system partition, the os loader image is retrieves by the platform firmware. The specification supplies for a diversity of media and mass storage device types as \say{disk}, \say{CD-ROM}, and \say{DVD} as well as \say{remote boot} via a network (also known as LAN boot or network boot). By the use of extensible protocol interfaces, there is possibility to include many other boot media types but also these would need OS loader alteration if they need to use the protocols.
 
-Once started, the OS loader continues to boot the complete operating system. To do so, it
-may use the EFI boot services and interfaces defined by this or other required specifications to
-survey, comprehend, and initialize the various platform components and the OS software that
-manages them. EFI runtime services are also available to the OS loader during the boot phase.
+Once begun, the OS loader proceeds to boot the whole operating system. To achieve this it could utilize the EFI boot services and interfaces characterized by respected specifications to analyze, embrace, and initialize the several platform components and the OS software which controls them. Also, for the OS loader will be capable to access EFI runtime services while in boot phase.
 
-\subsubsection{UEFI Driver Goals}
-The UEFI Driver Model has the following goals:
+\subsubsection{Goal of UEFI Driver}
+Majorly below are the listed motives to be expected to achieve by the UEFI Driver:
 \begin{itemize}
-	\item \textbf{Compatible} - Drivers conforming to this specification must maintain compatibility with the EFI and the UEFI Specification. This means that the UEFI Driver Model takes advantage of the extensibility mechanisms in the UEFI Specification to add the required
-	functionality.
-	\item \textbf{Simple} - Drivers that conform to this specification must be simple to implement and	simple to maintain. The UEFI Driver Model must allow a driver writer to concentrate on
-	the specific device for which the driver is being developed. A driver should not be
-	concerned with platform policy or platform management issues. These considerations
-	should be left to the system firmware.
-	\item \textbf{Scalable} - The UEFI Driver Model must be able to adapt to all types of platforms. These platforms include embedded systems, mobile, and desktop systems, as well as workstations and servers.
-	\item \textbf{Flexible} - The UEFI Driver Model must support the ability to enumerate all the devices, or to enumerate only those devices required to boot the required OS. The minimum device
-	enumeration provides support for more rapid boot capability, and the full device enumeration provides the ability to perform OS installations, system maintenance, or system diagnostics on any boot device present in the system.
-	\item \textbf{Extensible} - The UEFI Driver Model must be able to extend to future bus types as they
-	are defined.
-
-	\item \textbf{Portable} - Drivers written to the UEFI Driver Model must be portable between platforms and between supported processor architectures.
-	\item \textbf{Interoperable} - Drivers must coexist with other drivers and system firmware and must do so without generating resource conflicts.
-	\item \textbf{Describe complex bus hierarchies} - The UEFI Driver Model must be able to describe a variety of bus topologies from very simple single bus platforms to very complex platforms
-	containing many buses of various types.
-
-	\item \textbf{Small driver footprint} - The size of executables produced by the UEFI Driver Model must be minimized to reduce the overall platform cost. While flexibility and extensibility
-	are goals, the additional overhead required to support these must be kept to a minimum to
-	prevent the size of firmware components from becoming unmanageable.
-	\item \textbf{Address legacy option rom issues} - The UEFI Driver Model must directly address and	solve the constraints and limitations of legacy option ROMs. Specifically, it must be
-	possible to build add-in cards that support both UEFI drivers and legacy option ROMs,
-	where such cards can execute in both legacy BIOS systems and UEFI-conforming latforms, without modifications to the code carried on the card. The solution must provide an evolutionary path to migrate from legacy option ROMs driver to UEFI drivers.
+	\item \textbf{Compatible} - Any driver who conformist to the specification has to hold up compatibility along with the  UEFI and EFI Specification. Hence, the UEFI Driver Modal brings up benefits of the extensibility mechanisms in the UEFI Specification to include the desired and necessary features.
+	\item \textbf{Simple} - Any driver who conformist to the specification has to be simpler to develop and maintain. The UEFI Driver Modal has to permit a driver writer to focus on the ad hoc device for which the driver is to be developed. A driver should not be related to issues correspondence to platform management or policy of platform. These circumstance should be left over for the system firmware.
+	\item \textbf{Scalable} - The UEFI Driver Modal requires the adaptability for all kind of platforms including mobile, embedded systems, workstations, servers as well as desktop systems.
+	\item \textbf{Flexibility} - The UEFI Driver Modal have to have capability to enumerate over every the devices (or only the relevant devices needed to boot the OS). With the minimum device enumeration support for fast boot ability can be achieved and the full device enumeration results to provide capability for performing system maintenance, or system diagnostics, OS installations on any boot device exists on the system.
+	\item \textbf{Extensible} - The UEFI Driver Modal must be able to unfold to succeeding bus types as and when they are characterized.
+	\item \textbf{Portability} - Every drivers transcribed in the UEFI Driver Model has to be portable among platforms and within every founded processor architectures.
+	\item \textbf{Interoperability} -  Every drivers has to coexist along with every other firmware and drivers and also do so without incurring conflicts for any resource.
+	\item \textbf{Describing hierarchies of complex bus} - The UEFI Driver Modal has to be capable to key out a all kind of bus topologies from the platforms as simple as single bus to platforms with extremely complex bus which may consists of multiple buses of different kind.
+	\item \textbf{Address the issues for legacy ROM option} - The UEFI Driver Modal needs to instantly come up and resolve the restrictions and regulations of legacy ROM options. Especially, it has to be capable to build add-in device cards which supports both UEFI drivers and legacy ROM options. However, maintaining this backward compatibility, the solution with proposed methodology should also provide a way to migrate from legacy ROM option driver to UEFI driver.
 \end{itemize}
 
 \subsection{\gls{uefi}/\gls{pi} Firmware Images}
-\gls{uefi} and \gls{pi} specifications define the standardized format for EFI firmware storage devices (FLASH or other non-volatile storage) which are abstracted into "Firmware Volumes". Build systems must be capable of processing files to create the file formats described by the \gls{uefi} and PI specifications. The tools provided as part of the \gls{edk2} BaseTools package process files compiled by third party tools, as well as text and Unicode files in order to create UEFI or PI compliant binary image files. In some instances, where UEFI or PI specifications do not have an applicable input file format, such as the Visual Forms Representation (VFR) files used to create PI compliant IFR content, tools and documentation have been provided that allows the user to write text files that are processed into formats specified by UEFI or PI specifications.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.8\linewidth]{design/uefi-pi-firmware-image-creation}
-	\caption{UEFI/PI Firmware Image Creation}\label{fig:design-uefi-pi-firmware-image-creation}
+\gls{uefi} and \gls{pi} specifications characterize the standard format for EFI firmware storage devices which includes FLASH or any other nonvolatile storage which are separated in \say{Firmware Volumes}.
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\linewidth]{design/efi-application-creation}
+  \caption{UEFI/PI Firmware Image Creation}\label{fig:design-efi-application-creation}
 \end{figure}
 
-A Firmware Volume (FV) is a file level interface to firmware storage. Multiple FVs may be present in a single FLASH device, or a single FV may span multiple FLASH devices. An FV may be produced to support some other type of storage entirely, such as a disk partition or network device. For more information consult the Platform Initialization Specification, Volume 3.
-In all cases, an FV is formatted with a binary file system. The file system used is typically the Firmware File System (FFS), but other file systems may be possible in some cases. Hence, all modules are stored as "files" in the FV. Some modules may be "execute in place" (linked at a fixed address and executed from the ROM), while others are relocated when they are loaded into memory and some modules may be able to run from ROM if memory is not present (at the time of the module load) or run from memory if it is available.
-Files themselves have an internally defined binary format. This format allows for implementation of security, compression, signing, etc. Within this format, there are one or more "leaf" images. A leaf image could be, for example, a PE32 image for a DXE driver.
+Build systems should have the capability of processing files to construct the file formats represented by the \gls{uefi} and PI specifications. The tools which are supplied as part of the \say{\gls{edk2} BaseTools package} processes files compiled via third party scripts and tools, as well as unicode files and text files in order to construct UEFI or PI amenable binary image file. In few cases, where UEFI or PI specifications don't have an corresponding file format for input such as the \say{Visual Forms Representation (VFR)} files utilized to make PI compliant IFR contents, scripts, tools and documentation have been supplied which permits the user to create text files that are treated into formats specified by UEFI or PI specifications.
 
-Therefore, there are several layers of organization to a full UEFI/PI firmware image. These layers are illustrated below in Figure \ref{fig:design-uefi-pi-firmware-image-creation}. Each transition between layers implies a processing step that transforms or combines previously processed files into the next higher level. Also shown in Figure \ref{fig:design-uefi-pi-firmware-image-creation} are the reference implementation tools that process the files to move them between the different layers.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.9\linewidth]{design/efi-application-creation}
-	\caption{UEFI/PI Firmware Image Creation}\label{fig:design-efi-application-creation}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\linewidth]{design/uefi-pi-firmware-image-creation}
+  \caption{UEFI/PI Firmware Image Creation}\label{fig:design-uefi-pi-firmware-image-creation}
 \end{figure}
+There are different layers of structure to a complete UEFI/PI firmware image. These layers are exemplified in Figure \ref{fig:design-uefi-pi-firmware-image-creation}. Every Shifts between layers means that a processing block that transforms or unites previously treated files into the another higher level. Also in Figure \ref{fig:design-uefi-pi-firmware-image-creation} portrayed the reference tools utilized that processes the files to transit them among the different layers. The layers are described in more emphasized manner in Section \ref{section-architecture}
 
+Apart from constructing images that initialize the whole platform, the build process also sustains creation of standalone UEFI applications (such as OS Loaders) and ROM images having driver code. Figure \ref{fig:design-efi-application-creation} portrayed the reference implementation tools and creation processes for both the image type.
 
-In addition to creating images that initialize a complete platform, the build process also supports creation of stand-alone UEFI applications (including OS Loaders) and Option ROM images containing driver code. Figure \ref{fig:design-efi-application-creation}, below, shows the reference implementation tools and creation processes for both of these image types
+The closing feature that is backed by the EDK II build process is to packaged and distributed the founding of Binary Modules to be utilized by other governing body. Binary modules doesn't need to distribute the source code. This shall only allow vendors to publicize UEFI images \textbf{without releasing copyrighted source code}.
 
-The final feature that is supported by the EDK II build process is the creation of Binary Modules that can be packaged and distributed for use by other organizations. Binary modules do not require distribution of the source code. This will permit vendors to distribute UEFI images without having to release proprietary source code.
-
-This packaging process permits creation of an archive file containing one or more binary files that are either Firmware Image files or higher (EFI Section files, Firmware File system files, etc.). The build process will permit inserting these binary files into the appropriate level in the build stages.
+The process of packaging allows construction of an archive file having multiple binary files which can be either Firmware Image files or higher (FFS, EFI Section files, etc.). The build process would only allow insertion of such binary files in to the corresponding level of the build stages.

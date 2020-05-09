@@ -1,6 +1,6 @@
 \section{System Management Mode (\gls{smm})}\label{section-smm}
 \subsection{Overview}
-On IA-32 processors, System Management Mode (\gls{smm}) is a manner of operation which is different from flat modal so as from protected mode of the DXE and PEI phases. It is outlined as a real mode environs with $ 32-bit $ data bus access and its carried out in effect to either with a specified interrupt type or with the System Management Interrupt (\gls{smi}) pin. Note that Operation mode of SMM is OS independent mode and is discrete operational mode, however it may also lies in both within and OS runtime.
+On \say{IA-32 processors}, System Management Mode (\gls{smm}) is a manner of operation which is different from flat modal so as from protected mode of the DXE and PEI phases. It is outlined as a real mode environs with $ 32-bit $ data bus access and its carried out in effect to either with a specified interrupt type or with the System Management Interrupt (\gls{smi}) pin. Note that Operation mode of SMM is OS independent mode and is discrete operational mode, however it may also lies in both within and OS runtime.
 
 \begin{figure}[!htbp]
 	\centering
@@ -100,8 +100,8 @@ SMM Code segment lies within the SMM Dispatcher. Major Role of SMM Dispatcher is
 \subsection{Initializing SMM Phase}
 The SMM driver for the Framework is fundamentally a enrollment transport mode to dispatch the drivers in outcome to the:
 \begin{itemize}
-	\item System Management Interrupts for IA-32
-	\item Platform Management Interrupts (PMIs) for Itanium® processor family
+	\item System Management Interrupts for \say{IA-32}
+	\item Platform Management Interrupts (PMIs) for \say{Itanium® processor family}
 \end{itemize}
 
 \subsection{Relation of "System Management RAM (\gls{smram})" to conventional memory}
