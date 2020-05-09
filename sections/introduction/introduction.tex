@@ -49,7 +49,7 @@ Additional details are provided that allow UEFI drivers to be stored in PCI opti
 
 The UEFI Specification is designed keeping in mind the goal of having compact driver images. However to facilitate support for multiple processor architectures, a driver object file for each architecture is required to be included leading to a space issue. To resolve this issue, UEFI defines EFI Byte Code Virtual Machine. Every driver file is compiled into just a single EFI Byte Code object which is run by an UEFI Byte Code Interpreter included in the UEFI Specification complaint firmware. Another very common method to resolve this issue is compression. The UEFI specification defined compression and decompression algorithms which may be used to reduce the size of UEFI Drivers.
 
-This information can used by OEMs, IHVs, OSVs, and firmware vendors for developing drivers that produce standard protocol interfaces, and operating system loaders that can be used to boot UEFI compliant operating systems.
+This information can used by OEMs, \gls{ihv}s, OSVs, and firmware vendors for developing drivers that produce standard protocol interfaces, and operating system loaders that can be used to boot UEFI compliant operating systems.
 
 \subsubsection{\gls{uefi}'s Role in boot process}
 
@@ -76,7 +76,7 @@ The \verb|PC-AT| boot environment is challenging to innovate as each new firmwar
 		\\ \hline
 		OS Communication Bridge & via ACPI & through runtime driver
 		\\ \hline
-		$ 3^{rd} $ Party ISV \& IHV & Support Bas & Ease of Support and for Cross-Platforms
+		$ 3^{rd} $ Party ISV \& \gls{ihv} & Support Bas & Ease of Support and for Cross-Platforms
 		\\ \hline
 	\end{tabular}
 \end{table}

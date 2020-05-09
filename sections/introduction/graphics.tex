@@ -4,12 +4,12 @@ Almost every graphics controllers are merely PCI controllers only. And it is als
 Characterizes of Graphics drivers are listed below:
 \begin{itemize}
 	\item Follows UEFI Driver Modal
-	\item Depending on the driver manged adapter, a graphics driver could be classified as into: a single output adapter and a multiple output adapter.
+	\item Depending on the driver managed adapter, a graphics driver could be classified as into a single output adapter and a multiple output adapter.
 	\item For each output expected, the graphics driver has to construct child handles.
 	\item For some of the output ports and protocols (such as GOP Protocol) the graphics drivers must create child handles.
-	\item Graphics drivers are chip-specific because of the requirement to initialize and manage the graphics device.
+	\item Graphics drivers are hardware-dependent (i.e. specific to the corresponding chip) due to the need of initializing and managing the graphics device.
 \end{itemize}
-Note that (\gls{ihv}) has privilege for choosing whether to support and implement all the required modules of the UEFI specification. i.e., all modules might not be implemented to support on a specified system configuration which doesn't support all of the services and features understood by the needed modules.
+Note that (\gls{ihv}) has the privilege of choosing whether to support and implement all the required modules of the UEFI specification. i.e., all modules might not be implemented to support on a specified system configuration which doesn't support all of the services and features understood by the needed modules.
 
 \subsubsection{Graphics Output Protocol (\gls{gop})}
 The \say{Graphics Output Protocol \gls{gop}} Driver is member of the driver of UEFI boot time which are responsible for running up the display while the bios is booting. This driver triggers displaying of logo while the bios is booting.
@@ -18,16 +18,16 @@ The \say{Graphics Output Protocol \gls{gop}} Driver is member of the driver of U
 The GOP driver is the successor for video controller of legacy BIOS and sheers the utilization of UEFI pre-boot firmware without the use of CSM. The GOP driver can be $ 32-bit $, $ 64-bit $, or $ IA-64 $ with no binary support. Pre-boot firmware architecture of UEFI which could be either $ 32-bit $ or $ 64-bit $ has to adapt the corresponding GOP driver architecture ($ 32-bit $ or $ 64-bit $). The GOP driver could be one of the boot mode: \say{fastboot} (for specific platform optimized mode to speedup the boot time) or \say{generic} (the normal boot process).
 
 \subsubsection{GOP DRIVER}
-The EFI specification characterizes the \say{Universal Graphic Adapter (UGA)} protocol to provide graphics which could be device-independent. However, Specification of UEFI eliminated the inclusion of UGA and replaced it with it's successor \gls{gop} so that VGA hardware dependencies can be removed.
+The EFI specification characterizes the \say{Universal Graphic Adapter (UGA)} protocol to provide graphics that could be device-independent. However, Specification of UEFI eliminated the inclusion of UGA and replaced it with its successor \gls{gop} so that VGA hardware dependencies can be removed.
 
 \subsubsection{GOP Integration}
-The platform firmware must meet the following requirements for GOP Driver integration:
+The platform firmware has to align with the below listed requirements for integration of GOP Driver:
 \begin{itemize}
-	\item Platform firmware must be compliant to UEFI 2.1 or later.
+	\item Platform firmware has to be obedient with UEFI 2.1 or later.
 	\item Platform must enumerate and initialize the graphics device.
 	\item Platform must allocate enough graphics frame buffer memory required to support the native mode resolution of the integrated display.
-	\item The platform must produce the standard \verb|EFI_PCI_IO_PROTOCOL| and as well as the \verb|EFI_DEVICE_PATH_PROTOCOL| on the graphics device handle. Additionally, the platform must produce \verb|PLATFORM_GOP_POLICY_PROTOCOL|.
-	\item The platform firmware must not launch the legacy Video BIOS.
+	\item The platform has to bring forth the standard protocol \verb|EFI_PCI_IO_PROTOCOL| and also the \verb|EFI_DEVICE_PATH_PROTOCOL| on the graphics device handle. Additionally, the platform must produce \verb|PLATFORM_GOP_POLICY_PROTOCOL|.
+	\item The platform firmware should not establish the legacy BIOS Video.
 \end{itemize}
 
 The GOP Driver solution comprises the following files shown in Table \ref{table:gop-driver-files} GOP driver files.

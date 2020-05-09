@@ -33,47 +33,18 @@ Applying the UEFI Driver Model to PCI, the UEFI Specification defines the PCI Ro
 	\item \textbf{PCI Driver Model} - The PCI Driver Model is designed to extend the UEFI Driver Model in a way that supports PCI Bus Drivers and PCI Device Drivers. This applies to Conventional PCI, PCI-X, and PCI Express. PCI Bus Drivers manage PCI buses present in a system. The PCI Bus Driver creates child device handles that must contain a Device Path Protocol instance and a PCI I/O Protocol instance. The PCI I/O Protocol is used by the PCI Device Driver to access memory and I/O on a PCI controller. PCI Device Drivers manage PCI controllers present on PCI buses. The PCI Device Drivers produce an I/O abstraction that may be used to boot an UEFI compliant operating system.
 \end{itemize}
 
-\subsubsection{Graphics Output Protocol (\gls{gop})}
-Graphics Output Protocol (GOP) is defined in the UEFI Specification to remove the hardware requirement to support legacy VGA and INT 10h BIOS. GOP provides a software abstraction to draw on the video screen.
-
 \subsubsection{BUS Performances and Number of Slots Compared}
 The various architectures defined by the PCISIG. The table shows the evolution of bus frequencies and bandwidths., as it obvious, increasing bus frequency compromises the number of electrical loads or number of connectors allowable on a bus at that frequencies. At some point for a given bus architecture there is an upper limit beyond which one cannot further increase the bus frequency, hence requiring the definition of a new bus architecture.
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=\linewidth]{introduction/comparison-of-bus-frequency-bandwidth-slots}
+	\caption{Comparison of Bus Frequency, Bandwidth and Number of Slots}\label{fig:comparison-of-bus-frequency-bandwidth-slots}
+\end{figure}
+
 A PCI express (PCIe) Interconnect that connects two devices is referred to as a Link. A link consists if either x1, x2, x4, x8, x12, x16 or x32 signal pairs in each direction. These signals are referred to as Lanes. A designer determines how many Lanes to implement based on the targeted performance benchmark required on a given Link.
 
-\begin{table}
-	\centering
-	\renewcommand\arraystretch{2}
-	\caption{Comparison of Bus Frequency, Bandwidth and Number of Slots}\label{table:comparison-of-bus-frequency-bandwidth-slots}
-	\begin{tabular}{l | l | l | p{3cm}}
-		Bus Type & Clock Frequency & Peak Bandwidth & Number of Card Slots per Bus
-		\\ \hline \hline
-		PCI $ 32-bit $ & $ 33 \ MHz $ & $ 133 \ MBps $ & $ 4-5 $
-		\\ \hline
-		PCI $ 64-bit $ & $ 33 \ MHz $ & $ 266 \ MBps $ & $ 4-5 $
-		\\ \hline
-		PCI $ 32-bit $ & $ 66 \ MHz $ & $ 266 \ MBps $ & $ 1-2 $
-		\\ \hline
-		PCI $ 64-bit $ & $ 66 \ MHz $ & $ 533 \ MBps $ & $ 1-2 $
-		\\ \hline
-		PCI-X $ 32-bit $ & $ 66 \ MHz $ & $ 266 \ MBps $ & $ 4 $
-		\\ \hline
-		PCI-X $ 64-bit $ & $ 66 \ MHz $ & $ 533 \ MBps $ & $ 4 $
-		\\ \hline
-		PCI-X $ 32-bit $ & $ 133 \ MHz $ & $ 533 \ MBps $ & $ 1-2 $
-		\\ \hline
-		PCI-X $ 64-bit $ & $ 133 \ MHz $ & $ 1066 \ MBps $ & $ 1-2 $
-		\\ \hline
-		PCI-X $ 32-bit $ & $ 266 \ MHz $ effective & $ 1066 \ MBps $ & $ 1 $
-		\\ \hline
-		PCI-X $ 64-bit $ & $ 266 \ MHz $ effective & $ 2131 \ MBps $ & $ 1 $
-		\\ \hline
-		PCI-X $ 32-bit $ & $ 533 \ MHz $ effective & $ 2131 \ MBps $ & $ 1 $
-		\\ \hline
-		PCI-X $ 64-bit $ & $ 533 \ MHz $ effective & $ 4262 \ MBps $ & $ 1 $
-		\\ \hline
-	\end{tabular}
-\end{table}
 
-The Table \ref{table:comparison-of-bus-frequency-bandwidth-slots} shows aggregate bandwidth numbers for various Link width implementations, as is apparent from this table, the peak bandwidth achievable with \gls{pcie} is significantly higher than any existing bus today.
+The Figure \ref{fig:comparison-of-bus-frequency-bandwidth-slots} shows aggregate bandwidth numbers for various Link width implementations, as is apparent from this table, the peak bandwidth achievable with \gls{pcie} is significantly higher than any existing bus today.
 
 
