@@ -7,7 +7,7 @@ This fast growing generation has also raised the demand for many new higher perf
 Also, many of these modules actually remains untouched in PCI-X 2.0. Due to not having the much of the dissimilarity, it enables development easier because these modules have been already designed and developed with required engineering and familiar to the developers. As a end result, risk is dramatically decreased because the time-to-market became short.
 
 \subsubsection{Functional Description}
-The hardware which is used to implement a PCI based system consumes a software interface served by PCI BIOS feature. It has elementary use to generate operations in address spaces specific to PCI (PCI configuration space).
+The hardware which is used to implement a PCI based system consumes a software interface served by PCI BIOS feature. It has elementary use to generate operations in address spaces specific to PCI (PCI configuration space \cite{pci-config-space}).
 
 The X86 architecture allows following mode to operate as per PCI BIOS features:
 \begin{itemize}
@@ -22,7 +22,7 @@ The X86 architecture allows following mode to operate as per PCI BIOS features:
 In the Flat mode, all the segments begun at linear address $ 0 $ and span till the end of the whole $ 4-GB $ address space.
 
 \subsubsection{BUS Performances and Number of Slots Compared}
-The several architectures characterized by the PCISIG. Figure \ref{fig:comparison-of-bus-frequency-bandwidth-slots} portrays the development of PCI bus clock frequencies and bandwidths. Its pretty obvious that the increasing the bus frequency does comprise the load in terms of electrical nodes as also to the maximum permissible connectors on a bus at that clock frequencies.
+The several architectures characterized by the PCI-SIG\cite{pcisig}. Figure \ref{fig:comparison-of-bus-frequency-bandwidth-slots} portrays the development of PCI bus clock frequencies and bandwidths. Its pretty obvious that the increasing the bus frequency does comprise the load in terms of electrical nodes as also to the maximum permissible connectors on a bus at that clock frequencies.
 
 \begin{figure}[!htbp]
 	\centering
@@ -31,7 +31,3 @@ The several architectures characterized by the PCISIG. Figure \ref{fig:compariso
 \end{figure}
 
 A \say{PCI express (PCIe) Interconnect} is responsible in connecting two PCI devices via PCI link. A PCI link consists if any signal pairs in each direction. These signals ($ x1, x2, x4, x8, x12, x16, x32 $) known as the Lanes. A BIOS designer decides that how many Lanes implementation should be permissible based on the benchmark performance of targeted platform on a given PCI link.
-
-Figure \ref{fig:comparison-of-bus-frequency-bandwidth-slots} portrays the total bandwidth values for various PCI link width.
-
-

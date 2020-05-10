@@ -1,19 +1,21 @@
+\chapter{Introduction}\label{chapter-introduction}
+\lhead{Chapter 1. \emph{Introduction}}
 \section{Introduction}\label{section-introduction}
-Intel System on a Chip (\gls{soc}) features a new set of Intel Uncore Intellectual Property (IP) for every generation.
-Section \ref{section-introduction} covers the introduction and overview of BIOS, UEFI and it's role and major components - Advanced Configuration and Power Interface (\gls{acpi}), Peripheral Component Interconnect Express (\gls{pcie}) and Graphics Controller. Section \ref{section-design} describes the design of UEFI and the boot phases in detail. The study of the BIOS binary structure and mapping of each components byte and alignment is described in Section \ref{section-architecture}. Proposed work to reducing the process of build iteration described in Section \ref{section-proposed-work}. 
+Intel System on a Chip (\gls{soc}) \cite{intel-soc} features a new set of Intel Uncore Intellectual Property (\gls{ip}) for every generation.
+Section \ref{section-introduction} covers the introduction and overview of BIOS, UEFI and it's role and major components - \say{Advanced Configuration and Power Interface (\gls{acpi})}, \say{Peripheral Component Interconnect Express (\gls{pcie})} and Graphics Controller. Section \ref{section-design} describes the design of UEFI and the boot phases in detail. The study of the BIOS binary structure and mapping of each components byte and alignment is described in Section \ref{section-architecture}. Proposed work to reducing the process of build iteration described in Section \ref{section-proposed-work}. 
 
 \subsection{Uncore \gls{ip}}
-The Uncore encompasses system agent (SA), memory and Uncore agents such as graphics controller, display controller, memory controller and Input Output (IO).The Uncore IPs are Peripheral Component Interface Express (PCIe), Graphics Processing Engine (GPE), Thunderbolt, Imaging Processing Agent (IPU), North Peak (NPK), Virtualization Technology for directed-IO (Vt-d), Volume Management Device (VMD).
+The Uncore encompasses system agent (SA), memory and Uncore agents such as graphics controller, display controller, memory controller and Input Output (IO).The Uncore IPs are \say{Peripheral Component Interface Express (\gls{pcie})}, \say{Graphics Processing Engine (GPE)}, Thunderbolt, Imaging Processing Agent (IPU), \say{North Peak (NPK)}, \say{Virtualization Technology for directed-IO (Vt-d)}, Volume Management Device (VMD).
 
-PCI Express abbreviated as \gls{pci} or \gls{pcie}, is designed to replace the older PCI standards. A data communicating system is highly-developed via PCIe for use the transfer data between the host and the peripheral devices. Intel developed the hardware interface which allows the connection of external peripherals to a computer called Thunderbolt. This interface not only has PCI Express (PCIe) and DisplayPort (DP) combined into two serial signals but additionally provides DC power also, bundled in just one cable.
+PCI Express abbreviated as \gls{pci} or \gls{pcie}, is designed to replace the older PCI standards. A data communicating system is highly-developed via PCIe for use the transfer data between the host and the peripheral devices. Intel developed the hardware interface which allows the connection among the external peripherals to a computer called Thunderbolt. This interface not only has \say{PCI Express (PCIe)} and DisplayPort (DP) combined into two serial signals but additionally provides DC power also, bundled in just one cable.
 \say{Graphics Processing Engine (GPE)}, \say{Integrated graphics}, \say{shared graphics solutions}, \say{integrated graphics processors (IGP)} or \say{unified memory architecture(UMA)} utilize a portion of a memory of computer system instead of having dedicated graphics memory.
-GPEs can be integrated onto the motherboard as part of the chipset. Guest virtual machines use Virtual Technology for Directed-IO (Vt-d), an input/output memory management unit(IOMMU), to directly use peripheral devices, such as hard-drive controllers, accelerated graphics cards and Ethernet, through interrupt remapping.
+GPEs can be integrated onto the motherboard as part of the chipset. Guest virtual machines use \say{Virtual Technology for Directed-IO (Vt-d)}, an \say{input/output memory management unit(IOMMU)}, to directly use peripheral devices, such as hard-drive controllers, accelerated graphics cards and Ethernet, through interrupt remapping.
 
 \subsection{Legacy \gls{bios} and \gls{uefi}}
 
 \paragraph{\gls{bios}} is the governing reference which specifies a firmware interface.
 
-"Legacy" (as in Legacy \gls{bios}) -  in terms of firmware specifications it refers to an older, broadly used specification. Major responsibility of \gls{bios} is to initialize the hardware devices, loading and commencing an \gls{os}. When the system boots, the BIOS initializes and identifies every connected system devices including keyboard, mouse, hard disk drive, solid state drive, video display card and other hardware followed by locating software stored on a boot device i.e. a hard disk or removable storage such as USB or CD/DVD and loads and executes that software, transferring control of the system to it. This flow of actions is also known as "booting" or "boot strapping".
+"Legacy" (as in Legacy \gls{bios}) -  in terms of firmware specifications it refers to an older, broadly used specification. Major responsibility of \gls{bios} is to initiate the support for hardware devices, loading and commencing an \gls{os}. When the system boots, the BIOS initializes and identifies every connected system devices including keyboard, mouse, hard disk drive, solid state drive, video display card and other hardware followed by locating software stored on a boot device i.e. a hard disk or removable storage such as USB or CD/DVD and loads and executes that software, transferring control of the system to it. This flow of actions is also known as "booting" or "boot strapping".
 
 Table \ref{table:legacy-bios-vs-uefi} overviews of comparisons of UEFI with legacy BIOS.
 
@@ -56,7 +58,7 @@ One major problem with existing BIOS implementations is that since they are high
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{uefi_board_of_directors}
-	\caption{Board of Directors of UEFI Forum}\label{fig:introduction-uefi-board-of-directors}
+	\caption{Board of Directors of UEFI Forum \cite{uefi-board-of-directors}}\label{fig:introduction-uefi-board-of-directors}
 \end{figure}
 
 The UEFI Forum board of directors consists of representatives from 11 industry leaders as described in Figure \ref{fig:introduction-uefi-board-of-directors}. These organizations work to ensure that the UEFI specifications meet industry needs.

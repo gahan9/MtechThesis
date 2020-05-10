@@ -1,3 +1,6 @@
+\chapter{Implementation}\label{chapter-implementation}
+\lhead{Chapter 3. \emph{Implementation}}
+
 \section{Proposed Work}\label{section-proposed-work}
 In general to generate BIOS image (*.rom file), compilation of XYZ.c (source code) has to be done, this compilation not only involves compilation of DXE driver, PEI driver, EFI Application but also includes pre-processing checks, compression of raw files which takes huge amount of time depending on the system configuration. Implementation of this project aids in reduction of this compilation time.
 
@@ -103,12 +106,6 @@ Figure \ref{fig:setup-knobs-flow} describes the flow of setup knobs modification
 	\includegraphics[width=0.9\linewidth]{proposed-work/setup-knobs-flow}
 	\caption{Flow of Setup Knobs Modification}\label{fig:setup-knobs-flow}
 \end{figure}
-
-The iteration of the development could be reduce in two ways:
-\begin{enumerate}
-	\item Processing Debug/Unsigned BIOS in section \ref{subsection-processing-bios}
-	\item Processing Firmware individually in section \ref{subsection-processing-firmware}
-\end{enumerate}
 
 
 \subsubsection{Screenshots of Module}
